@@ -64,7 +64,7 @@
                            FontFamily=".\resources\fonts\#NanumGothic"
                            FontSize="15"
                            FontWeight="Regular"/>
-          <TextBlock TextWrapping="Wrap"
+          <TextBlock x:Name="NeedUpdateTextBlock" TextWrapping="Wrap"
                      Margin="7,0,0,0"
                      FontFamily=".\resources\fonts\#NanumGothic"
                      FontSize="15"
