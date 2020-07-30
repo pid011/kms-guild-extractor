@@ -18,8 +18,8 @@ namespace KMSGuildExtractor
 
             string version = $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
             Title = $"{LocalizationString.title} {version}";
-            InfoTitle.Text = $"{LocalizationString.title}";
-            VersionText.Text = version;
+            InfoTitleTextBlock.Text = $"{LocalizationString.title}";
+            VersionTextBlock.Text = version;
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)
