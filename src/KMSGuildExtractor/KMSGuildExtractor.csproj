@@ -34,4 +34,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SciChart.Wpf.UI.Transitionz" Version="3.1.251" />
+  </ItemGroup>
+
 </Project>
