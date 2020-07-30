@@ -120,4 +120,10 @@
   <data name="title" xml:space="preserve">
     <value>메이플 길드 유저정보 추출기</value>
   </data>
+  <data name="already_updated" xml:space="preserve">
+    <value>최신 버전이에요 :D</value>
+  </data>
+  <data name="new_version_update" xml:space="preserve">
+    <value>새로운 버전이 있어요!</value>
+  </data>
 </root>

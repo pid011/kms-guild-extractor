@@ -61,6 +61,24 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 최신 버전이에요 :D.
+        /// </summary>
+        internal static string already_updated {
+            get {
+                return ResourceManager.GetString("already_updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 새로운 버전이 있어요!.
+        /// </summary>
+        internal static string new_version_update {
+            get {
+                return ResourceManager.GetString("new_version_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 메이플 길드 유저정보 추출기.
         /// </summary>
         internal static string title {
