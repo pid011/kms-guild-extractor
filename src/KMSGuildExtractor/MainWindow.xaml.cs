@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor
 {
@@ -23,6 +15,30 @@ namespace KMSGuildExtractor
         public MainWindow()
         {
             InitializeComponent();
+
+            string version = $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
+            Title = $"{LocalizationString.title} {version}";
+            InfoTitle.Text = $"{LocalizationString.title}";
+            VersionText.Text = version;
+        }
+
+        private void OpenHyperLink(object sender, RequestNavigateEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(e.Uri.ToString()) { UseShellExecute = true });
+            }
+            catch (System.ComponentModel.Win32Exception ex)
+            {
+                if (ex.ErrorCode == -2147467259)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

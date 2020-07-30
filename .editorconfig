@@ -180,7 +180,7 @@ charset = utf-8
 indent_size = 2
 
 # Xml files
-[*.{xml,stylecop,resx,ruleset}]
+[*.{xml,xaml,stylecop,resx,ruleset}]
 indent_size = 2
 
 # Xml config files

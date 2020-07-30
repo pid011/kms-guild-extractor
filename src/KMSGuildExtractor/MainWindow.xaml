@@ -1,12 +1,50 @@
-﻿<Window x:Class="KMSGuildExtractor.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KMSGuildExtractor"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:KMSGuildExtractor"
+    xmlns:localText="clr-namespace:KMSGuildExtractor.Localization"
+    xmlns:Primitives="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon"
+    x:Class="KMSGuildExtractor.MainWindow"
+    mc:Ignorable="d"
+    Height="600" Width="400"
+    WindowStyle="SingleBorderWindow"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+    ResizeMode="CanMinimize">
 
-    </Grid>
+  <Grid>
+    <StackPanel>
+      <StackPanel Height="250" Margin="0,20,0,0">
+        <Image Source=".\resources\icon\icon.png" Stretch="None"/>
+        <TextBlock x:Name="InfoTitle"
+                   Text="InfoTitle"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   FontFamily=".\resources\fonts\#NanumGothic"
+                   Margin="0,5,0,0"
+                   VerticalAlignment="Stretch"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <TextBlock x:Name="VersionText"
+                     Text="v00.00.00"
+                     TextWrapping="Wrap"
+                     FontSize="15"
+                     FontWeight="Regular"
+                     FontFamily="Consolas"
+                     Foreground="#FF1EB22C"/>
+
+          <TextBlock FontFamily="Consolas"
+                     Margin="7,0,0,0"
+                     TextWrapping="Wrap"
+                     FontSize="15"
+                     FontWeight="Regular">
+            by <Hyperlink RequestNavigate="OpenHyperLink" NavigateUri="https://github.com/pid011">Sepi</Hyperlink></TextBlock>
+                     
+        </StackPanel>
+      </StackPanel>
+      <StackPanel/>
+    </StackPanel>
+  </Grid>
 </Window>
