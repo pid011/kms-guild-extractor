@@ -10,13 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="resources\images\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
     <Resource Include="resources\fonts\NanumGothic-Regular.ttf" />
+    <Resource Include="resources\icon\close.png" />
     <Resource Include="resources\icon\icon.png" />
+    <Resource Include="resources\icon\minimize.png" />
   </ItemGroup>
 
   <ItemGroup>
