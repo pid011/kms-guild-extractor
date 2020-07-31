@@ -120,10 +120,10 @@
   <data name="title" xml:space="preserve">
     <value>메이플 길드 유저정보 추출기</value>
   </data>
-  <data name="already_updated" xml:space="preserve">
+  <data name="updatenotify_already_updated" xml:space="preserve">
     <value>최신 버전이에요 :D</value>
   </data>
-  <data name="new_version_update" xml:space="preserve">
+  <data name="updatenotify_new_version_update" xml:space="preserve">
     <value>새로운 버전이 있어요!</value>
   </data>
   <data name="info_image_tooltip" xml:space="preserve">
@@ -134,5 +134,14 @@
   </data>
   <data name="titlebar_minimize" xml:space="preserve">
     <value>창 최소화</value>
+  </data>
+  <data name="info_author_name" xml:space="preserve">
+    <value>Sepi</value>
+  </data>
+  <data name="updatenotify_check_update" xml:space="preserve">
+    <value>새로운 업데이트가 있는지 확인하는 중...</value>
+  </data>
+  <data name="updatenotify_install_new_version" xml:space="preserve">
+    <value>설치하기</value>
   </data>
 </root>

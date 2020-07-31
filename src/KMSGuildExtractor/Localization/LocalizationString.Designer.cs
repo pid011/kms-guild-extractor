@@ -61,11 +61,11 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 최신 버전이에요 :D.
+        ///   Looks up a localized string similar to Sepi.
         /// </summary>
-        public static string already_updated {
+        public static string info_author_name {
             get {
-                return ResourceManager.GetString("already_updated", resourceCulture);
+                return ResourceManager.GetString("info_author_name", resourceCulture);
             }
         }
         
@@ -75,15 +75,6 @@ namespace KMSGuildExtractor.Localization {
         public static string info_image_tooltip {
             get {
                 return ResourceManager.GetString("info_image_tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 새로운 버전이 있어요!.
-        /// </summary>
-        public static string new_version_update {
-            get {
-                return ResourceManager.GetString("new_version_update", resourceCulture);
             }
         }
         
@@ -111,6 +102,42 @@ namespace KMSGuildExtractor.Localization {
         public static string titlebar_minimize {
             get {
                 return ResourceManager.GetString("titlebar_minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 최신 버전이에요 :D.
+        /// </summary>
+        public static string updatenotify_already_updated {
+            get {
+                return ResourceManager.GetString("updatenotify_already_updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 새로운 업데이트가 있는지 확인하는 중....
+        /// </summary>
+        public static string updatenotify_check_update {
+            get {
+                return ResourceManager.GetString("updatenotify_check_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 설치하기.
+        /// </summary>
+        public static string updatenotify_install_new_version {
+            get {
+                return ResourceManager.GetString("updatenotify_install_new_version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 새로운 버전이 있어요!.
+        /// </summary>
+        public static string updatenotify_new_version_update {
+            get {
+                return ResourceManager.GetString("updatenotify_new_version_update", resourceCulture);
             }
         }
     }

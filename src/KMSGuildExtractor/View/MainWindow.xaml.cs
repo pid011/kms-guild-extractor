@@ -8,24 +8,20 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 using KMSGuildExtractor.Localization;
+using KMSGuildExtractor.ViewModel;
 
-namespace KMSGuildExtractor
+namespace KMSGuildExtractor.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public sealed partial class MainWindow : Window
     {
-        internal string Version => $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
+        // public MainWindowViewModel MainWindowViewModel { get; } = new MainWindowViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
-
-            Title = $"{LocalizationString.title} {Version}";
-            VersionTextBlock.Text = Version;
-            // 버전확인해서 GitHubReleaseHyperLink.NavigateUri를 현재 버전의 링크로 수정하기
-
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)
