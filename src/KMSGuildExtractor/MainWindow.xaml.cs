@@ -16,14 +16,14 @@ namespace KMSGuildExtractor
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal string Version => $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
+
         public MainWindow()
         {
             InitializeComponent();
 
-            string version = $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
-            Title = $"{LocalizationString.title} {version}";
-            InfoTitleTextBlock.Text = $"{LocalizationString.title}";
-            VersionTextBlock.Text = version;
+            Title = $"{LocalizationString.title} {Version}";
+            VersionTextBlock.Text = Version;
             // 버전확인해서 GitHubReleaseHyperLink.NavigateUri를 현재 버전의 링크로 수정하기
 
         }

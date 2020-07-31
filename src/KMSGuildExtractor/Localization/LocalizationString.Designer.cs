@@ -22,7 +22,7 @@ namespace KMSGuildExtractor.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LocalizationString {
+    public class LocalizationString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace KMSGuildExtractor.Localization {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KMSGuildExtractor.Localization.LocalizationString", typeof(LocalizationString).Assembly);
@@ -51,7 +51,7 @@ namespace KMSGuildExtractor.Localization {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,25 @@ namespace KMSGuildExtractor.Localization {
         /// <summary>
         ///   Looks up a localized string similar to 최신 버전이에요 :D.
         /// </summary>
-        internal static string already_updated {
+        public static string already_updated {
             get {
                 return ResourceManager.GetString("already_updated", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 샤레니안의 악마.
+        /// </summary>
+        public static string info_image_tooltip {
+            get {
+                return ResourceManager.GetString("info_image_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 새로운 버전이 있어요!.
         /// </summary>
-        internal static string new_version_update {
+        public static string new_version_update {
             get {
                 return ResourceManager.GetString("new_version_update", resourceCulture);
             }
@@ -81,9 +90,27 @@ namespace KMSGuildExtractor.Localization {
         /// <summary>
         ///   Looks up a localized string similar to 메이플 길드 유저정보 추출기.
         /// </summary>
-        internal static string title {
+        public static string title {
             get {
                 return ResourceManager.GetString("title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 창 닫기.
+        /// </summary>
+        public static string titlebar_close {
+            get {
+                return ResourceManager.GetString("titlebar_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 창 최소화.
+        /// </summary>
+        public static string titlebar_minimize {
+            get {
+                return ResourceManager.GetString("titlebar_minimize", resourceCulture);
             }
         }
     }

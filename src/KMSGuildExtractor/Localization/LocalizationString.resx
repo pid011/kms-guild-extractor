@@ -126,4 +126,13 @@
   <data name="new_version_update" xml:space="preserve">
     <value>새로운 버전이 있어요!</value>
   </data>
+  <data name="info_image_tooltip" xml:space="preserve">
+    <value>샤레니안의 악마</value>
+  </data>
+  <data name="titlebar_close" xml:space="preserve">
+    <value>창 닫기</value>
+  </data>
+  <data name="titlebar_minimize" xml:space="preserve">
+    <value>창 최소화</value>
+  </data>
 </root>

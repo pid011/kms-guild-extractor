@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Localization\LocalizationString.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizationString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
