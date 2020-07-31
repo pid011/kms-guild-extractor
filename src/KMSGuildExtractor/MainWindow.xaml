@@ -61,13 +61,13 @@
       <Button x:Name="WindowCloseButton"
               Click="CloseButtonClicked"
               ToolTip="창 닫기">
-        <Image Source="./resources/icon/close.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Image Source=".\resources\icons\close.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Center"/>
       </Button>
 
       <Button x:Name="WindowMinimizeButton"
               Click="MinimizeButtonClicked"
               ToolTip="창 최소화">
-        <Image Source="./resources/icon/minimize.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image Source=".\resources\icons\minimize.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
       </Button>
 
     </DockPanel>
@@ -79,7 +79,7 @@
       <StackPanel x:Name="InfoPanel"
                   Margin="0,0,0,0">
 
-        <Image Source=".\resources\icon\icon.png"
+        <Image Source=".\resources\icons\icon.png"
                Stretch="None"
                Margin="0,20,0,0"
                tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
