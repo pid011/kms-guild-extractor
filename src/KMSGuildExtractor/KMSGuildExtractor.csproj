@@ -12,10 +12,33 @@
   <ItemGroup>
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
     <Resource Include="resources\fonts\NanumGothic-Regular.ttf" />
-    <Resource Include="resources\icons\close.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="resources\icons\icon.png" />
+
+    <Resource Include="resources\icons\close.png" />
     <Resource Include="resources\icons\minimize.png" />
     <Resource Include="resources\icons\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\icons\worlds\arcane.gif" />
+    <Resource Include="resources\icons\worlds\aurora.gif" />
+    <Resource Include="resources\icons\worlds\bera.gif" />
+    <Resource Include="resources\icons\worlds\burning.gif" />
+    <Resource Include="resources\icons\worlds\burning2.gif" />
+    <Resource Include="resources\icons\worlds\croa.gif" />
+    <Resource Include="resources\icons\worlds\elysium.gif" />
+    <Resource Include="resources\icons\worlds\enosis.gif" />
+    <Resource Include="resources\icons\worlds\luna.gif" />
+    <Resource Include="resources\icons\worlds\nova.gif" />
+    <Resource Include="resources\icons\worlds\reboot.gif" />
+    <Resource Include="resources\icons\worlds\reboot2.gif" />
+    <Resource Include="resources\icons\worlds\red.gif" />
+    <Resource Include="resources\icons\worlds\scania.gif" />
+    <Resource Include="resources\icons\worlds\union.gif" />
+    <Resource Include="resources\icons\worlds\zenith.gif" />
   </ItemGroup>
 
   <ItemGroup>

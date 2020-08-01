@@ -156,15 +156,12 @@ indent_size = 2
 indent_size = 2
 
 # Xml files
-[*.{xml,stylecop,resx,ruleset}]
+[*.{xaml,xml,stylecop,resx,ruleset}]
 indent_size = 2
 
 # Xml config files
 [*.{props,targets,config,nuspec}]
 indent_size = 2
-
-[*.xaml]
-indent_size = 4
 
 # Shell scripts
 [*.sh]
