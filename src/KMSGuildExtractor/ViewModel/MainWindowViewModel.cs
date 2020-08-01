@@ -20,7 +20,7 @@ namespace KMSGuildExtractor.ViewModel
         public string UpdateStatus
         {
             get => _updateStatus;
-            private set => SetProperty(ref _updateStatus, value, nameof(UpdateStatus));
+            private set => SetProperty(ref _updateStatus, value ?? string.Empty, nameof(UpdateStatus));
         }
 
         private string _updateStatus;
@@ -46,7 +46,7 @@ namespace KMSGuildExtractor.ViewModel
         public string GuildName
         {
             get => _guildName;
-            set => SetProperty(ref _guildName, value, nameof(GuildName));
+            set => SetProperty(ref _guildName, value ?? string.Empty, nameof(GuildName));
         }
 
         private string _guildName = string.Empty;
@@ -54,7 +54,7 @@ namespace KMSGuildExtractor.ViewModel
         public string GuildNameCheck
         {
             get => _guildNameCheck;
-            set => SetProperty(ref _guildNameCheck, value, nameof(GuildNameCheck));
+            set => SetProperty(ref _guildNameCheck, value ?? string.Empty, nameof(GuildNameCheck));
         }
 
         private string _guildNameCheck = string.Empty;
@@ -127,7 +127,7 @@ namespace KMSGuildExtractor.ViewModel
         }
 
         private bool CanExecuteSearchCommand(object _) =>
-            SelectedWorld != null && !string.IsNullOrEmpty(GuildName) && string.IsNullOrEmpty(GuildNameCheck) && CanEdit;
+            SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0 && CanEdit;
 
         private async void ExecuteSearchCommand(object _)
         {
