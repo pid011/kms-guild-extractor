@@ -21,230 +21,216 @@
         Background="{x:Null}"
         Title="{Binding InfoViewModel.Title}"
         Style="{StaticResource CustomWindowStyle}">
-  
-  <Window.Resources>
+
+    <Window.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
         </Style>
     </Window.Resources>
-  
-  <Window.DataContext>
-    <viewmodel:MainWindowViewModel/>
-  </Window.DataContext>
-  <Grid HorizontalAlignment="Stretch">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="30"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+
+    <Window.DataContext>
+        <viewmodel:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
         <DockPanel x:Name="TitleBar" Background="Black" LastChildFill="False" Panel.ZIndex="1">
 
             <Button x:Name="WindowCloseButton"
-              Click="CloseButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_close}"
-              DockPanel.Dock="Right"
-              Width="40"
-              WindowChrome.IsHitTestVisibleInChrome="True"
-              Style="{DynamicResource DarkButton}">
-        <Image Source="..\resources\icons\close.png"
-               Stretch="None"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"/>
-      </Button>
+                    Click="CloseButtonClicked"
+                    ToolTip="{x:Static local:LocalizationString.titlebar_close}"
+                    DockPanel.Dock="Right"
+                    Width="40"
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    Style="{DynamicResource DarkButton}">
+                <Image Source="..\resources\icons\close.png"
+                       Stretch="None"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+            </Button>
 
-      <Button x:Name="WindowMinimizeButton"
-              Click="MinimizeButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_minimize}"
-              Style="{DynamicResource DarkButton}"
-              DockPanel.Dock="Right"
-              Width="40"
-              WindowChrome.IsHitTestVisibleInChrome="True">
-        <Image Source="..\resources\icons\minimize.png"
-               Stretch="None"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
-      </Button>
+            <Button x:Name="WindowMinimizeButton"
+                    Click="MinimizeButtonClicked"
+                    ToolTip="{x:Static local:LocalizationString.titlebar_minimize}"
+                    Style="{DynamicResource DarkButton}"
+                    DockPanel.Dock="Right"
+                    Width="40"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+                <Image Source="..\resources\icons\minimize.png"
+                       Stretch="None"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Button>
 
-    </DockPanel>
+        </DockPanel>
 
-    <StackPanel x:Name="Contents"
-                Margin="0,30,0,0"
-                Grid.RowSpan="2"
-                Background="#1e1e1e">
-      <StackPanel x:Name="InfoPanel"
-                  Margin="0,0,0,0">
+        <StackPanel x:Name="Contents"
+                    Margin="0,30,0,0"
+                    Grid.RowSpan="2"
+                    Background="#1e1e1e">
+            <StackPanel x:Name="InfoPanel"
+                        Margin="0,0,0,0">
 
-        <Image Source="..\resources\icons\icon.png"
-               Stretch="None"
-               Margin="0,20,0,0"
-               tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
-               tz:Transitionz.Opacity="{tz:OpacityParams Duration=500, From=0, TransitionOn=Loaded, To=1}"
-               Visibility="Visible"
-               ToolTip="{x:Static local:LocalizationString.info_image_tooltip}">
-          <Image.Effect>
-            <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="10"/>
-          </Image.Effect>
-        </Image>
+                <Image Source="..\resources\icons\icon.png"
+                       Stretch="None"
+                       Margin="0,20,0,0"
+                       tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
+                       tz:Transitionz.Opacity="{tz:OpacityParams Duration=500, From=0, TransitionOn=Loaded, To=1}"
+                       Visibility="Visible"
+                       ToolTip="{x:Static local:LocalizationString.info_image_tooltip}">
+                    <Image.Effect>
+                        <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="10"/>
+                    </Image.Effect>
+                </Image>
 
-        <TextBlock x:Name="InfoTitleTextBlock"
-                   Foreground="WhiteSmoke"
-                   Text="{x:Static local:LocalizationString.title}"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   Margin="0,15,0,0"
-                   VerticalAlignment="Stretch"
-                   tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=700, TransitionOn=Visibility}"
-               tz:Transitionz.Opacity="{tz:OpacityParams Duration=700, From=0, TransitionOn=Loaded, To=1}">
-          <TextBlock.Effect>
-            <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="4"/>
-          </TextBlock.Effect>
-        </TextBlock>
+                <TextBlock x:Name="InfoTitleTextBlock"
+                           Foreground="WhiteSmoke"
+                           Text="{x:Static local:LocalizationString.title}"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Margin="0,15,0,0"
+                           VerticalAlignment="Stretch"
+                           tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=700, TransitionOn=Visibility}"
+                           tz:Transitionz.Opacity="{tz:OpacityParams Duration=700, From=0, TransitionOn=Loaded, To=1}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
 
-        <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,3,0,0">
 
-          <TextBlock x:Name="VersionTextBlock"
-                     Text="{Binding Version}"
-                     TextWrapping="Wrap"
-                     FontSize="15"
-                     FontWeight="Regular"
-                     FontFamily="Consolas"
-                     Foreground="GhostWhite" />
+                    <TextBlock x:Name="VersionTextBlock"
+                               Text="{Binding Version}"
+                               TextWrapping="Wrap"
+                               FontSize="15"
+                               FontWeight="Regular"
+                               FontFamily="Consolas"
+                               Foreground="GhostWhite" />
 
-          <TextBlock Foreground="GhostWhite"
-                     FontFamily="Consolas"
-                     Margin="7,0,0,0"
-                     TextWrapping="Wrap"
-                     FontSize="15"
-                     FontWeight="Regular">
-            <Run Text="by "/>
-            <Hyperlink RequestNavigate="OpenHyperLink"
-                       NavigateUri="https://github.com/pid011"
-                       ToolTip="https://github.com/pid011">
-              <Run Text="Sepi"/>
-            </Hyperlink>
-          </TextBlock>
+                </StackPanel>
 
-        </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Center">
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Center">
+                    <TextBlock x:Name="UpdateStatusTextBlock"
+                               Foreground="GhostWhite"
+                               Text="{Binding UpdateStatus}"
+                               TextWrapping="Wrap"
+                               FontSize="15"
+                               FontWeight="Regular" />
 
-          <TextBlock x:Name="UpdateStatusTextBlock"
-                     Foreground="GhostWhite"
-                     Text="{Binding UpdateStatus}"
-                     TextWrapping="Wrap"
-                     FontSize="15"
-                     FontWeight="Regular" />
-
-          <TextBlock x:Name="NeedUpdateTextBlock"
-                     TextWrapping="Wrap"
-                     Margin="7,0,0,0"
-                     FontSize="15"
-                     FontWeight="Regular"
-                     Visibility="Visible">
+                    <TextBlock x:Name="NeedUpdateTextBlock"
+                               TextWrapping="Wrap"
+                               Margin="7,0,0,0"
+                               FontSize="15"
+                               FontWeight="Regular"
+                               Visibility="Visible">
             <Hyperlink x:Name="GitHubReleaseHyperLink"
                        RequestNavigate="OpenHyperLink"
                        NavigateUri="https://github.com/pid011/kms-guild-extractor/releases">
               <Run Text="{x:Static local:LocalizationString.updatenotify_install_new_version}" />
             </Hyperlink>
-          </TextBlock>
+                    </TextBlock>
 
-        </StackPanel>
-      </StackPanel>
-
-      <StackPanel VerticalAlignment="Stretch"
-                  Margin="0,50,0,0" >
-        
-        <StackPanel HorizontalAlignment="Center">
-
-          <StackPanel.Resources>
-            
-            <Style TargetType="{x:Type StackPanel}">
-              <Setter Property="Margin" Value="0,10,0,0"/>
-            </Style>
-            
-            <Style TargetType="{x:Type TextBlock}">
-              <Setter Property="TextAlignment" Value="Right"/>
-              <Setter Property="Margin" Value="0,0,10,0"/>
-              <Setter Property="VerticalAlignment" Value="Center"/>
-              <Setter Property="FontSize" Value="15"/>
-              <Setter Property="Foreground" Value="Gray"/>
-            </Style>
-            
-          </StackPanel.Resources>
-          
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
-                     Height="30">
-            <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
-                       Width="65"/>
-            <ComboBox Width="150"
-                      ItemsSource="{Binding ServerList}"
-                      SelectedValue="{Binding SelectedServer}"
-                      Style="{DynamicResource ComboBoxFlatStyle}">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}"/>
-                  </StackPanel>
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-          </StackPanel>
-          <StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Height="30">
-              <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
-                       Width="65"/>
-              <TextBox x:Name="GuildNameInput1"
-                       TextWrapping="Wrap"
-                       Background="#111"
-                       Foreground="GhostWhite"
-                       CaretBrush="GhostWhite"
-                       BorderBrush="Transparent"
-                       HorizontalContentAlignment="Left"
-                       VerticalContentAlignment="Center"
-                       FontSize="14"
-                       Width="150"
-                       Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}">
-              </TextBox>
+                </StackPanel>
             </StackPanel>
-            <TextBlock TextAlignment="Right"
-                       FontSize="11"
-                       Margin="0"
-                       VerticalAlignment="Top"
-                       Foreground="Red"
-                       Visibility="Visible"
-                       Text="{Binding GuildNameCheck}"/>
-          </StackPanel>
 
-          <Button x:Name="SearchButton"
-                  Foreground="GhostWhite"
-                  Style="{DynamicResource DarkButton}"
-                  HorizontalContentAlignment="Center"
-                  VerticalContentAlignment="Center"
-                  Padding="10,1,10,1"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Height="30"
-                  Command="{Binding SearchCommand}">
-            <TextBlock Text="{x:Static local:LocalizationString.input_search}"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch"
-                       Margin="10,5,10,5"
-                       FontWeight="Bold"/>
-          </Button>
-            
+            <StackPanel VerticalAlignment="Stretch"
+                        Margin="0,50,0,0" >
+
+                <StackPanel HorizontalAlignment="Center">
+
+                    <StackPanel.Resources>
+
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0,10,0,0"/>
+                        </Style>
+
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextAlignment" Value="Right"/>
+                            <Setter Property="Margin" Value="0,0,10,0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Style>
+
+                    </StackPanel.Resources>
+
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Height="30">
+                        <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
+                                   Width="65"/>
+                        <ComboBox Width="150"
+                                  ItemsSource="{Binding ServerList}"
+                                  SelectedValue="{Binding SelectedServer}"
+                                  Style="{DynamicResource ComboBoxFlatStyle}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Height="30">
+                            <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
+                                       Width="65"/>
+                            <TextBox x:Name="GuildNameInput1"
+                                     TextWrapping="Wrap"
+                                     Background="#111"
+                                     Foreground="GhostWhite"
+                                     CaretBrush="GhostWhite"
+                                     BorderBrush="Transparent"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"
+                                     FontSize="14"
+                                     Width="150"
+                                     Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+                        </StackPanel>
+                        <TextBlock TextAlignment="Right"
+                                   FontSize="11"
+                                   Margin="0"
+                                   VerticalAlignment="Top"
+                                   Foreground="Red"
+                                   Visibility="Visible"
+                                   Text="{Binding GuildNameCheck}"/>
+                    </StackPanel>
+
+                    <Button x:Name="SearchButton"
+                            Foreground="GhostWhite"
+                            Style="{DynamicResource DarkButton}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Padding="10,1,10,1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Height="30"
+                            Command="{Binding SearchCommand}">
+                        <TextBlock Text="{x:Static local:LocalizationString.input_search}"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Margin="10,5,10,5"
+                                   FontWeight="Bold"/>
+                    </Button>
+
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-      </StackPanel>
-    </StackPanel>
-  </Grid>
+    </Grid>
 </Window>
