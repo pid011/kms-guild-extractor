@@ -25,31 +25,35 @@ namespace KMSGuildExtractor.ViewModel
 
         public ObservableCollection<Server> ServerList { get; } = new ObservableCollection<Server>
         {
-            new Server(LocalizationString.server_luna, ServerUrls.Luna),
+            new Server(LocalizationString.server_luna, ServerID.Luna),
 
-            new Server(LocalizationString.server_scania, ServerUrls.Scania),
+            new Server(LocalizationString.server_scania, ServerID.Scania),
 
-            new Server(LocalizationString.server_elysium, ServerUrls.Elysium),
+            new Server(LocalizationString.server_elysium, ServerID.Elysium),
 
-            new Server(LocalizationString.server_croa, ServerUrls.Croa),
+            new Server(LocalizationString.server_croa, ServerID.Croa),
 
-            new Server(LocalizationString.server_aurora, ServerUrls.Aurora),
+            new Server(LocalizationString.server_aurora, ServerID.Aurora),
 
-            new Server(LocalizationString.server_bera, ServerUrls.Bera),
+            new Server(LocalizationString.server_bera, ServerID.Bera),
 
-            new Server(LocalizationString.server_red, ServerUrls.Red),
+            new Server(LocalizationString.server_red, ServerID.Red),
 
-            new Server(LocalizationString.server_union, ServerUrls.Union),
+            new Server(LocalizationString.server_union, ServerID.Union),
 
-            new Server(LocalizationString.server_zenith, ServerUrls.Zenith),
+            new Server(LocalizationString.server_zenith, ServerID.Zenith),
 
-            new Server(LocalizationString.server_enosis, ServerUrls.Enosis),
+            new Server(LocalizationString.server_enosis, ServerID.Enosis),
 
-            new Server(LocalizationString.server_nova, ServerUrls.Nova),
+            new Server(LocalizationString.server_nova, ServerID.Nova),
 
-            new Server(LocalizationString.server_reboot, ServerUrls.Reboot),
+            new Server(LocalizationString.server_reboot, ServerID.Reboot),
 
-            new Server(LocalizationString.server_reboot2, ServerUrls.Reboot2)
+            new Server(LocalizationString.server_reboot2, ServerID.Reboot2),
+
+            new Server(LocalizationString.server_burning, ServerID.Burning),
+
+            new Server(LocalizationString.server_burning2, ServerID.Burning2)
         };
 
         public Server SelectedServer
@@ -118,15 +122,19 @@ namespace KMSGuildExtractor.ViewModel
 
         private static void ExecuteSearchCommand(object obj)
         {
-            MessageBox.Show("코드비하인드가 아닌 Command ExecuteMethod");
+            MessageBox.Show("Command ExecuteMethod");
         }
 
         public class Server
         {
             public string Name { get; }
-            public ServerUrls Url { get; }
 
-            public Server(string name, ServerUrls url)
+            public string ServerLogoPath =>
+                $"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png";
+
+            public ServerID Url { get; }
+
+            public Server(string name, ServerID url)
             {
                 Name = name;
                 Url = url;

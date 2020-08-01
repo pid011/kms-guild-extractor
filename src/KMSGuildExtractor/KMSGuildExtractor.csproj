@@ -23,22 +23,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\icons\worlds\arcane.gif" />
-    <Resource Include="resources\icons\worlds\aurora.gif" />
-    <Resource Include="resources\icons\worlds\bera.gif" />
-    <Resource Include="resources\icons\worlds\burning.gif" />
-    <Resource Include="resources\icons\worlds\burning2.gif" />
-    <Resource Include="resources\icons\worlds\croa.gif" />
-    <Resource Include="resources\icons\worlds\elysium.gif" />
-    <Resource Include="resources\icons\worlds\enosis.gif" />
-    <Resource Include="resources\icons\worlds\luna.gif" />
-    <Resource Include="resources\icons\worlds\nova.gif" />
-    <Resource Include="resources\icons\worlds\reboot.gif" />
-    <Resource Include="resources\icons\worlds\reboot2.gif" />
-    <Resource Include="resources\icons\worlds\red.gif" />
-    <Resource Include="resources\icons\worlds\scania.gif" />
-    <Resource Include="resources\icons\worlds\union.gif" />
-    <Resource Include="resources\icons\worlds\zenith.gif" />
+    <Resource Include="resources\icons\worlds\arcane.png" />
+    <Resource Include="resources\icons\worlds\aurora.png" />
+    <Resource Include="resources\icons\worlds\bera.png" />
+    <Resource Include="resources\icons\worlds\burning.png" />
+    <Resource Include="resources\icons\worlds\burning2.png" />
+    <Resource Include="resources\icons\worlds\croa.png" />
+    <Resource Include="resources\icons\worlds\elysium.png" />
+    <Resource Include="resources\icons\worlds\enosis.png" />
+    <Resource Include="resources\icons\worlds\luna.png" />
+    <Resource Include="resources\icons\worlds\nova.png" />
+    <Resource Include="resources\icons\worlds\reboot.png" />
+    <Resource Include="resources\icons\worlds\reboot2.png" />
+    <Resource Include="resources\icons\worlds\red.png" />
+    <Resource Include="resources\icons\worlds\scania.png" />
+    <Resource Include="resources\icons\worlds\union.png" />
+    <Resource Include="resources\icons\worlds\zenith.png" />
   </ItemGroup>
 
   <ItemGroup>

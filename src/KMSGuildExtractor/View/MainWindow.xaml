@@ -19,14 +19,8 @@
         BorderBrush="Black"
         BorderThickness="1,1,1,1"
         Background="{x:Null}"
-        Title="{Binding InfoViewModel.Title}"
+        Title="{Binding Title}"
         Style="{StaticResource CustomWindowStyle}">
-
-  <Window.Resources>
-    <Style TargetType="{x:Type TextBlock}">
-      <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
-    </Style>
-  </Window.Resources>
 
   <Window.DataContext>
     <viewmodel:MainWindowViewModel/>
@@ -151,7 +145,7 @@
           <StackPanel.Resources>
 
             <Style TargetType="{x:Type StackPanel}">
-              <Setter Property="Margin" Value="0,10,0,0"/>
+              <Setter Property="Margin" Value="0,5,0,0"/>
             </Style>
 
             <Style TargetType="{x:Type TextBlock}">
@@ -176,8 +170,20 @@
                       Style="{DynamicResource ComboBoxFlatStyle}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}"/>
+                  <StackPanel Orientation="Horizontal" Height="20">
+
+                    <Image Source="{Binding ServerLogoPath}"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <TextBlock Text="{Binding Name}">
+                      <TextBlock.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                          <Setter Property="FontSize" Value="14"/>
+                          <Setter Property="Margin" Value="3,0,0,0"/>
+                        </Style>
+                      </TextBlock.Resources>
+                    </TextBlock>
+
                   </StackPanel>
                 </DataTemplate>
               </ComboBox.ItemTemplate>
@@ -228,7 +234,6 @@
                        Margin="10,5,10,5"
                        FontWeight="Bold"/>
           </Button>
-
         </StackPanel>
       </StackPanel>
     </StackPanel>

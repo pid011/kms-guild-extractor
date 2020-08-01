@@ -142,6 +142,24 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 버닝.
+        /// </summary>
+        public static string server_burning {
+            get {
+                return ResourceManager.GetString("server_burning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 버닝2.
+        /// </summary>
+        public static string server_burning2 {
+            get {
+                return ResourceManager.GetString("server_burning2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 크로아.
         /// </summary>
         public static string server_croa {
@@ -187,7 +205,7 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 리부트1.
+        ///   Looks up a localized string similar to 리부트.
         /// </summary>
         public static string server_reboot {
             get {
