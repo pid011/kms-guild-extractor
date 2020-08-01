@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
+using System.Threading.Tasks;
 
 namespace KMSGuildExtractor.ViewModel
 {
@@ -21,40 +22,18 @@ namespace KMSGuildExtractor.ViewModel
             get => _updateStatus;
             private set => SetProperty(ref _updateStatus, value, nameof(UpdateStatus));
         }
+
         private string _updateStatus;
 
-        public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
+        public bool CanEdit
         {
-            new World(LocalizationString.world_luna, WorldID.Luna),
+            get => _canEdit;
+            private set => SetProperty(ref _canEdit, value, nameof(CanEdit));
+        }
 
-            new World(LocalizationString.world_scania, WorldID.Scania),
+        private bool _canEdit;
 
-            new World(LocalizationString.world_elysium, WorldID.Elysium),
-
-            new World(LocalizationString.world_croa, WorldID.Croa),
-
-            new World(LocalizationString.world_aurora, WorldID.Aurora),
-
-            new World(LocalizationString.world_bera, WorldID.Bera),
-
-            new World(LocalizationString.world_red, WorldID.Red),
-
-            new World(LocalizationString.world_union, WorldID.Union),
-
-            new World(LocalizationString.world_zenith, WorldID.Zenith),
-
-            new World(LocalizationString.world_enosis, WorldID.Enosis),
-
-            new World(LocalizationString.world_nova, WorldID.Nova),
-
-            new World(LocalizationString.world_reboot, WorldID.Reboot),
-
-            new World(LocalizationString.world_reboot2, WorldID.Reboot2),
-
-            new World(LocalizationString.world_burning, WorldID.Burning),
-
-            new World(LocalizationString.world_burning2, WorldID.Burning2)
-        };
+        public ObservableCollection<World> WorldList { get; }
 
         public World SelectedWorld
         {
@@ -80,24 +59,57 @@ namespace KMSGuildExtractor.ViewModel
 
         private string _guildNameCheck = string.Empty;
 
-        public ICommand SearchCommand { get; } = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
+        public DelegateCommand SearchCommand { get; }
 
         public MainWindowViewModel()
         {
+            WorldList = new ObservableCollection<World>
+            {
+                new World(LocalizationString.world_luna, WorldID.Luna),
+
+                new World(LocalizationString.world_scania, WorldID.Scania),
+
+                new World(LocalizationString.world_elysium, WorldID.Elysium),
+
+                new World(LocalizationString.world_croa, WorldID.Croa),
+
+                new World(LocalizationString.world_aurora, WorldID.Aurora),
+
+                new World(LocalizationString.world_bera, WorldID.Bera),
+
+                new World(LocalizationString.world_red, WorldID.Red),
+
+                new World(LocalizationString.world_union, WorldID.Union),
+
+                new World(LocalizationString.world_zenith, WorldID.Zenith),
+
+                new World(LocalizationString.world_enosis, WorldID.Enosis),
+
+                new World(LocalizationString.world_nova, WorldID.Nova),
+
+                new World(LocalizationString.world_reboot, WorldID.Reboot),
+
+                new World(LocalizationString.world_reboot2, WorldID.Reboot2),
+
+                new World(LocalizationString.world_burning, WorldID.Burning),
+
+                new World(LocalizationString.world_burning2, WorldID.Burning2)
+            };
+
+            SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
+
             UpdateStatus = LocalizationString.updatenotify_check_update;
             PropertyChanged += MainWindowViewModel_PropertyChanged;
+
+            CanEdit = true;
         }
 
         private void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(GuildName))
             {
-                GuildNameCheck = IsValidGuildName(GuildName) ? string.Empty : LocalizationString.input_wrong_guild_name;
-
-                if (GuildNameCheck == string.Empty)
-                {
-
-                }
+                bool valid = IsValidGuildName(GuildName);
+                GuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
             }
         }
 
@@ -108,21 +120,21 @@ namespace KMSGuildExtractor.ViewModel
                 return false;
             }
 
-            const float limit = 6;
+            float count = guildName.ToCharArray()
+                                   .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f);
 
-            return guildName.ToCharArray()
-                            .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f)
-                            <= limit;
+            return 2 <= count && count <= 6;
         }
 
-        private static bool CanExecuteSearchCommand(object arg)
-        {
-            return true;
-        }
+        private bool CanExecuteSearchCommand(object _) =>
+            SelectedWorld != null && !string.IsNullOrEmpty(GuildName) && string.IsNullOrEmpty(GuildNameCheck) && CanEdit;
 
-        private static void ExecuteSearchCommand(object obj)
+        private async void ExecuteSearchCommand(object _)
         {
-            MessageBox.Show("Command ExecuteMethod");
+            CanEdit = false;
+            MessageBox.Show("Pressed");
+            await Task.Delay(5000);
+            CanEdit = true;
         }
 
         public class World

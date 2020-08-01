@@ -53,8 +53,8 @@
     <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#111" />
     <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
-    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundBrush" Color="#eee" />
-    <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="#888" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundBrush" Color="#111" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="Transparent" />
 
     <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
       <Grid>
