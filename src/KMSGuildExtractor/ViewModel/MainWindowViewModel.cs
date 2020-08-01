@@ -9,5 +9,7 @@ namespace KMSGuildExtractor.ViewModel
         public InfoViewModel InfoViewModel { get; } = new InfoViewModel();
 
         public UpdateNotifyViewModel UpdateNotifyViewModel { get; } = new UpdateNotifyViewModel();
+
+        public InputViewModel InputViewModel { get; } = new InputViewModel();
     }
 }

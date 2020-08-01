@@ -21,6 +21,13 @@
         Background="{x:Null}"
         Title="{Binding InfoViewModel.Title}"
         Style="{StaticResource CustomWindowStyle}">
+  
+  <Window.Resources>
+    <Style TargetType="{x:Type TextBlock}">
+      <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
+    </Style>
+  </Window.Resources>
+  
   <Window.DataContext>
     <viewmodel:MainWindowViewModel/>
   </Window.DataContext>
@@ -34,46 +41,31 @@
       <DockPanel.Effect>
         <DropShadowEffect Color="Black" Direction="-90" BlurRadius="5" ShadowDepth="3"/>
       </DockPanel.Effect>
-      <DockPanel.Resources>
-        
-        <Style TargetType="{x:Type Button}">
-          <Setter Property="DockPanel.Dock" Value="Right"/>
-          <Setter Property="Width" Value="40"/>
-          <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-          <Setter Property="Background" Value="Transparent"/>
-          <Setter Property="BorderThickness" Value="0"/>
-
-          <!--#region 버튼 호버링 시 배경 변화-->
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="{x:Type Button}">
-                <Border Background="{TemplateBinding Background}">
-                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-          <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#7F616161"/>
-            </Trigger>
-          </Style.Triggers>
-          <!--#endregion-->
-          
-        </Style>
-        
-      </DockPanel.Resources>
 
       <Button x:Name="WindowCloseButton"
               Click="CloseButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_close}">
-        <Image Source="..\resources\icons\close.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              ToolTip="{x:Static local:LocalizationString.titlebar_close}"
+              DockPanel.Dock="Right"
+              Width="40"
+              WindowChrome.IsHitTestVisibleInChrome="True"
+              Style="{DynamicResource DarkButton}">
+        <Image Source="..\resources\icons\close.png"
+               Stretch="None"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
       </Button>
 
       <Button x:Name="WindowMinimizeButton"
               Click="MinimizeButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_minimize}">
-        <Image Source="..\resources\icons\minimize.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              ToolTip="{x:Static local:LocalizationString.titlebar_minimize}"
+              Style="{DynamicResource DarkButton}"
+              DockPanel.Dock="Right"
+              Width="40"
+              WindowChrome.IsHitTestVisibleInChrome="True">
+        <Image Source="..\resources\icons\minimize.png"
+               Stretch="None"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
       </Button>
 
     </DockPanel>
@@ -104,7 +96,6 @@
                    TextAlignment="Center"
                    FontSize="20"
                    FontWeight="Bold"
-                   FontFamily="..\resources\fonts\#NanumGothic"
                    Margin="0,15,0,0"
                    VerticalAlignment="Stretch"
                    tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=700, TransitionOn=Visibility}"
@@ -150,14 +141,12 @@
                      Foreground="GhostWhite"
                      Text="{Binding UpdateNotifyViewModel.UpdateStatus}"
                      TextWrapping="Wrap"
-                     FontFamily="..\resources\fonts\#NanumGothic"
                      FontSize="15"
                      FontWeight="Regular" />
 
           <TextBlock x:Name="NeedUpdateTextBlock"
                      TextWrapping="Wrap"
                      Margin="7,0,0,0"
-                     FontFamily="..\resources\fonts\#NanumGothic"
                      FontSize="15"
                      FontWeight="Regular"
                      Visibility="Visible">
@@ -171,8 +160,94 @@
         </StackPanel>
       </StackPanel>
 
-      <StackPanel VerticalAlignment="Bottom"
-                  Height="100" />
+      <StackPanel VerticalAlignment="Stretch"
+                  Margin="0,50,0,0" >
+        
+        <StackPanel HorizontalAlignment="Center">
+
+          <StackPanel.Resources>
+            
+            <Style TargetType="{x:Type StackPanel}">
+              <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            
+            <Style TargetType="{x:Type TextBlock}">
+              <Setter Property="TextAlignment" Value="Right"/>
+              <Setter Property="Margin" Value="0,0,10,0"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+              <Setter Property="FontSize" Value="15"/>
+              <Setter Property="Foreground" Value="Gray"/>
+            </Style>
+            
+          </StackPanel.Resources>
+          
+          <StackPanel Orientation="Horizontal"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                     Height="30">
+            <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
+                       Width="65"/>
+            <ComboBox Width="150"
+                      ItemsSource="{Binding InputViewModel.ServerList}"
+                      SelectedValue="{Binding InputViewModel.SelectedServer}"
+                      Style="{DynamicResource ComboBoxFlatStyle}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Height="30">
+              <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
+                       Width="65"/>
+              <TextBox x:Name="GuildNameInput1"
+                       TextWrapping="Wrap"
+                       Background="#111"
+                       Foreground="GhostWhite"
+                       CaretBrush="GhostWhite"
+                       BorderBrush="Transparent"
+                       HorizontalContentAlignment="Left"
+                       VerticalContentAlignment="Center"
+                       FontSize="14"
+                       Width="150"
+                       Text="{Binding InputViewModel.GuildName, UpdateSourceTrigger=PropertyChanged}">
+              </TextBox>
+            </StackPanel>
+            <TextBlock TextAlignment="Right"
+                       FontSize="11"
+                       Margin="0"
+                       VerticalAlignment="Top"
+                       Foreground="Red"
+                       Visibility="Visible"
+                       Text="{Binding InputViewModel.GuildNameCheck}"/>
+          </StackPanel>
+
+          <Button x:Name="SearchButton"
+                  Foreground="GhostWhite"
+                  Style="{DynamicResource DarkButton}"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  Padding="10,1,10,1"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Height="30"
+                  IsEnabled="False">
+            <TextBlock Text="{x:Static local:LocalizationString.input_search}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="10,5,10,5"
+                       FontWeight="Bold"/>
+          </Button>
+            
+        </StackPanel>
+      </StackPanel>
     </StackPanel>
   </Grid>
 </Window>

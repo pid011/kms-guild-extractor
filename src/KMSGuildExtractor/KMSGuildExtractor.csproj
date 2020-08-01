@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -15,6 +15,7 @@
     <Resource Include="resources\icons\close.png" />
     <Resource Include="resources\icons\icon.png" />
     <Resource Include="resources\icons\minimize.png" />
+    <Resource Include="resources\icons\search.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,10 @@
 
   <ItemGroup>
     <PackageReference Include="SciChart.Wpf.UI.Transitionz" Version="3.1.251" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
   </ItemGroup>
 
 </Project>

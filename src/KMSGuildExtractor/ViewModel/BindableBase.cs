@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace KMSGuildExtractor.ViewModel
 {
@@ -8,7 +10,6 @@ namespace KMSGuildExtractor.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-
         {
             if (Equals(storage, value))
             {

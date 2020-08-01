@@ -144,4 +144,58 @@
   <data name="updatenotify_install_new_version" xml:space="preserve">
     <value>설치하기</value>
   </data>
+  <data name="input_name_guild" xml:space="preserve">
+    <value>길드 이름</value>
+  </data>
+  <data name="input_name_server" xml:space="preserve">
+    <value>서버</value>
+  </data>
+  <data name="input_wrong_guild_name" xml:space="preserve">
+    <value>잘못된 길드 이름입니다.</value>
+  </data>
+  <data name="server_arcane" xml:space="preserve">
+    <value>아케인</value>
+  </data>
+  <data name="server_aurora" xml:space="preserve">
+    <value>오로라</value>
+  </data>
+  <data name="server_bera" xml:space="preserve">
+    <value>베라</value>
+  </data>
+  <data name="server_croa" xml:space="preserve">
+    <value>크로아</value>
+  </data>
+  <data name="server_elysium" xml:space="preserve">
+    <value>엘리시움</value>
+  </data>
+  <data name="server_enosis" xml:space="preserve">
+    <value>이노시스</value>
+  </data>
+  <data name="server_luna" xml:space="preserve">
+    <value>루나</value>
+  </data>
+  <data name="server_nova" xml:space="preserve">
+    <value>노바</value>
+  </data>
+  <data name="server_reboot" xml:space="preserve">
+    <value>리부트1</value>
+  </data>
+  <data name="server_reboot2" xml:space="preserve">
+    <value>리부트2</value>
+  </data>
+  <data name="server_red" xml:space="preserve">
+    <value>레드</value>
+  </data>
+  <data name="server_scania" xml:space="preserve">
+    <value>스카니아</value>
+  </data>
+  <data name="server_union" xml:space="preserve">
+    <value>유니온</value>
+  </data>
+  <data name="server_zenith" xml:space="preserve">
+    <value>제니스</value>
+  </data>
+  <data name="input_search" xml:space="preserve">
+    <value>검색하기</value>
+  </data>
 </root>

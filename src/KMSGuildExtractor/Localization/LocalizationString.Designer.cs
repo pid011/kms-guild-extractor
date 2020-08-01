@@ -79,6 +79,168 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 길드 이름.
+        /// </summary>
+        public static string input_name_guild {
+            get {
+                return ResourceManager.GetString("input_name_guild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 서버.
+        /// </summary>
+        public static string input_name_server {
+            get {
+                return ResourceManager.GetString("input_name_server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 검색하기.
+        /// </summary>
+        public static string input_search {
+            get {
+                return ResourceManager.GetString("input_search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 잘못된 길드 이름입니다..
+        /// </summary>
+        public static string input_wrong_guild_name {
+            get {
+                return ResourceManager.GetString("input_wrong_guild_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 아케인.
+        /// </summary>
+        public static string server_arcane {
+            get {
+                return ResourceManager.GetString("server_arcane", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 오로라.
+        /// </summary>
+        public static string server_aurora {
+            get {
+                return ResourceManager.GetString("server_aurora", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 베라.
+        /// </summary>
+        public static string server_bera {
+            get {
+                return ResourceManager.GetString("server_bera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 크로아.
+        /// </summary>
+        public static string server_croa {
+            get {
+                return ResourceManager.GetString("server_croa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 엘리시움.
+        /// </summary>
+        public static string server_elysium {
+            get {
+                return ResourceManager.GetString("server_elysium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 이노시스.
+        /// </summary>
+        public static string server_enosis {
+            get {
+                return ResourceManager.GetString("server_enosis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 루나.
+        /// </summary>
+        public static string server_luna {
+            get {
+                return ResourceManager.GetString("server_luna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 노바.
+        /// </summary>
+        public static string server_nova {
+            get {
+                return ResourceManager.GetString("server_nova", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 리부트1.
+        /// </summary>
+        public static string server_reboot {
+            get {
+                return ResourceManager.GetString("server_reboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 리부트2.
+        /// </summary>
+        public static string server_reboot2 {
+            get {
+                return ResourceManager.GetString("server_reboot2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 레드.
+        /// </summary>
+        public static string server_red {
+            get {
+                return ResourceManager.GetString("server_red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 스카니아.
+        /// </summary>
+        public static string server_scania {
+            get {
+                return ResourceManager.GetString("server_scania", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 유니온.
+        /// </summary>
+        public static string server_union {
+            get {
+                return ResourceManager.GetString("server_union", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 제니스.
+        /// </summary>
+        public static string server_zenith {
+            get {
+                return ResourceManager.GetString("server_zenith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 메이플 길드 유저정보 추출기.
         /// </summary>
         public static string title {
