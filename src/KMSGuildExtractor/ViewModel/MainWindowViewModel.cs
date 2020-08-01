@@ -127,7 +127,7 @@ namespace KMSGuildExtractor.ViewModel
         }
 
         private bool CanExecuteSearchCommand(object _) =>
-            SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0 && CanEdit;
+            CanEdit && SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0;
 
         private async void ExecuteSearchCommand(object _)
         {
