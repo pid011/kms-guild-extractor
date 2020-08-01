@@ -165,14 +165,14 @@
             <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
                        Width="65"/>
             <ComboBox Width="150"
-                      ItemsSource="{Binding ServerList}"
-                      SelectedValue="{Binding SelectedServer}"
+                      ItemsSource="{Binding WorldList}"
+                      SelectedValue="{Binding SelectedWorld}"
                       Style="{DynamicResource ComboBoxFlatStyle}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
                   <StackPanel Orientation="Horizontal" Height="20">
 
-                    <Image Source="{Binding ServerLogoPath}"
+                    <Image Source="{Binding WorldLogoPath}"
                            Stretch="Uniform"
                            RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                     <TextBlock Text="{Binding Name}">

@@ -23,46 +23,46 @@ namespace KMSGuildExtractor.ViewModel
         }
         private string _updateStatus;
 
-        public ObservableCollection<Server> ServerList { get; } = new ObservableCollection<Server>
+        public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
         {
-            new Server(LocalizationString.server_luna, ServerID.Luna),
+            new World(LocalizationString.world_luna, WorldID.Luna),
 
-            new Server(LocalizationString.server_scania, ServerID.Scania),
+            new World(LocalizationString.world_scania, WorldID.Scania),
 
-            new Server(LocalizationString.server_elysium, ServerID.Elysium),
+            new World(LocalizationString.world_elysium, WorldID.Elysium),
 
-            new Server(LocalizationString.server_croa, ServerID.Croa),
+            new World(LocalizationString.world_croa, WorldID.Croa),
 
-            new Server(LocalizationString.server_aurora, ServerID.Aurora),
+            new World(LocalizationString.world_aurora, WorldID.Aurora),
 
-            new Server(LocalizationString.server_bera, ServerID.Bera),
+            new World(LocalizationString.world_bera, WorldID.Bera),
 
-            new Server(LocalizationString.server_red, ServerID.Red),
+            new World(LocalizationString.world_red, WorldID.Red),
 
-            new Server(LocalizationString.server_union, ServerID.Union),
+            new World(LocalizationString.world_union, WorldID.Union),
 
-            new Server(LocalizationString.server_zenith, ServerID.Zenith),
+            new World(LocalizationString.world_zenith, WorldID.Zenith),
 
-            new Server(LocalizationString.server_enosis, ServerID.Enosis),
+            new World(LocalizationString.world_enosis, WorldID.Enosis),
 
-            new Server(LocalizationString.server_nova, ServerID.Nova),
+            new World(LocalizationString.world_nova, WorldID.Nova),
 
-            new Server(LocalizationString.server_reboot, ServerID.Reboot),
+            new World(LocalizationString.world_reboot, WorldID.Reboot),
 
-            new Server(LocalizationString.server_reboot2, ServerID.Reboot2),
+            new World(LocalizationString.world_reboot2, WorldID.Reboot2),
 
-            new Server(LocalizationString.server_burning, ServerID.Burning),
+            new World(LocalizationString.world_burning, WorldID.Burning),
 
-            new Server(LocalizationString.server_burning2, ServerID.Burning2)
+            new World(LocalizationString.world_burning2, WorldID.Burning2)
         };
 
-        public Server SelectedServer
+        public World SelectedWorld
         {
-            get => _selectedServer;
-            set => SetProperty(ref _selectedServer, value, nameof(SelectedServer));
+            get => _selectedWorld;
+            set => SetProperty(ref _selectedWorld, value, nameof(SelectedWorld));
         }
 
-        private Server _selectedServer;
+        private World _selectedWorld;
 
         public string GuildName
         {
@@ -125,16 +125,16 @@ namespace KMSGuildExtractor.ViewModel
             MessageBox.Show("Command ExecuteMethod");
         }
 
-        public class Server
+        public class World
         {
             public string Name { get; }
 
-            public string ServerLogoPath =>
+            public string WorldLogoPath =>
                 $"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png";
 
-            public ServerID Url { get; }
+            public WorldID Url { get; }
 
-            public Server(string name, ServerID url)
+            public World(string name, WorldID url)
             {
                 Name = name;
                 Url = url;

@@ -1,6 +1,6 @@
 ﻿namespace KMSGuildExtractor.Core
 {
-    public enum ServerID
+    public enum WorldID
     {
         Scania = 0,
         Bera = 1,
