@@ -37,12 +37,9 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <DockPanel x:Name="TitleBar" Background="Black" LastChildFill="False" Panel.ZIndex="1">
-      <DockPanel.Effect>
-        <DropShadowEffect Color="Black" Direction="-90" BlurRadius="5" ShadowDepth="3"/>
-      </DockPanel.Effect>
+        <DockPanel x:Name="TitleBar" Background="Black" LastChildFill="False" Panel.ZIndex="1">
 
-      <Button x:Name="WindowCloseButton"
+            <Button x:Name="WindowCloseButton"
               Click="CloseButtonClicked"
               ToolTip="{x:Static local:LocalizationString.titlebar_close}"
               DockPanel.Dock="Right"
