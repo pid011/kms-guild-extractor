@@ -23,10 +23,10 @@
         Style="{StaticResource CustomWindowStyle}">
   
   <Window.Resources>
-    <Style TargetType="{x:Type TextBlock}">
-      <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
-    </Style>
-  </Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
+        </Style>
+    </Window.Resources>
   
   <Window.DataContext>
     <viewmodel:MainWindowViewModel/>
@@ -110,7 +110,7 @@
                     Margin="0,3,0,0">
 
           <TextBlock x:Name="VersionTextBlock"
-                     Text="{Binding InfoViewModel.Version}"
+                     Text="{Binding Version}"
                      TextWrapping="Wrap"
                      FontSize="15"
                      FontWeight="Regular"
@@ -139,7 +139,7 @@
 
           <TextBlock x:Name="UpdateStatusTextBlock"
                      Foreground="GhostWhite"
-                     Text="{Binding UpdateNotifyViewModel.UpdateStatus}"
+                     Text="{Binding UpdateStatus}"
                      TextWrapping="Wrap"
                      FontSize="15"
                      FontWeight="Regular" />
@@ -188,8 +188,8 @@
             <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
                        Width="65"/>
             <ComboBox Width="150"
-                      ItemsSource="{Binding InputViewModel.ServerList}"
-                      SelectedValue="{Binding InputViewModel.SelectedServer}"
+                      ItemsSource="{Binding ServerList}"
+                      SelectedValue="{Binding SelectedServer}"
                       Style="{DynamicResource ComboBoxFlatStyle}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -217,7 +217,7 @@
                        VerticalContentAlignment="Center"
                        FontSize="14"
                        Width="150"
-                       Text="{Binding InputViewModel.GuildName, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}">
               </TextBox>
             </StackPanel>
             <TextBlock TextAlignment="Right"
@@ -226,7 +226,7 @@
                        VerticalAlignment="Top"
                        Foreground="Red"
                        Visibility="Visible"
-                       Text="{Binding InputViewModel.GuildNameCheck}"/>
+                       Text="{Binding GuildNameCheck}"/>
           </StackPanel>
 
           <Button x:Name="SearchButton"
@@ -238,7 +238,7 @@
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Height="30"
-                  IsEnabled="False">
+                  Command="{Binding SearchCommand}">
             <TextBlock Text="{x:Static local:LocalizationString.input_search}"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
