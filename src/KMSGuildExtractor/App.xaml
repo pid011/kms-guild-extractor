@@ -1,11 +1,11 @@
 ﻿<Application x:Class="KMSGuildExtractor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri=".\View\MainWindow.xaml">
+             StartupUri="pack://application:,,,/View/MainWindow.xaml">
   <Application.Resources>
-    <Style TargetType="{x:Type TextBlock}">
-      <Setter Property="FontFamily" Value="..\resources\fonts\#NanumGothic"/>
-    </Style>
+    
+    <FontFamily x:Key="NanumGothic">pack://application:,,,/resources/fonts/#NanumGothic</FontFamily>
+
     <SolidColorBrush x:Key="ButtonSelectedBackgroundBrush" Color="#7F616161"/>
     <Style TargetType="{x:Type Window}" x:Key="CustomWindowStyle">
       <Setter Property="WindowChrome.WindowChrome">

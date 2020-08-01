@@ -40,7 +40,7 @@
               Width="40"
               WindowChrome.IsHitTestVisibleInChrome="True"
               Style="{DynamicResource DarkButton}">
-        <Image Source="..\resources\icons\close.png"
+        <Image Source="pack://application:,,,/resources/icons/close.png"
                Stretch="None"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"/>
@@ -53,7 +53,7 @@
               DockPanel.Dock="Right"
               Width="40"
               WindowChrome.IsHitTestVisibleInChrome="True">
-        <Image Source="..\resources\icons\minimize.png"
+        <Image Source="pack://application:,,,/resources/icons/minimize.png"
                Stretch="None"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
@@ -68,7 +68,7 @@
       <StackPanel x:Name="InfoPanel"
                   Margin="0,0,0,0">
 
-        <Image Source="..\resources\icons\icon.png"
+        <Image Source="pack://application:,,,/resources/icons/icon.png"
                Stretch="None"
                Margin="0,20,0,0"
                tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
@@ -86,6 +86,7 @@
                    TextWrapping="Wrap"
                    TextAlignment="Center"
                    FontSize="20"
+                   FontFamily="{StaticResource NanumGothic}"
                    FontWeight="Bold"
                    Margin="0,15,0,0"
                    VerticalAlignment="Stretch"
@@ -115,6 +116,7 @@
                     HorizontalAlignment="Center">
 
           <TextBlock x:Name="UpdateStatusTextBlock"
+                     FontFamily="{StaticResource NanumGothic}"
                      Foreground="GhostWhite"
                      Text="{Binding UpdateStatus}"
                      TextWrapping="Wrap"
@@ -122,6 +124,7 @@
                      FontWeight="Regular" />
 
           <TextBlock x:Name="NeedUpdateTextBlock"
+                     FontFamily="{StaticResource NanumGothic}"
                      TextWrapping="Wrap"
                      Margin="7,0,0,0"
                      FontSize="15"
@@ -180,6 +183,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                           <Setter Property="FontSize" Value="14"/>
                           <Setter Property="Margin" Value="3,0,0,0"/>
+                          <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
                         </Style>
                       </TextBlock.Resources>
                     </TextBlock>
@@ -195,6 +199,7 @@
                         HorizontalAlignment="Left"
                         Height="30">
               <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
+                         FontFamily="{StaticResource NanumGothic}"
                          Width="65"/>
               <TextBox x:Name="GuildNameInput1"
                        TextWrapping="Wrap"
@@ -205,6 +210,7 @@
                        HorizontalContentAlignment="Left"
                        VerticalContentAlignment="Center"
                        FontSize="14"
+                       FontFamily="{StaticResource NanumGothic}"
                        Width="150"
                        Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}">
               </TextBox>
@@ -229,6 +235,7 @@
                   Height="30"
                   Command="{Binding SearchCommand}">
             <TextBlock Text="{x:Static local:LocalizationString.input_search}"
+                       FontFamily="{StaticResource NanumGothic}"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Margin="10,5,10,5"
