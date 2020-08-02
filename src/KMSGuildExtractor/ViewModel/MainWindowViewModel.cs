@@ -8,6 +8,8 @@ using System.Windows.Input;
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
 using System.Threading.Tasks;
+using KMSGuildExtractor.Core.Info;
+using System.Collections.Generic;
 
 namespace KMSGuildExtractor.ViewModel
 {
