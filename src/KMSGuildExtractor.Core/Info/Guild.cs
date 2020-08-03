@@ -9,6 +9,8 @@ namespace KMSGuildExtractor.Core.Info
         public int Level { get; }
         public IList<GuildUser> Users { get; set; }
 
+        public Guild(string name, WorldID world) : this(name, world, 0) { } 
+
         public Guild(string name, WorldID world, int level)
         {
             Name = name;

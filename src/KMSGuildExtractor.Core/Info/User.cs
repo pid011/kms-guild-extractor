@@ -11,6 +11,8 @@
         public Union Union { get; set; }
         public Achievement Achievement { get; set; }
 
+        public WorldID World { get; } // ctor
+
         public User(string name) : this(name, 0, string.Empty) { }
 
         public User(string name, int level, string job) : this(name, level, job, 0, 0) { }
