@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 using HtmlAgilityPack;
@@ -11,19 +12,25 @@ namespace KMSGuildExtractor.Core
 {
     public static class Guild
     {
-        public static async Task<(bool exist, int guildID)> TryFindGuildID(string name, WorldID world,
-                                                                           CancellationToken cancellationToken)
+        /// <summary>
+        /// 길드를 검색합니다.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="wid"></param>
+        /// <param name="cancel"></param>
+        /// <returns>길드가 존재하면 <see cref="GuildInfo"/>를 반환, 존재하지 않거나 html파싱에 실패했다면 null을 반환</returns>
+        public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancel)
         {
-            (bool exist, int gid) result = (false, -1);
+            HtmlDocument html = await GuildRequester.GetGuildSearchResultHtmlAsync(name, cancel);
 
-            HtmlDocument html = await GuildRequester.GetGuildSearchResultHtmlAsync(name, cancellationToken);
+            return !cancel.IsCancellationRequested
+                ? GuildParser.FindGuildInHtml(html, wid)
+                : null;
+        }
 
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                result.exist = GuildParser.TryGetGuildID(html, world, out result.gid);
-            }
-
-            return result;
+        public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancel)
+        {
+            throw new NotImplementedException();
         }
     }
 }
