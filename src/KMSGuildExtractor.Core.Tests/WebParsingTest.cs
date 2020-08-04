@@ -1,8 +1,8 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using KMSGuildExtractor.Core;
-using KMSGuildExtractor.Core.Info;
 using System.Threading;
 using System.Threading.Tasks;
+using KMSGuildExtractor.Core;
+using KMSGuildExtractor.Core.Info;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests
 {

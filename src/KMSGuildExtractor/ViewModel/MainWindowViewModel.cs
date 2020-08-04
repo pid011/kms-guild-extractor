@@ -1,15 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
 using KMSGuildExtractor.Core;
-using KMSGuildExtractor.Localization;
-using System.Threading.Tasks;
 using KMSGuildExtractor.Core.Info;
-using System.Collections.Generic;
+using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel
 {
