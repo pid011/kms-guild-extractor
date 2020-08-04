@@ -1,7 +1,8 @@
-﻿namespace KMSGuildExtractor.Core
+﻿namespace KMSGuildExtractor.Core.Info
 {
     public enum WorldID
     {
+        Unknown = -1,
         Scania = 0,
         Bera = 1,
         Luna = 3,

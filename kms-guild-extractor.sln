@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KMSGuildExtractor.Core.Tests", "src\KMSGuildExtractor.Core.Tests\KMSGuildExtractor.Core.Tests.csproj", "{C128FE60-3B1E-4079-9E98-3D09A2942FB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,18 @@ Global
 		{2D1ACBA5-3ED7-44CA-8E75-9E274F18224C}.Release|x64.Build.0 = Release|Any CPU
 		{2D1ACBA5-3ED7-44CA-8E75-9E274F18224C}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D1ACBA5-3ED7-44CA-8E75-9E274F18224C}.Release|x86.Build.0 = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|x64.Build.0 = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Debug|x86.Build.0 = Debug|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|x64.ActiveCfg = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|x64.Build.0 = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|x86.ActiveCfg = Release|Any CPU
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,9 +69,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F394504B-9149-4F01-B647-E617E770DC26} = {42807082-F660-4B4F-A8EE-98685822BA16}
 		{2D1ACBA5-3ED7-44CA-8E75-9E274F18224C} = {42807082-F660-4B4F-A8EE-98685822BA16}
+		{C128FE60-3B1E-4079-9E98-3D09A2942FB0} = {42807082-F660-4B4F-A8EE-98685822BA16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = ko-KR
 		SolutionGuid = {0639AF34-E939-4498-A130-E0B9C96CE159}
+		RESX_NeutralResourcesLanguage = ko-KR
 	EndGlobalSection
 EndGlobal

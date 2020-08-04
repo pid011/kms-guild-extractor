@@ -4,6 +4,6 @@
     {
         public WorldID World { get; }
         public string Name { get; }
-        public int Level { get; }
+        public int Level { get; set; }
     }
 }
