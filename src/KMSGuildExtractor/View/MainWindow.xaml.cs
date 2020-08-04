@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+
 using KMSGuildExtractor.Localization;
 using KMSGuildExtractor.ViewModel;
 
