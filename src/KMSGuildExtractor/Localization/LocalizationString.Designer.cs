@@ -79,6 +79,42 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 길드 이름.
+        /// </summary>
+        public static string input_name_guild {
+            get {
+                return ResourceManager.GetString("input_name_guild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 서버.
+        /// </summary>
+        public static string input_name_server {
+            get {
+                return ResourceManager.GetString("input_name_server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 검색하기.
+        /// </summary>
+        public static string input_search {
+            get {
+                return ResourceManager.GetString("input_search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 잘못된 길드 이름입니다..
+        /// </summary>
+        public static string input_wrong_guild_name {
+            get {
+                return ResourceManager.GetString("input_wrong_guild_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 메이플 길드 유저정보 추출기.
         /// </summary>
         public static string title {
@@ -138,6 +174,150 @@ namespace KMSGuildExtractor.Localization {
         public static string updatenotify_new_version_update {
             get {
                 return ResourceManager.GetString("updatenotify_new_version_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 아케인.
+        /// </summary>
+        public static string world_arcane {
+            get {
+                return ResourceManager.GetString("world_arcane", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 오로라.
+        /// </summary>
+        public static string world_aurora {
+            get {
+                return ResourceManager.GetString("world_aurora", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 베라.
+        /// </summary>
+        public static string world_bera {
+            get {
+                return ResourceManager.GetString("world_bera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 버닝.
+        /// </summary>
+        public static string world_burning {
+            get {
+                return ResourceManager.GetString("world_burning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 버닝2.
+        /// </summary>
+        public static string world_burning2 {
+            get {
+                return ResourceManager.GetString("world_burning2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 크로아.
+        /// </summary>
+        public static string world_croa {
+            get {
+                return ResourceManager.GetString("world_croa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 엘리시움.
+        /// </summary>
+        public static string world_elysium {
+            get {
+                return ResourceManager.GetString("world_elysium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 이노시스.
+        /// </summary>
+        public static string world_enosis {
+            get {
+                return ResourceManager.GetString("world_enosis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 루나.
+        /// </summary>
+        public static string world_luna {
+            get {
+                return ResourceManager.GetString("world_luna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 노바.
+        /// </summary>
+        public static string world_nova {
+            get {
+                return ResourceManager.GetString("world_nova", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 리부트.
+        /// </summary>
+        public static string world_reboot {
+            get {
+                return ResourceManager.GetString("world_reboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 리부트2.
+        /// </summary>
+        public static string world_reboot2 {
+            get {
+                return ResourceManager.GetString("world_reboot2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 레드.
+        /// </summary>
+        public static string world_red {
+            get {
+                return ResourceManager.GetString("world_red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 스카니아.
+        /// </summary>
+        public static string world_scania {
+            get {
+                return ResourceManager.GetString("world_scania", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 유니온.
+        /// </summary>
+        public static string world_union {
+            get {
+                return ResourceManager.GetString("world_union", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 제니스.
+        /// </summary>
+        public static string world_zenith {
+            get {
+                return ResourceManager.GetString("world_zenith", resourceCulture);
             }
         }
     }

@@ -19,8 +19,9 @@
         BorderBrush="Black"
         BorderThickness="1,1,1,1"
         Background="{x:Null}"
-        Title="{Binding InfoViewModel.Title}"
+        Title="{Binding Title}"
         Style="{StaticResource CustomWindowStyle}">
+
   <Window.DataContext>
     <viewmodel:MainWindowViewModel/>
   </Window.DataContext>
@@ -31,49 +32,31 @@
     </Grid.RowDefinitions>
 
     <DockPanel x:Name="TitleBar" Background="Black" LastChildFill="False" Panel.ZIndex="1">
-      <DockPanel.Effect>
-        <DropShadowEffect Color="Black" Direction="-90" BlurRadius="5" ShadowDepth="3"/>
-      </DockPanel.Effect>
-      <DockPanel.Resources>
-        
-        <Style TargetType="{x:Type Button}">
-          <Setter Property="DockPanel.Dock" Value="Right"/>
-          <Setter Property="Width" Value="40"/>
-          <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-          <Setter Property="Background" Value="Transparent"/>
-          <Setter Property="BorderThickness" Value="0"/>
-
-          <!--#region 버튼 호버링 시 배경 변화-->
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="{x:Type Button}">
-                <Border Background="{TemplateBinding Background}">
-                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-          <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="#7F616161"/>
-            </Trigger>
-          </Style.Triggers>
-          <!--#endregion-->
-          
-        </Style>
-        
-      </DockPanel.Resources>
 
       <Button x:Name="WindowCloseButton"
               Click="CloseButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_close}">
-        <Image Source="..\resources\icons\close.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              ToolTip="{x:Static local:LocalizationString.titlebar_close}"
+              DockPanel.Dock="Right"
+              Width="40"
+              WindowChrome.IsHitTestVisibleInChrome="True"
+              Style="{DynamicResource DarkButton}">
+        <Image Source="pack://application:,,,/resources/icons/close.png"
+               Stretch="None"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
       </Button>
 
       <Button x:Name="WindowMinimizeButton"
               Click="MinimizeButtonClicked"
-              ToolTip="{x:Static local:LocalizationString.titlebar_minimize}">
-        <Image Source="..\resources\icons\minimize.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              ToolTip="{x:Static local:LocalizationString.titlebar_minimize}"
+              Style="{DynamicResource DarkButton}"
+              DockPanel.Dock="Right"
+              Width="40"
+              WindowChrome.IsHitTestVisibleInChrome="True">
+        <Image Source="pack://application:,,,/resources/icons/minimize.png"
+               Stretch="None"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
       </Button>
 
     </DockPanel>
@@ -85,7 +68,7 @@
       <StackPanel x:Name="InfoPanel"
                   Margin="0,0,0,0">
 
-        <Image Source="..\resources\icons\icon.png"
+        <Image Source="pack://application:,,,/resources/icons/icon.png"
                Stretch="None"
                Margin="0,20,0,0"
                tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
@@ -103,12 +86,12 @@
                    TextWrapping="Wrap"
                    TextAlignment="Center"
                    FontSize="20"
+                   FontFamily="{StaticResource NanumGothic}"
                    FontWeight="Bold"
-                   FontFamily="..\resources\fonts\#NanumGothic"
                    Margin="0,15,0,0"
                    VerticalAlignment="Stretch"
                    tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=700, TransitionOn=Visibility}"
-               tz:Transitionz.Opacity="{tz:OpacityParams Duration=700, From=0, TransitionOn=Loaded, To=1}">
+                   tz:Transitionz.Opacity="{tz:OpacityParams Duration=700, From=0, TransitionOn=Loaded, To=1}">
           <TextBlock.Effect>
             <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="4"/>
           </TextBlock.Effect>
@@ -119,26 +102,12 @@
                     Margin="0,3,0,0">
 
           <TextBlock x:Name="VersionTextBlock"
-                     Text="{Binding InfoViewModel.Version}"
+                     Text="{Binding Version}"
                      TextWrapping="Wrap"
                      FontSize="15"
                      FontWeight="Regular"
                      FontFamily="Consolas"
                      Foreground="GhostWhite" />
-
-          <TextBlock Foreground="GhostWhite"
-                     FontFamily="Consolas"
-                     Margin="7,0,0,0"
-                     TextWrapping="Wrap"
-                     FontSize="15"
-                     FontWeight="Regular">
-            <Run Text="by "/>
-            <Hyperlink RequestNavigate="OpenHyperLink"
-                       NavigateUri="https://github.com/pid011"
-                       ToolTip="https://github.com/pid011">
-              <Run Text="Sepi"/>
-            </Hyperlink>
-          </TextBlock>
 
         </StackPanel>
 
@@ -147,17 +116,17 @@
                     HorizontalAlignment="Center">
 
           <TextBlock x:Name="UpdateStatusTextBlock"
+                     FontFamily="{StaticResource NanumGothic}"
                      Foreground="GhostWhite"
-                     Text="{Binding UpdateNotifyViewModel.UpdateStatus}"
+                     Text="{Binding UpdateStatus}"
                      TextWrapping="Wrap"
-                     FontFamily="..\resources\fonts\#NanumGothic"
                      FontSize="15"
                      FontWeight="Regular" />
 
           <TextBlock x:Name="NeedUpdateTextBlock"
+                     FontFamily="{StaticResource NanumGothic}"
                      TextWrapping="Wrap"
                      Margin="7,0,0,0"
-                     FontFamily="..\resources\fonts\#NanumGothic"
                      FontSize="15"
                      FontWeight="Regular"
                      Visibility="Visible">
@@ -171,8 +140,109 @@
         </StackPanel>
       </StackPanel>
 
-      <StackPanel VerticalAlignment="Bottom"
-                  Height="100" />
+      <StackPanel VerticalAlignment="Stretch"
+                  Margin="0,50,0,0" >
+
+        <StackPanel HorizontalAlignment="Center">
+
+          <StackPanel.Resources>
+
+            <Style TargetType="{x:Type StackPanel}">
+              <Setter Property="Margin" Value="0,5,0,0"/>
+            </Style>
+
+            <Style TargetType="{x:Type TextBlock}">
+              <Setter Property="TextAlignment" Value="Right"/>
+              <Setter Property="Margin" Value="0,0,10,0"/>
+              <Setter Property="VerticalAlignment" Value="Center"/>
+              <Setter Property="FontSize" Value="15"/>
+              <Setter Property="Foreground" Value="Gray"/>
+            </Style>
+
+          </StackPanel.Resources>
+
+          <StackPanel Orientation="Horizontal"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      Height="30">
+            <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
+                       Width="65"/>
+            <ComboBox Width="150"
+                      ItemsSource="{Binding WorldList}"
+                      SelectedValue="{Binding SelectedWorld}"
+                      Style="{DynamicResource ComboBoxFlatStyle}" IsEnabled="{Binding CanEdit}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal" Height="20">
+
+                    <Image Source="{Binding WorldLogoPath}"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <TextBlock Text="{Binding Name}">
+                      <TextBlock.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                          <Setter Property="FontSize" Value="14"/>
+                          <Setter Property="Margin" Value="3,0,0,0"/>
+                          <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
+                        </Style>
+                      </TextBlock.Resources>
+                    </TextBlock>
+
+                  </StackPanel>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Height="30">
+              <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
+                         FontFamily="{StaticResource NanumGothic}"
+                         Width="65"/>
+              <TextBox x:Name="GuildNameInput1"
+                       TextWrapping="Wrap"
+                       Background="#111"
+                       Foreground="GhostWhite"
+                       CaretBrush="GhostWhite"
+                       BorderBrush="Transparent"
+                       HorizontalContentAlignment="Left"
+                       VerticalContentAlignment="Center"
+                       FontSize="14"
+                       FontFamily="{StaticResource NanumGothic}"
+                       Width="150"
+                       Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}"
+                       IsEnabled="{Binding CanEdit}"/>
+            </StackPanel>
+            <TextBlock TextAlignment="Right"
+                       FontSize="11"
+                       Margin="0"
+                       VerticalAlignment="Top"
+                       Foreground="Red"
+                       Visibility="Visible"
+                       Text="{Binding GuildNameCheck}"/>
+          </StackPanel>
+
+          <Button x:Name="SearchButton"
+                  Foreground="GhostWhite"
+                  Style="{DynamicResource DarkButton}"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Height="30"
+                  Command="{Binding SearchCommand}"
+                  Margin="0,10,0,0">
+            <TextBlock Text="{x:Static local:LocalizationString.input_search}"
+                       FontFamily="{StaticResource NanumGothic}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="10,3,10,3"
+                       FontWeight="Bold"/>
+          </Button>
+        </StackPanel>
+      </StackPanel>
     </StackPanel>
   </Grid>
 </Window>
