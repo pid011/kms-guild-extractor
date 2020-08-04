@@ -24,7 +24,7 @@ namespace KMSGuildExtractor.Core.Requester
         {
             return gid < 0
                 ? null
-                : await s_web.LoadFromWebAsync(string.Format(GuildOrganizationLink, gid, wid, page), cancel);
+                : await s_web.LoadFromWebAsync(string.Format(GuildOrganizationLink, gid, (int)wid, page), cancel);
         }
     }
 }

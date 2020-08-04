@@ -20,10 +20,8 @@ namespace KMSGuildExtractor.Core.Parser
         /// <returns>만약 일치하는 길드가 없거나 잘못된 html문서면 null을 반환</returns>
         public static GuildInfo FindGuildInHtml(HtmlDocument html, WorldID world)
         {
-            GuildInfo info;
-
             try
-            {
+            { // 성능 개선 필요, xpath 확인, 레벨 데이터도 넣어야됨
                 HtmlNode rankNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table2\"]/tbody");
 
                 foreach (HtmlNode item in rankNode.SelectNodes("//tr[@class=\"\"]"))
@@ -35,19 +33,16 @@ namespace KMSGuildExtractor.Core.Parser
 
                     if (wid == world)
                     {
-                        info = new GuildInfo(guildName, wid, gid);
+                        return new GuildInfo(guildName, wid, gid);
                     }
-                    continue;
                 }
 
-                info = null;
+                return null;
             }
             catch (NullReferenceException)
             {
-                info = null;
+                return null;
             }
-
-            return info;
         }
 
         public static WeeklyGuildReputationInfo GetWeeklyReputation(HtmlDocument html)
@@ -85,7 +80,7 @@ namespace KMSGuildExtractor.Core.Parser
             }
         }
 
-        public static bool TryAddGuildOrganization(ref GuildInfo info, HtmlDocument html, WorldID wid)
+        public static bool TryAddGuildOrganization(ref GuildInfo info, HtmlDocument html)
         {
             try
             {
@@ -96,7 +91,7 @@ namespace KMSGuildExtractor.Core.Parser
                     //WriteLine(item.OuterHtml);
                     string position = item.SelectSingleNode("td[1]").InnerText.Trim();
                     string name = item.SelectSingleNode("td[2]/dl/dt/a").InnerText.Trim();
-                    info.Users.Add(new GuildUserInfo(name, wid)
+                    info.Users.Add(new GuildUserInfo(name, info.World)
                     {
                         Position = ParseGuildPosition(position)
                     });

@@ -23,14 +23,36 @@ namespace KMSGuildExtractor.Core
         {
             HtmlDocument html = await GuildRequester.GetGuildSearchResultHtmlAsync(name, cancel);
 
-            return !cancel.IsCancellationRequested
-                ? GuildParser.FindGuildInHtml(html, wid)
-                : null;
+            return cancel.IsCancellationRequested
+                ? null
+                : GuildParser.FindGuildInHtml(html, wid);
         }
 
         public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancel)
         {
-            throw new NotImplementedException();
+            int i = 1;
+            bool next = true;
+
+            GuildInfo result = new GuildInfo(info.Name, info.World, info.GuildID);
+
+            while (!cancel.IsCancellationRequested && next)
+            {
+                HtmlDocument html = await GuildRequester.GetGuildOrganizationHtmlAsync(info.GuildID, info.World, cancel, i);
+                if (cancel.IsCancellationRequested)
+                {
+                    break;
+                }
+                result.WeeklyReputation ??= GuildParser.GetWeeklyReputation(html);
+                next = GuildParser.TryAddGuildOrganization(ref result, html) && GuildParser.IsNextPageExist(html);
+                i++;
+
+                if (next)
+                {
+                    await Task.Delay(500, cancel);
+                }
+            }
+
+            return result;
         }
     }
 }
