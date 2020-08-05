@@ -20,11 +20,11 @@ namespace KMSGuildExtractor.Core
         /// <returns>길드가 존재하면 <see cref="GuildInfo"/>를 반환, 존재하지 않거나 html파싱에 실패했다면 null을 반환</returns>
         public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancel)
         {
-            HtmlDocument html = await GuildRequester.GetGuildSearchResultHtmlAsync(name, cancel);
+            HtmlDocument html = await GuildDataRequester.GetGuildSearchResultHtmlAsync(name, cancel);
 
             return cancel.IsCancellationRequested
                 ? null
-                : GuildParser.FindGuildInHtml(html, wid);
+                : GuildDataParser.FindGuildInHtml(html, wid);
         }
 
         public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancel)
@@ -36,13 +36,13 @@ namespace KMSGuildExtractor.Core
 
             while (!cancel.IsCancellationRequested && next)
             {
-                HtmlDocument html = await GuildRequester.GetGuildOrganizationHtmlAsync(info.GuildID, info.World, cancel, i);
+                HtmlDocument html = await GuildDataRequester.GetGuildOrganizationHtmlAsync(info.GuildID, info.World, cancel, i);
                 if (cancel.IsCancellationRequested)
                 {
                     break;
                 }
-                result.WeeklyReputation ??= GuildParser.GetWeeklyReputation(html);
-                next = GuildParser.TryAddGuildOrganization(ref result, html) && GuildParser.IsNextPageExist(html);
+                result.WeeklyReputation ??= GuildDataParser.GetWeeklyReputation(html);
+                next = GuildDataParser.TryAddGuildOrganization(ref result, html) && GuildDataParser.IsNextPageExist(html);
                 i++;
 
                 if (next)
