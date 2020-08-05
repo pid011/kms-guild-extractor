@@ -1,53 +1,55 @@
 using System.Threading;
 using System.Threading.Tasks;
-using KMSGuildExtractor.Core;
+
 using KMSGuildExtractor.Core.Info;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests
 {
     [TestClass]
-    public class WebParsingTest
+    public class GuildSearchTest
     {
 
         [TestMethod]
         public void GuildSearchTest1()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<(bool, int)> task = Guild.TryFindGuildID("∞Ì¿◊∏ﬁ∏Æ»£", WorldID.Reboot, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("Í≥†ÏûâÎ©îÎ¶¨Ìò∏", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
-            Assert.AreEqual(task.Result, (true, 2210));
+            Assert.AreEqual(task.Result.GuildID, 2210);
         }
 
         [TestMethod]
         public void GuildSearchTest2()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<(bool, int)> task = Guild.TryFindGuildID("∞Ì¿◊∏ﬁ", WorldID.Reboot, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("Í≥†ÏûâÎ©î", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
-            Assert.AreEqual(task.Result, (false, -1));
+            Assert.AreEqual(task.Result, null);
         }
 
         [TestMethod]
         public void GuildSearchTest3()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<(bool, int)> task = Guild.TryFindGuildID("»∆¿Â±≥", WorldID.Scania, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("ÌõàÏû•Íµê", WorldID.Scania, tokenSource.Token);
             Task.WaitAll(task);
 
-            Assert.AreEqual(task.Result, (true, 241077));
+            Assert.AreEqual(task.Result.GuildID, 241077);
         }
 
         [TestMethod]
         public void GuildSearchTest4()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<(bool, int)> task = Guild.TryFindGuildID("ªÁ∞˙", WorldID.Burning, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("ÏÇ¨Í≥º", WorldID.Burning, tokenSource.Token);
             Task.WaitAll(task);
 
-            Assert.AreEqual(task.Result, (true, 2));
+            Assert.AreEqual(task.Result.GuildID, 2);
         }
+
     }
 }

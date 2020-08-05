@@ -1,4 +1,4 @@
-﻿namespace KMSGuildExtractor.Core.Info
+namespace KMSGuildExtractor.Core.Info
 {
     public interface IStatus
     {
