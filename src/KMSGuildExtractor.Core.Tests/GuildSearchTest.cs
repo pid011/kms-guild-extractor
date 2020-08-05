@@ -49,6 +49,5 @@ namespace KMSGuildExtractor.Core.Tests
 
             Assert.AreEqual(task.Result.GuildID, 2);
         }
-
     }
 }

@@ -8,6 +8,10 @@
     <ApplicationIcon>.\resources\icons\icon.ico</ApplicationIcon>
     <Version>0.1.2</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
+  </ItemGroup>
   
   <ItemGroup>
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
@@ -54,10 +58,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizationString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
   </ItemGroup>
 
 </Project>
