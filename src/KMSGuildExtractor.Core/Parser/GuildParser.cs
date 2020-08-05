@@ -20,7 +20,7 @@ namespace KMSGuildExtractor.Core.Parser
         public static GuildInfo FindGuildInHtml(HtmlDocument html, WorldID world)
         {
             try
-            { // 성능 개선 필요, xpath 확인, 레벨 데이터도 넣어야됨
+            {
                 HtmlNode rankNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table2\"]/tbody");
 
                 foreach (HtmlNode item in rankNode.SelectNodes(".//tr[@class=\"\"]"))
@@ -28,11 +28,12 @@ namespace KMSGuildExtractor.Core.Parser
                     HtmlNode guildNode = item.SelectSingleNode("./td[2]/span/a");
                     string guildName = guildNode.InnerText.Trim();
                     string guildLink = guildNode.GetAttributeValue("href", string.Empty);
+                    int guildLevel = ParseTool.GetDigitInString(item.SelectSingleNode("./td[3]").InnerText);
                     (int gid, WorldID wid) = ParseValueFromGuildLink(guildLink);
 
                     if (wid == world)
                     {
-                        return new GuildInfo(guildName, wid, gid);
+                        return new GuildInfo(guildName, wid, gid) { Level = guildLevel };
                     }
                 }
 
@@ -46,8 +47,6 @@ namespace KMSGuildExtractor.Core.Parser
 
         public static WeeklyGuildReputationInfo GetWeeklyReputation(HtmlDocument html)
         {
-            static int GetDigitInString(string str) =>
-                int.TryParse(Regex.Replace(str, @"[^0-9]", string.Empty), out int result) ? result : 0;
 
             try
             {
@@ -55,10 +54,10 @@ namespace KMSGuildExtractor.Core.Parser
                 HtmlNodeCollection weeklyRankNode = infoNode.SelectNodes("./div[@class=\"char_info\"]/dl");
 
                 string weeklyOverallRankRaw = weeklyRankNode[0].SelectSingleNode("./dd[@class=\"num\"]").InnerText;
-                int weeklyOverallRank = GetDigitInString(weeklyOverallRankRaw);
+                int weeklyOverallRank = ParseTool.GetDigitInString(weeklyOverallRankRaw);
 
                 string weeklyWorldRankRaw = weeklyRankNode[1].SelectSingleNode("./dd[@class=\"num\"]").InnerText;
-                int weeklyWorldRank = GetDigitInString(weeklyWorldRankRaw);
+                int weeklyWorldRank = ParseTool.GetDigitInString(weeklyWorldRankRaw);
 
                 string weeklyScoreRaw = infoNode.SelectNodes(".//ul[@class=\"info_tb_left_list\"]/li")[2].GetDirectInnerText();
                 IFormatProvider provider = CultureInfo.CreateSpecificCulture("ko-KR");
