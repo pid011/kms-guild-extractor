@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,8 +18,8 @@ namespace KMSGuildExtractor.Core.Tests
             Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("고잉메리호", WorldID.Reboot, 2210), tokenSource.Token);
             Task.WaitAll(task);
 
-            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "캡틴이름뭐해"));
-            Assert.AreEqual(task.Result.Users.Count, 171);
+            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "캡틴이름뭐해"));
+            //Assert.AreEqual(task.Result.Users.Count, 171);
         }
 
         [TestMethod]
@@ -28,8 +29,8 @@ namespace KMSGuildExtractor.Core.Tests
             Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("훈장교", WorldID.Scania, 241077), tokenSource.Token);
             Task.WaitAll(task);
 
-            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Master));
-            Assert.AreEqual(task.Result.Users.Count, 174);
+            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Master));
+            //Assert.AreEqual(task.Result.Users.Count, 174);
         }
     }
 }
