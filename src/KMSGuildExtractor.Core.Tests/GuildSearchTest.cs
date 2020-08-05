@@ -1,7 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using KMSGuildExtractor.Core;
+
 using KMSGuildExtractor.Core.Info;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests
@@ -14,7 +15,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildSearchTest1()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.SearchGuildAsync("∞Ì¿◊∏ﬁ∏Æ»£", WorldID.Reboot, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("Í≥†ÏûâÎ©îÎ¶¨Ìò∏", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.AreEqual(task.Result.GuildID, 2210);
@@ -24,7 +25,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildSearchTest2()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.SearchGuildAsync("∞Ì¿◊∏ﬁ", WorldID.Reboot, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("Í≥†ÏûâÎ©î", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.AreEqual(task.Result, null);
@@ -34,7 +35,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildSearchTest3()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.SearchGuildAsync("»∆¿Â±≥", WorldID.Scania, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("ÌõàÏû•Íµê", WorldID.Scania, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.AreEqual(task.Result.GuildID, 241077);
@@ -44,7 +45,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildSearchTest4()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.SearchGuildAsync("ªÁ∞˙", WorldID.Burning, tokenSource.Token);
+            Task<GuildInfo> task = Guild.SearchGuildAsync("ÏÇ¨Í≥º", WorldID.Burning, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.AreEqual(task.Result.GuildID, 2);

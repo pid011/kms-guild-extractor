@@ -1,4 +1,3 @@
-﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,14 +12,14 @@ namespace KMSGuildExtractor.Core.Requester
         private const string GuildSearchLink = "https://maplestory.nexon.com/Ranking/World/Guild?n={0}";
         private const string GuildOrganizationLink = "https://maplestory.nexon.com/Common/Guild?gid={0}&wid={1}&orderby=1&page={2}";
 
-        public async static Task<HtmlDocument> GetGuildSearchResultHtmlAsync(string name, CancellationToken cancel)
+        public static async Task<HtmlDocument> GetGuildSearchResultHtmlAsync(string name, CancellationToken cancel)
         {
             return string.IsNullOrWhiteSpace(name)
                 ? null
                 : await s_web.LoadFromWebAsync(string.Format(GuildSearchLink, name), cancel);
         }
 
-        public async static Task<HtmlDocument> GetGuildOrganizationHtmlAsync(int gid, WorldID wid, CancellationToken cancel, int page = 1)
+        public static async Task<HtmlDocument> GetGuildOrganizationHtmlAsync(int gid, WorldID wid, CancellationToken cancel, int page = 1)
         {
             return gid < 0
                 ? null

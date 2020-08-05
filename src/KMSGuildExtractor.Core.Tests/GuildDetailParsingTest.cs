@@ -1,9 +1,8 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using KMSGuildExtractor.Core;
+
 using KMSGuildExtractor.Core.Info;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests
@@ -16,10 +15,10 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildDetailParsingTest1()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("∞Ì¿◊∏ﬁ∏Æ»£", WorldID.Reboot, 2210), tokenSource.Token);
+            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("Í≥†ÏûâÎ©îÎ¶¨Ìò∏", WorldID.Reboot, 2210), tokenSource.Token);
             Task.WaitAll(task);
 
-            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "ƒ∏∆æ¿Ã∏ßππ«ÿ"));
+            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "Ï∫°Ìã¥Ïù¥Î¶ÑÎ≠êÌï¥"));
             Assert.AreEqual(task.Result.Users.Count, 171);
         }
 
@@ -27,10 +26,10 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildDetailParsingTest2()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("»∆¿Â±≥", WorldID.Scania, 241077), tokenSource.Token);
+            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("ÌõàÏû•Íµê", WorldID.Scania, 241077), tokenSource.Token);
             Task.WaitAll(task);
 
-            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "Ω≈≥≤" && u.Position == GuildPosition.Master));
+            //Assert.IsTrue(task.Result.Users.Any(u => u.Name == "Ïã†ÎÇ®" && u.Position == GuildPosition.Master));
             Assert.AreEqual(task.Result.Users.Count, 174);
         }
     }
