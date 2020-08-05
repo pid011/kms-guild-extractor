@@ -1,7 +1,5 @@
-namespace KMSGuildExtractor.Core.Info
-{
-public enum GuildPosition
-{
+namespace KMSGuildExtractor.Core.Info {
+  public enum GuildPosition {
     /// <summary>
     /// 길드 마스터
     /// </summary>
@@ -16,5 +14,5 @@ public enum GuildPosition
     /// 길드원
     /// </summary>
     Member
-}
+  }
 }
