@@ -122,7 +122,7 @@ namespace KMSGuildExtractor.ViewModel
             float count = guildName.ToCharArray()
                                    .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f);
 
-            return 2 <= count && count <= 6;
+            return count >= 2 && count <= 6;
         }
 
         private bool CanExecuteSearchCommand(object _) =>
