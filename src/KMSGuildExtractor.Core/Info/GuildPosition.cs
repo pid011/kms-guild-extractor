@@ -5,7 +5,7 @@ namespace KMSGuildExtractor.Core.Info
         /// <summary>
         /// 길드 마스터
         /// </summary>
-        Master,
+        Owner,
 
         /// <summary>
         /// 길드 부마스터
@@ -15,6 +15,6 @@ namespace KMSGuildExtractor.Core.Info
         /// <summary>
         /// 길드원
         /// </summary>
-        Organization
+        Member
     }
 }
