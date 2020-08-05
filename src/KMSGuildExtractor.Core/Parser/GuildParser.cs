@@ -117,9 +117,9 @@ namespace KMSGuildExtractor.Core.Parser
 
         private static GuildPosition ParseGuildPosition(string position) => position switch
         {
-            "마스터" => GuildPosition.Master,
+            "마스터" => GuildPosition.Owner,
             "부마스터" => GuildPosition.Staff,
-            _ => GuildPosition.Organization
+            _ => GuildPosition.Member
         };
 
 

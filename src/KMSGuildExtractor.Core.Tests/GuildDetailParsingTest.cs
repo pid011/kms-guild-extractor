@@ -29,7 +29,7 @@ namespace KMSGuildExtractor.Core.Tests
             Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("훈장교", WorldID.Scania, 241077), tokenSource.Token);
             Task.WaitAll(task);
 
-            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Master));
+            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Owner));
             //Assert.AreEqual(task.Result.Users.Count, 174);
         }
     }
