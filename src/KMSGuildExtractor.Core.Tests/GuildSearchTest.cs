@@ -10,6 +10,11 @@ namespace KMSGuildExtractor.Core.Tests
     [TestClass]
     public class GuildSearchTest
     {
+        [TestInitialize]
+        public void Wait1Second()
+        {
+            Task.WaitAll(Task.Delay(1000));
+        }
 
         [TestMethod]
         public void GuildSearchTest1()

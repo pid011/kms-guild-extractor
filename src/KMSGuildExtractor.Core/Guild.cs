@@ -47,7 +47,7 @@ namespace KMSGuildExtractor.Core
 
                 if (next)
                 {
-                    await Task.Delay(500, cancel);
+                    await Task.Delay(750, cancel);
                 }
             }
 
