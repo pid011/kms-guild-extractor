@@ -1,8 +1,7 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:tz="http://schemas.abtsoftware.co.uk/transitionz"
         xmlns:local="clr-namespace:KMSGuildExtractor.Localization"
         xmlns:viewmodel="clr-namespace:KMSGuildExtractor.ViewModel"
         x:Class="KMSGuildExtractor.View.MainWindow"
@@ -71,9 +70,7 @@
         <Image Source="pack://application:,,,/resources/icons/icon.png"
                Stretch="None"
                Margin="0,20,0,0"
-               tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
-               tz:Transitionz.Opacity="{tz:OpacityParams Duration=500, From=0, TransitionOn=Loaded, To=1}"
-               Visibility="Visible"
+               Visibility="Visible" 
                ToolTip="{x:Static local:LocalizationString.info_image_tooltip}">
           <Image.Effect>
             <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="10"/>
@@ -89,9 +86,7 @@
                    FontFamily="{StaticResource NanumGothic}"
                    FontWeight="Bold"
                    Margin="0,15,0,0"
-                   VerticalAlignment="Stretch"
-                   tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=700, TransitionOn=Visibility}"
-                   tz:Transitionz.Opacity="{tz:OpacityParams Duration=700, From=0, TransitionOn=Loaded, To=1}">
+                   VerticalAlignment="Stretch">
           <TextBlock.Effect>
             <DropShadowEffect Color="AntiqueWhite" ShadowDepth="0" BlurRadius="4"/>
           </TextBlock.Effect>

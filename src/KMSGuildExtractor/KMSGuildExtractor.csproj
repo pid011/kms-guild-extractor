@@ -6,9 +6,9 @@
     <UseWPF>true</UseWPF>
     <StartupObject>KMSGuildExtractor.App</StartupObject>
     <ApplicationIcon>.\resources\icons\icon.ico</ApplicationIcon>
-    <Version>0.0.1</Version>
+    <Version>0.1.2</Version>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
     <Resource Include="resources\fonts\NanumGothic-Regular.ttf" />
@@ -55,11 +55,7 @@
       <LastGenOutput>LocalizationString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="SciChart.Wpf.UI.Transitionz" Version="3.1.251" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
   </ItemGroup>
