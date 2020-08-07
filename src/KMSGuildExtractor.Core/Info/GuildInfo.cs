@@ -7,8 +7,7 @@ namespace KMSGuildExtractor.Core.Info
         public string Name { get; }
         public WorldID World { get; }
         public int GuildID { get; }
-        public int Level { get; set; }
-        public WeeklyGuildReputationInfo WeeklyReputation { get; set; }
+        public int? Level { get; set; }
         public IList<GuildUserInfo> Users { get; }
 
         public GuildInfo(string name, WorldID world, int guildID)

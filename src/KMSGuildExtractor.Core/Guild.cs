@@ -16,38 +16,37 @@ namespace KMSGuildExtractor.Core
         /// </summary>
         /// <param name="name"></param>
         /// <param name="wid"></param>
-        /// <param name="cancel"></param>
+        /// <param name="cancellation"></param>
         /// <returns>길드가 존재하면 <see cref="GuildInfo"/>를 반환, 존재하지 않거나 html파싱에 실패했다면 null을 반환</returns>
-        public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancel)
+        public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancellation)
         {
-            HtmlDocument html = await GuildDataRequester.GetGuildSearchResultHtmlAsync(name, cancel);
+            HtmlDocument html = await GuildDataRequester.GetGuildSearchResultHtmlAsync(name, cancellation);
 
-            return cancel.IsCancellationRequested
+            return cancellation.IsCancellationRequested
                 ? null
                 : GuildDataParser.FindGuildInHtml(html, wid);
         }
 
-        public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancel)
+        public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancellation)
         {
             int i = 1;
             bool next = true;
 
             GuildInfo result = new GuildInfo(info.Name, info.World, info.GuildID);
 
-            while (!cancel.IsCancellationRequested && next)
+            while (!cancellation.IsCancellationRequested && next)
             {
-                HtmlDocument html = await GuildDataRequester.GetGuildOrganizationHtmlAsync(info.GuildID, info.World, cancel, i);
-                if (cancel.IsCancellationRequested)
+                HtmlDocument html = await GuildDataRequester.GetGuildOrganizationHtmlAsync(info.GuildID, info.World, cancellation, i);
+                if (cancellation.IsCancellationRequested)
                 {
                     break;
                 }
-                result.WeeklyReputation ??= GuildDataParser.GetWeeklyReputation(html);
                 next = GuildDataParser.TryAddGuildMembers(ref result, html) && GuildDataParser.IsNextPageExist(html);
                 i++;
 
                 if (next)
                 {
-                    await Task.Delay(750, cancel);
+                    await Task.Delay(750, cancellation);
                 }
             }
 

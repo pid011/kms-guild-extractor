@@ -4,6 +4,6 @@ namespace KMSGuildExtractor.Core.Info
     {
         public WorldID World { get; }
         public string Name { get; }
-        public int Level { get; set; }
+        public int? Level { get; set; }
     }
 }

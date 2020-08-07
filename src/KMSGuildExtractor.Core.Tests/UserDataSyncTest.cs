@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using KMSGuildExtractor.Core.Requester;
@@ -42,7 +43,7 @@ namespace KMSGuildExtractor.Core.Tests
         {
             while (true)
             {
-                Task<UserDataRequester.SyncData> data = UserDataRequester.GetUserSyncData(name);
+                Task<UserDataRequester.SyncData> data = UserDataRequester.GetUserSyncDataAsync(name, new CancellationTokenSource().Token);
                 Task.WaitAll(data);
                 if (data.Result.Error == true || data.Result.Done == true)
                 {
