@@ -47,7 +47,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void UserDataParsingTest3()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<UserInfo> task = User.GetUserDataAsync("클라스", WorldID.Reboot, tokenSource.Token);
+            Task<UserInfo> task = User.GetUserDataAsync("클라스", WorldID.Scania, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsNotNull(task.Result.LastUpdated);
