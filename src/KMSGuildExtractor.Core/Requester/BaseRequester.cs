@@ -4,7 +4,7 @@ using HtmlAgilityPack;
 
 namespace KMSGuildExtractor.Core.Requester
 {
-    public class BaseRequester
+    internal class BaseRequester
     {
         protected static readonly HtmlWeb s_web = new HtmlWeb();
         protected static readonly HttpClient s_client = new HttpClient();
