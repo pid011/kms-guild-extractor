@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
@@ -8,7 +7,7 @@ using KMSGuildExtractor.Core.Info;
 
 namespace KMSGuildExtractor.Core.Parser
 {
-    internal static class GuildParser
+    internal static class GuildDataParser
     {
 
         /// <summary>
@@ -45,38 +44,7 @@ namespace KMSGuildExtractor.Core.Parser
             }
         }
 
-        public static WeeklyGuildReputationInfo GetWeeklyReputation(HtmlDocument html)
-        {
-
-            try
-            {
-                HtmlNode infoNode = html.DocumentNode.SelectSingleNode("//div[@class=\"char_info_top\"]");
-                HtmlNodeCollection weeklyRankNode = infoNode.SelectNodes("./div[@class=\"char_info\"]/dl");
-
-                string weeklyOverallRankRaw = weeklyRankNode[0].SelectSingleNode("./dd[@class=\"num\"]").InnerText;
-                int weeklyOverallRank = ParseTool.GetDigitInString(weeklyOverallRankRaw);
-
-                string weeklyWorldRankRaw = weeklyRankNode[1].SelectSingleNode("./dd[@class=\"num\"]").InnerText;
-                int weeklyWorldRank = ParseTool.GetDigitInString(weeklyWorldRankRaw);
-
-                string weeklyScoreRaw = infoNode.SelectNodes(".//ul[@class=\"info_tb_left_list\"]/li")[2].GetDirectInnerText();
-                IFormatProvider provider = CultureInfo.CreateSpecificCulture("ko-KR");
-                int weeklyScore = int.TryParse(weeklyScoreRaw, NumberStyles.Number | NumberStyles.Integer, provider, out int result) ? result : 0;
-
-                return new WeeklyGuildReputationInfo
-                {
-                    Score = weeklyScore,
-                    OverallRank = weeklyOverallRank,
-                    WorldRank = weeklyWorldRank
-                };
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
-        }
-
-        public static bool TryAddGuildOrganization(ref GuildInfo info, HtmlDocument html)
+        public static bool TryAddGuildMembers(ref GuildInfo info, HtmlDocument html)
         {
             try
             {

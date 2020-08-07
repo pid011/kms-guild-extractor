@@ -1,16 +1,17 @@
+using System;
+
 namespace KMSGuildExtractor.Core.Info
 {
-    public class UserInfo : IStatus, IRank
+    public class UserInfo : IStatus
     {
-        public string Name { get; }
+        public DateTime LastUpdated { get; set; }
         public WorldID World { get; }
-        public int Level { get; set; }
+        public string Name { get; }
         public string Job { get; set; }
-        public int OverallRank { get; set; }
-        public int WorldRank { get; set; }
-        public DojangInfo Dojang { get; set; }
-        public UnionInfo Union { get; set; }
-        public AchievementInfo Achievement { get; set; }
+        public int? Level { get; set; }
+        public int? Popularity { get; set; }
+        public int? DojangFloor { get; set; }
+        public int? UnionLevel { get; set; }
 
         public UserInfo(string name, WorldID world)
         {
