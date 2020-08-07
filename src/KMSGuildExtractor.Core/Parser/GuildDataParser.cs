@@ -76,7 +76,7 @@ namespace KMSGuildExtractor.Core.Parser
             }
         }
 
-        public static bool TryAddGuildOrganization(ref GuildInfo info, HtmlDocument html)
+        public static bool TryAddGuildMembers(ref GuildInfo info, HtmlDocument html)
         {
             try
             {

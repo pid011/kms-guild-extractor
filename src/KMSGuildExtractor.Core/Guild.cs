@@ -42,7 +42,7 @@ namespace KMSGuildExtractor.Core
                     break;
                 }
                 result.WeeklyReputation ??= GuildDataParser.GetWeeklyReputation(html);
-                next = GuildDataParser.TryAddGuildOrganization(ref result, html) && GuildDataParser.IsNextPageExist(html);
+                next = GuildDataParser.TryAddGuildMembers(ref result, html) && GuildDataParser.IsNextPageExist(html);
                 i++;
 
                 if (next)
