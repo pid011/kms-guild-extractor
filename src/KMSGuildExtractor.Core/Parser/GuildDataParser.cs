@@ -8,7 +8,7 @@ using KMSGuildExtractor.Core.Info;
 
 namespace KMSGuildExtractor.Core.Parser
 {
-    internal static class GuildParser
+    internal static class GuildDataParser
     {
 
         /// <summary>

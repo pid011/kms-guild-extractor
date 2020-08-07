@@ -7,7 +7,7 @@ using KMSGuildExtractor.Core.Info;
 
 namespace KMSGuildExtractor.Core.Requester
 {
-    internal class GuildRequester : BaseRequester
+    internal class GuildDataRequester : BaseRequester
     {
         private const string GuildSearchLink = "https://maplestory.nexon.com/Ranking/World/Guild?n={0}";
         private const string GuildOrganizationLink = "https://maplestory.nexon.com/Common/Guild?gid={0}&wid={1}&orderby=1&page={2}";

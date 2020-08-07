@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KMSGuildExtractor.Core.Requester
 {
-    public class UserDataRequester : BaseRequester
+    internal class UserDataRequester : BaseRequester
     {
         private const string UserDataUrl = "https://maple.gg/u/{0}";
         private const string UserSyncUrl = UserDataUrl + "/sync";
