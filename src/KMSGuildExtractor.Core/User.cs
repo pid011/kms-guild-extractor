@@ -20,8 +20,7 @@ namespace KMSGuildExtractor.Core
 
                 if (data.Error)
                 {
-                    // Exception 새로 만들어서 메시지 리턴하기
-                    return;
+                    throw new UserSyncException(data.Message);
                 }
                 if (data.Done)
                 {

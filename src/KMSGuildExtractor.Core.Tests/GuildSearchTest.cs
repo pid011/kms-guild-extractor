@@ -1,6 +1,8 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
+using KMSGuildExtractor.Core.Parser;
 using KMSGuildExtractor.Core.Info;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,11 +25,16 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildSearchTest2()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.SearchGuildAsync("고잉메", WorldID.Reboot, tokenSource.Token);
-            Task.WaitAll(task);
-
-            Assert.AreEqual(task.Result, null);
+            try
+            {
+                var tokenSource = new CancellationTokenSource();
+                Task<GuildInfo> task = Guild.SearchGuildAsync("고잉메", WorldID.Reboot, tokenSource.Token);
+                Task.WaitAll(task);
+            }
+            catch (AggregateException e) when (e.InnerException is ParseException pe)
+            {
+                Assert.AreEqual(pe.Message, "Failed to parse guild search html");
+            }
         }
 
         [TestMethod]

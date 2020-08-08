@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,16 +15,22 @@ namespace KMSGuildExtractor.Core.Requester
 
         public static async Task<HtmlDocument> GetGuildSearchResultHtmlAsync(string name, CancellationToken cancellation)
         {
-            return string.IsNullOrWhiteSpace(name)
-                ? null
-                : await s_web.LoadFromWebAsync(string.Format(GuildSearchLink, name), cancellation);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Guild name cannot be null or empty.", nameof(name));
+            }
+
+            return await s_web.LoadFromWebAsync(string.Format(GuildSearchLink, name), cancellation);
         }
 
-        public static async Task<HtmlDocument> GetGuildOrganizationHtmlAsync(int gid, WorldID wid, CancellationToken cancel, int page = 1)
+        public static async Task<HtmlDocument> GetGuildOrganizationHtmlAsync(int gid, WorldID wid, CancellationToken cancellation, int page = 1)
         {
-            return gid < 0
-                ? null
-                : await s_web.LoadFromWebAsync(string.Format(GuildOrganizationLink, gid, (int)wid, page), cancel);
+            if (gid < 0)
+            {
+                throw new ArgumentException("Guild ID cannot be negative.", nameof(gid));
+            }
+
+            return await s_web.LoadFromWebAsync(string.Format(GuildOrganizationLink, gid, (int)wid, page), cancellation);
         }
     }
 }

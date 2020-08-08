@@ -13,8 +13,8 @@ namespace KMSGuildExtractor.Core.Tests
     [TestClass]
     public class UserDataParsingTest : WebParsingTest
     {
-       [TestMethod]
-       public void UserDataParsingTest1()
+        [TestMethod]
+        public void UserDataParsingTest1()
         {
             var tokenSource = new CancellationTokenSource();
             Task<UserInfo> task = User.GetUserDataAsync("캡틴이름뭐해", WorldID.Reboot, tokenSource.Token);

@@ -38,9 +38,9 @@ namespace KMSGuildExtractor.Core.Parser
 
                 return null;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                return null;
+                throw new ParseException("Failed to parse guild search html", e);
             }
         }
 
@@ -63,9 +63,9 @@ namespace KMSGuildExtractor.Core.Parser
 
                 return true;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                return false;
+                throw new ParseException("Faild to parse guild organization html", e);
             }
         }
 
@@ -76,9 +76,9 @@ namespace KMSGuildExtractor.Core.Parser
                 HtmlNode node = html.DocumentNode.SelectSingleNode("//span[@class=\"cm_next\"]/a");
                 return node.HasAttributes;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                return false;
+                throw new ParseException("Doesn't found next page button", e);
             }
         }
 

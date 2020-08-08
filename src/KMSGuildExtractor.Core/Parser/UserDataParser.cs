@@ -17,7 +17,6 @@ namespace KMSGuildExtractor.Core.Parser
                 DateTime subract = DateTime.Now.Subtract(TimeSpan.FromDays(lastUpdated));
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
-
                 string levelRaw = profile[0].InnerText;
                 int level = ParseTool.GetDigitInString(levelRaw);
 
@@ -45,9 +44,13 @@ namespace KMSGuildExtractor.Core.Parser
                 };
                 return true;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
-                return false;
+                throw new ParseException("User could not be found.", e);
+            }
+            catch (NullReferenceException e)
+            {
+                throw new ParseException("Faild to parse user detail html", e);
             }
         }
     }

@@ -16,6 +16,11 @@ namespace KMSGuildExtractor.Core.Requester
 
         public static async Task<SyncData> GetUserSyncDataAsync(string name, CancellationToken cancellation)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("User name cannot be null or empty.", nameof(name));
+            }
+
             var request = new HttpRequestMessage(HttpMethod.Get, string.Format(UserSyncUrl, name));
             using HttpResponseMessage response = await s_client.SendAsync(request, cancellation);
 
@@ -29,9 +34,12 @@ namespace KMSGuildExtractor.Core.Requester
 
         public static async Task<HtmlDocument> GetUserDataHtmlAsync(string name, CancellationToken cancellation)
         {
-            return string.IsNullOrWhiteSpace(name)
-                ? null
-                : await s_web.LoadFromWebAsync(string.Format(UserDataUrl, name), cancellation);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("User name cannot be null or empty.", nameof(name));
+            }
+
+            return await s_web.LoadFromWebAsync(string.Format(UserDataUrl, name), cancellation);
         }
 
         public class SyncData
