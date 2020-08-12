@@ -2,8 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using KMSGuildExtractor.Core.Parser;
 using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Parser;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
