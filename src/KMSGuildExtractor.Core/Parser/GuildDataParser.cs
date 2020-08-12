@@ -10,12 +10,6 @@ namespace KMSGuildExtractor.Core.Parser
     internal static class GuildDataParser
     {
 
-        /// <summary>
-        /// 월드와 일치하는 길드를 찾는다.
-        /// </summary>
-        /// <param name="html">검색할 html문서</param>
-        /// <param name="world">검색할 길드의 월드</param>
-        /// <returns>만약 일치하는 길드가 없거나 잘못된 html문서면 null을 반환</returns>
         public static GuildInfo FindGuildInHtml(HtmlDocument html, WorldID world)
         {
             try
@@ -44,7 +38,7 @@ namespace KMSGuildExtractor.Core.Parser
             }
         }
 
-        public static bool TryAddGuildMembers(ref GuildInfo info, HtmlDocument html)
+        public static void AddGuildMembers(ref GuildInfo info, HtmlDocument html)
         {
             try
             {
@@ -52,7 +46,6 @@ namespace KMSGuildExtractor.Core.Parser
 
                 foreach (HtmlNode item in guildOrgNode.Descendants("tr"))
                 {
-                    //WriteLine(item.OuterHtml);
                     string position = item.SelectSingleNode("./td[1]").InnerText.Trim();
                     string name = item.SelectSingleNode("./td[2]/dl/dt/a").InnerText.Trim();
                     info.Users.Add(new GuildUserInfo(name, info.World)
@@ -60,8 +53,6 @@ namespace KMSGuildExtractor.Core.Parser
                         Position = ParseGuildPosition(position)
                     });
                 }
-
-                return true;
             }
             catch (NullReferenceException e)
             {
