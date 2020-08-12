@@ -8,6 +8,7 @@ namespace KMSGuildExtractor.Core.Parser
 {
     internal class UserDataParser
     {
+        // TODO: 문서주석 달기
         public static bool TryGetUserDetail(ref UserInfo user, HtmlDocument html)
         {
             try
@@ -44,9 +45,9 @@ namespace KMSGuildExtractor.Core.Parser
                 };
                 return true;
             }
-            catch (NullReferenceException e) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
+            catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
-                throw new ParseException("User could not be found.", e);
+                throw new UserNotFoundException();
             }
             catch (NullReferenceException e)
             {
