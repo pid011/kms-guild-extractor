@@ -34,7 +34,9 @@ namespace KMSGuildExtractor.Core
         {
             UserInfo user = new UserInfo(name, world);
             HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(name, cancellation);
-            return UserDataParser.TryGetUserDetail(ref user, html) ? user : null;
+            UserDataParser.GetUserDetail(ref user, html);
+
+            return user;
         }
     }
 }

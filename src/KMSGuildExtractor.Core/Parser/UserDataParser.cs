@@ -8,8 +8,7 @@ namespace KMSGuildExtractor.Core.Parser
 {
     internal class UserDataParser
     {
-        // TODO: 문서주석 달기
-        public static bool TryGetUserDetail(ref UserInfo user, HtmlDocument html)
+        public static void GetUserDetail(ref UserInfo user, HtmlDocument html)
         {
             try
             {
@@ -43,7 +42,6 @@ namespace KMSGuildExtractor.Core.Parser
                     DojangFloor = dojangFloor,
                     UnionLevel = union
                 };
-                return true;
             }
             catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
