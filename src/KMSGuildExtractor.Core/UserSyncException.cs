@@ -2,7 +2,6 @@ using System;
 
 namespace KMSGuildExtractor.Core
 {
-
     [Serializable]
     public class UserSyncException : Exception
     {
