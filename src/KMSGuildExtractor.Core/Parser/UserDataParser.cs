@@ -8,7 +8,7 @@ namespace KMSGuildExtractor.Core.Parser
 {
     internal class UserDataParser
     {
-        public static bool TryGetUserDetail(ref UserInfo user, HtmlDocument html)
+        public static void GetUserDetail(ref UserInfo user, HtmlDocument html)
         {
             try
             {
@@ -17,7 +17,6 @@ namespace KMSGuildExtractor.Core.Parser
                 DateTime subract = DateTime.Now.Subtract(TimeSpan.FromDays(lastUpdated));
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
-
                 string levelRaw = profile[0].InnerText;
                 int level = ParseTool.GetDigitInString(levelRaw);
 
@@ -43,11 +42,14 @@ namespace KMSGuildExtractor.Core.Parser
                     DojangFloor = dojangFloor,
                     UnionLevel = union
                 };
-                return true;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
-                return false;
+                throw new UserNotFoundException();
+            }
+            catch (NullReferenceException e)
+            {
+                throw new ParseException("Faild to parse user detail html", e);
             }
         }
     }

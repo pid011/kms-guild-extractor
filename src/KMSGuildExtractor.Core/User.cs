@@ -20,8 +20,7 @@ namespace KMSGuildExtractor.Core
 
                 if (data.Error)
                 {
-                    // Exception 새로 만들어서 메시지 리턴하기
-                    return;
+                    throw new UserSyncException(data.Message);
                 }
                 if (data.Done)
                 {
@@ -35,7 +34,9 @@ namespace KMSGuildExtractor.Core
         {
             UserInfo user = new UserInfo(name, world);
             HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(name, cancellation);
-            return UserDataParser.TryGetUserDetail(ref user, html) ? user : null;
+            UserDataParser.GetUserDetail(ref user, html);
+
+            return user;
         }
     }
 }
