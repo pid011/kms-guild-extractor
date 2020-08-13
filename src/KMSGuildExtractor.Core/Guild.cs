@@ -13,7 +13,7 @@ namespace KMSGuildExtractor.Core
     {
         public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancellation)
         {
-            HtmlDocument html = await GuildDataRequester.GetGuildSearchResultHtmlAsync(name, cancellation);
+            HtmlDocument html = await GuildDataRequester.GetGuildSearchHtmlAsync(name, cancellation);
 
             return cancellation.IsCancellationRequested
                 ? null
