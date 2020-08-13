@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 
-namespace KMSGuildExtractor.Core.Info
+namespace KMSGuildExtractor.Core.Data
 {
-    public class GuildInfo : IStatus
+    public class GuildData : IStatus
     {
         public string Name { get; }
         public WorldID World { get; }
         public int GuildID { get; }
         public int? Level { get; set; }
-        public IList<GuildUserInfo> Users { get; }
+        public IList<GuildUserData> Users { get; }
 
-        public GuildInfo(string name, WorldID world, int guildID)
+        public GuildData(string name, WorldID world, int guildID)
         {
             Name = name;
             World = world;
             GuildID = guildID;
-            Users = new List<GuildUserInfo>();
+            Users = new List<GuildUserData>();
         }
     }
 }

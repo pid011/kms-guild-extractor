@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel

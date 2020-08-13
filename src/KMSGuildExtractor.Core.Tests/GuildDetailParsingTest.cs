@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,7 +15,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildDetailParsingTest1()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("고잉메리호", WorldID.Reboot, 2210), tokenSource.Token);
+            Task<GuildData> task = Guild.GetGuildDetailAsync(new GuildData("고잉메리호", WorldID.Reboot, 2210), tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsTrue(task.Result.Users.Any(u => u.Name == "캡틴이름뭐해"));
@@ -26,7 +26,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void GuildDetailParsingTest2()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<GuildInfo> task = Guild.GetGuildDetailAsync(new GuildInfo("훈장교", WorldID.Scania, 241077), tokenSource.Token);
+            Task<GuildData> task = Guild.GetGuildDetailAsync(new GuildData("훈장교", WorldID.Scania, 241077), tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Owner));

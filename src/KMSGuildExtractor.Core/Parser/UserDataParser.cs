@@ -2,13 +2,13 @@ using System;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 
 namespace KMSGuildExtractor.Core.Parser
 {
     internal class UserDataParser
     {
-        public static void GetUserDetail(ref UserInfo user, HtmlDocument html)
+        public static void GetUserDetail(ref UserData user, HtmlDocument html)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace KMSGuildExtractor.Core.Parser
                 string unionRaw = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]").InnerText;
                 int union = ParseTool.GetDigitInString(unionRaw);
 
-                user = new UserInfo(user.Name, user.World)
+                user = new UserData(user.Name, user.World)
                 {
                     LastUpdated = new DateTime(subract.Year, subract.Month, subract.Day),
                     Level = level,

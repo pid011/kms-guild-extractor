@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 using KMSGuildExtractor.Core.Parser;
 using KMSGuildExtractor.Core.Requester;
 
@@ -30,9 +30,9 @@ namespace KMSGuildExtractor.Core
             }
         }
 
-        public static async Task<UserInfo> GetUserDataAsync(string name, WorldID world, CancellationToken cancellation)
+        public static async Task<UserData> GetUserDataAsync(string name, WorldID world, CancellationToken cancellation)
         {
-            UserInfo user = new UserInfo(name, world);
+            UserData user = new UserData(name, world);
             HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(name, cancellation);
             UserDataParser.GetUserDetail(ref user, html);
 

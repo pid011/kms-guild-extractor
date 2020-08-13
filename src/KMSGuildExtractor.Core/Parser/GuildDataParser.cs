@@ -3,14 +3,14 @@ using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 
 namespace KMSGuildExtractor.Core.Parser
 {
     internal static class GuildDataParser
     {
 
-        public static GuildInfo FindGuildInHtml(HtmlDocument html, WorldID world)
+        public static GuildData FindGuildInHtml(HtmlDocument html, WorldID world)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace KMSGuildExtractor.Core.Parser
 
                     if (wid == world)
                     {
-                        return new GuildInfo(guildName, wid, gid) { Level = guildLevel };
+                        return new GuildData(guildName, wid, gid) { Level = guildLevel };
                     }
                 }
 
@@ -38,7 +38,7 @@ namespace KMSGuildExtractor.Core.Parser
             }
         }
 
-        public static void AddGuildMembers(ref GuildInfo info, HtmlDocument html)
+        public static void AddGuildMembers(ref GuildData info, HtmlDocument html)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace KMSGuildExtractor.Core.Parser
                 {
                     string position = item.SelectSingleNode("./td[1]").InnerText.Trim();
                     string name = item.SelectSingleNode("./td[2]/dl/dt/a").InnerText.Trim();
-                    info.Users.Add(new GuildUserInfo(name, info.World)
+                    info.Users.Add(new GuildUserData(name, info.World)
                     {
                         Position = ParseGuildPosition(position)
                     });

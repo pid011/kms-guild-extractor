@@ -1,8 +1,8 @@
 using System;
 
-namespace KMSGuildExtractor.Core.Info
+namespace KMSGuildExtractor.Core.Data
 {
-    public class UserInfo : IStatus
+    public class UserData : IStatus
     {
         public DateTime LastUpdated { get; set; }
         public WorldID World { get; }
@@ -13,7 +13,7 @@ namespace KMSGuildExtractor.Core.Info
         public int? DojangFloor { get; set; }
         public int? UnionLevel { get; set; }
 
-        public UserInfo(string name, WorldID world)
+        public UserData(string name, WorldID world)
         {
             Name = name;
             World = world;

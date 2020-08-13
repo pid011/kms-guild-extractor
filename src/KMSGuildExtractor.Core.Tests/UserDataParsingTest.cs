@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,7 +14,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void UserDataParsingTest1()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<UserInfo> task = User.GetUserDataAsync("캡틴이름뭐해", WorldID.Reboot, tokenSource.Token);
+            Task<UserData> task = User.GetUserDataAsync("캡틴이름뭐해", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsNotNull(task.Result.LastUpdated);
@@ -29,7 +29,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void UserDataParsingTest2()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<UserInfo> task = User.GetUserDataAsync("킹갓일", WorldID.Reboot, tokenSource.Token);
+            Task<UserData> task = User.GetUserDataAsync("킹갓일", WorldID.Reboot, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsNotNull(task.Result.LastUpdated);
@@ -44,7 +44,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void UserDataParsingTest3()
         {
             var tokenSource = new CancellationTokenSource();
-            Task<UserInfo> task = User.GetUserDataAsync("클라스", WorldID.Scania, tokenSource.Token);
+            Task<UserData> task = User.GetUserDataAsync("클라스", WorldID.Scania, tokenSource.Token);
             Task.WaitAll(task);
 
             Assert.IsNotNull(task.Result.LastUpdated);

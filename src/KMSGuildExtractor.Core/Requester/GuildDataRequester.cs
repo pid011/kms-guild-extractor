@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 
 namespace KMSGuildExtractor.Core.Requester
 {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Info;
+using KMSGuildExtractor.Core.Data;
 using KMSGuildExtractor.Core.Parser;
 using KMSGuildExtractor.Core.Requester;
 
@@ -11,7 +11,7 @@ namespace KMSGuildExtractor.Core
 {
     public static class Guild
     {
-        public static async Task<GuildInfo> SearchGuildAsync(string name, WorldID wid, CancellationToken cancellation)
+        public static async Task<GuildData> SearchGuildAsync(string name, WorldID wid, CancellationToken cancellation)
         {
             HtmlDocument html = await GuildDataRequester.GetGuildSearchHtmlAsync(name, cancellation);
 
@@ -20,12 +20,12 @@ namespace KMSGuildExtractor.Core
                 : GuildDataParser.FindGuildInHtml(html, wid);
         }
 
-        public static async Task<GuildInfo> GetGuildDetailAsync(GuildInfo info, CancellationToken cancellation)
+        public static async Task<GuildData> GetGuildDetailAsync(GuildData info, CancellationToken cancellation)
         {
             int i = 1;
             bool next = true;
 
-            GuildInfo result = new GuildInfo(info.Name, info.World, info.GuildID);
+            GuildData result = new GuildData(info.Name, info.World, info.GuildID);
 
             while (!cancellation.IsCancellationRequested && next)
             {
