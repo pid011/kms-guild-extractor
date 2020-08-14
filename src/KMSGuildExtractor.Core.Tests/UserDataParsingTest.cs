@@ -1,7 +1,5 @@
 using System.Threading.Tasks;
 
-using KMSGuildExtractor.Core.Data;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests

@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using KMSGuildExtractor.Core.Data;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KMSGuildExtractor.Core.Tests
@@ -19,7 +17,7 @@ namespace KMSGuildExtractor.Core.Tests
             Task loadTask = guild.LoadGuildMembersAsync();
             Task.WaitAll(loadTask);
 
-            Assert.IsTrue(guild.Members.Any(u => u.Name == "캡틴이름뭐해"));
+            Assert.IsTrue(guild.Members.Any(u => u.data.Name == "캡틴이름뭐해"));
         }
 
         [TestMethod]
@@ -31,7 +29,7 @@ namespace KMSGuildExtractor.Core.Tests
             Task loadTask = guild.LoadGuildMembersAsync();
             Task.WaitAll(loadTask);
 
-            Assert.IsTrue(guild.Members.Any(u => u.Name == "신남" && u.Position == GuildPosition.Owner));
+            Assert.IsTrue(guild.Members.Any(u => u.data.Name == "신남" && u.position == GuildPosition.Owner));
         }
     }
 }

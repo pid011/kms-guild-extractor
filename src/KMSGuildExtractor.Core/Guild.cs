@@ -6,14 +6,28 @@ using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Data;
 using KMSGuildExtractor.Core.Requester;
 
 namespace KMSGuildExtractor.Core
 {
-    public class Guild : GuildData
+    public class Guild : IGuild
     {
-        public Guild(string name, WorldID world, int guildID) : base(name, world, guildID) { }
+        public int GuildID { get; }
+
+        public WorldID World { get; }
+
+        public string Name { get; }
+
+        public int? Level { get; private set; }
+
+        public IList<(GuildPosition position, User data)> Members { get; private set; }
+
+        public Guild(string name, WorldID world, int guildID)
+        {
+            Name = name;
+            World = world;
+            GuildID = guildID;
+        }
 
         public static async Task<Guild> SearchAsync(string name, WorldID wid, CancellationToken cancellation = default)
         {
@@ -24,7 +38,7 @@ namespace KMSGuildExtractor.Core
 
         public async Task LoadGuildMembersAsync(CancellationToken cancellation = default)
         {
-            List<GuildMemberData> members = new List<GuildMemberData>(200);
+            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>(200);
             int i = 1;
 
             while (true)
@@ -97,9 +111,9 @@ namespace KMSGuildExtractor.Core
             }
         }
 
-        private IEnumerable<GuildMemberData> GetGuildMembersInHtml(HtmlDocument html)
+        private IEnumerable<(GuildPosition, User)> GetGuildMembersInHtml(HtmlDocument html)
         {
-            List<GuildMemberData> members = new List<GuildMemberData>();
+            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>();
             try
             {
                 HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table\"]/tbody");
@@ -108,10 +122,7 @@ namespace KMSGuildExtractor.Core
                 {
                     string position = item.SelectSingleNode("./td[1]").InnerText.Trim();
                     string name = item.SelectSingleNode("./td[2]/dl/dt/a").InnerText.Trim();
-                    members.Add(new GuildMemberData(name, World)
-                    {
-                        Position = ParseGuildPosition(position)
-                    });
+                    members.Add((ParseGuildPosition(position), new User(name, World)));
                 }
 
                 return members;

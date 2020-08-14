@@ -4,19 +4,38 @@ using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
-using KMSGuildExtractor.Core.Data;
 using KMSGuildExtractor.Core.Requester;
 
 namespace KMSGuildExtractor.Core
 {
-    public class User : UserData
+    public class User : IUser
     {
-        public User(string name, WorldID world) : base(name, world) { }
+        public WorldID World { get; }
+
+        public string Name { get; private set; }
+
+        public int? Level { get; private set; }
+
+        public DateTime LastUpdated { get; private set; }
+
+        public string Job { get; private set; }
+
+        public int? Popularity { get; private set; }
+
+        public int? DojangFloor { get; private set; }
+
+        public int? UnionLevel { get; private set; }
+
+        public User(string name, WorldID world)
+        {
+            Name = name;
+            World = world;
+        }
 
         public async Task LoadUserDetailAsync(CancellationToken cancellation = default)
         {
             HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(Name, cancellation);
-            GetUserDetail(html);
+            SetUserDetail(html);
         }
 
         public async Task RequestSyncAsync(CancellationToken cancellation = default)
@@ -37,7 +56,7 @@ namespace KMSGuildExtractor.Core
             }
         }
 
-        private void GetUserDetail(HtmlDocument html)
+        private void SetUserDetail(HtmlDocument html)
         {
             try
             {
