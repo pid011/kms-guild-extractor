@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,6 +35,19 @@ namespace KMSGuildExtractor.Core
             HtmlDocument html = await GuildDataRequester.GetGuildSearchHtmlAsync(name, cancellation);
 
             return FindGuildInHtml(html, wid);
+        }
+
+        public static bool IsValidGuildName(string guildName)
+        {
+            if (!Regex.IsMatch(guildName, "^[0-9a-zA-Z가-힣]*$")) // 특수문자 입력 금지
+            {
+                return false;
+            }
+
+            float count = guildName.ToCharArray()
+                                   .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f);
+
+            return count >= 2 && count <= 6;
         }
 
         public async Task LoadGuildMembersAsync(CancellationToken cancellation = default)

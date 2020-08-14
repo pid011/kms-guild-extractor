@@ -107,22 +107,9 @@ namespace KMSGuildExtractor.ViewModel
         {
             if (e.PropertyName == nameof(GuildName))
             {
-                bool valid = IsValidGuildName(GuildName);
+                bool valid = Guild.IsValidGuildName(GuildName);
                 GuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
             }
-        }
-
-        private bool IsValidGuildName(string guildName)
-        {
-            if (!Regex.IsMatch(guildName, "^[0-9a-zA-Z가-힣]*$")) // 특수문자 입력 금지
-            {
-                return false;
-            }
-
-            float count = guildName.ToCharArray()
-                                   .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f);
-
-            return count >= 2 && count <= 6;
         }
 
         private bool CanExecuteSearchCommand(object _) =>
