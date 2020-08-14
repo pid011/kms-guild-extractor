@@ -11,7 +11,7 @@ namespace KMSGuildExtractor.Core.Tests
     public class UserDataSyncTest : WebParsingTest
     {
         [TestMethod]
-        public void UserDataSyncNotFound1()
+        public void UserDataSyncTest1()
         {
             UserDataRequester.SyncData check = WaitForSyncing("일이삼사오육칠");
 
@@ -20,7 +20,7 @@ namespace KMSGuildExtractor.Core.Tests
         }
 
         [TestMethod]
-        public void UserDataSyncNotFound2()
+        public void UserDataSyncTest2()
         {
             UserDataRequester.SyncData check = WaitForSyncing("캡틴이름뮈헤");
 
@@ -29,7 +29,7 @@ namespace KMSGuildExtractor.Core.Tests
         }
 
         [TestMethod]
-        public void UserDataSyncNotFound3()
+        public void UserDataSyncTest3()
         {
             UserDataRequester.SyncData check = WaitForSyncing("캡틴이름뭐해");
 

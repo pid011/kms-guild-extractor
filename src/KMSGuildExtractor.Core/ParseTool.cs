@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace KMSGuildExtractor.Core.Parser
+namespace KMSGuildExtractor.Core
 {
     internal static class ParseTool
     {

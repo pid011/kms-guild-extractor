@@ -1,9 +1,7 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using KMSGuildExtractor.Core.Data;
-using KMSGuildExtractor.Core.Parser;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,11 +13,10 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildSearchTest1()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildData> task = Guild.SearchGuildAsync("고잉메리호", WorldID.Reboot, tokenSource.Token);
-            Task.WaitAll(task);
+            Task<Guild> searchTask = Guild.SearchAsync("고잉메리호", WorldID.Reboot);
+            Guild guild = searchTask.Result;
 
-            Assert.AreEqual(task.Result.GuildID, 2210);
+            Assert.AreEqual(guild.GuildID, 2210);
         }
 
         [TestMethod]
@@ -27,9 +24,8 @@ namespace KMSGuildExtractor.Core.Tests
         {
             try
             {
-                var tokenSource = new CancellationTokenSource();
-                Task<GuildData> task = Guild.SearchGuildAsync("고잉메", WorldID.Reboot, tokenSource.Token);
-                Task.WaitAll(task);
+                Task<Guild> searchTask = Guild.SearchAsync("고잉메", WorldID.Reboot);
+                Guild guild = searchTask.Result;
             }
             catch (AggregateException e) when (e.InnerException is ParseException pe)
             {
@@ -40,21 +36,24 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildSearchTest3()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildData> task = Guild.SearchGuildAsync("훈장교", WorldID.Scania, tokenSource.Token);
-            Task.WaitAll(task);
-
-            Assert.AreEqual(task.Result.GuildID, 241077);
+            try
+            {
+                Task<Guild> searchTask = Guild.SearchAsync("고잉메리호", WorldID.Scania);
+                Guild guild = searchTask.Result;
+            }
+            catch (AggregateException e) when (e.InnerException is ParseException pe)
+            {
+                Assert.AreEqual(pe.Message, "Failed to parse guild search html");
+            }
         }
 
         [TestMethod]
         public void GuildSearchTest4()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildData> task = Guild.SearchGuildAsync("사과", WorldID.Burning, tokenSource.Token);
-            Task.WaitAll(task);
+            Task<Guild> searchTask = Guild.SearchAsync("훈장교", WorldID.Scania);
+            Guild guild = searchTask.Result;
 
-            Assert.AreEqual(task.Result.GuildID, 2);
+            Assert.AreEqual(guild.GuildID, 241077);
         }
     }
 }

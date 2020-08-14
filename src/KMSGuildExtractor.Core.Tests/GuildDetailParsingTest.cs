@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 using KMSGuildExtractor.Core.Data;
@@ -14,23 +13,25 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildDetailParsingTest1()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildData> task = Guild.GetGuildDetailAsync(new GuildData("고잉메리호", WorldID.Reboot, 2210), tokenSource.Token);
-            Task.WaitAll(task);
+            Task<Guild> searchTask = Guild.SearchAsync("고잉메리호", WorldID.Reboot);
+            Guild guild = searchTask.Result;
 
-            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "캡틴이름뭐해"));
-            //Assert.AreEqual(task.Result.Users.Count, 171);
+            Task loadTask = guild.LoadGuildMembersAsync();
+            Task.WaitAll(loadTask);
+
+            Assert.IsTrue(guild.Members.Any(u => u.Name == "캡틴이름뭐해"));
         }
 
         [TestMethod]
         public void GuildDetailParsingTest2()
         {
-            var tokenSource = new CancellationTokenSource();
-            Task<GuildData> task = Guild.GetGuildDetailAsync(new GuildData("훈장교", WorldID.Scania, 241077), tokenSource.Token);
-            Task.WaitAll(task);
+            Task<Guild> searchTask = Guild.SearchAsync("훈장교", WorldID.Scania);
+            Guild guild = searchTask.Result;
 
-            Assert.IsTrue(task.Result.Users.Any(u => u.Name == "신남" && u.Position == GuildPosition.Owner));
-            //Assert.AreEqual(task.Result.Users.Count, 174);
+            Task loadTask = guild.LoadGuildMembersAsync();
+            Task.WaitAll(loadTask);
+
+            Assert.IsTrue(guild.Members.Any(u => u.Name == "신남" && u.Position == GuildPosition.Owner));
         }
     }
 }
