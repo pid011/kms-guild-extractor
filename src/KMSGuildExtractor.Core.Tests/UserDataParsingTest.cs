@@ -11,8 +11,7 @@ namespace KMSGuildExtractor.Core.Tests
         public void UserDataParsingTest1()
         {
             User user = new User("캡틴이름뭐해", WorldID.Reboot);
-            Task loadTask = user.LoadUserDetailAsync();
-            Task.WaitAll(loadTask);
+            user.LoadUserDetailAsync().Wait();
 
             Assert.IsNotNull(user.LastUpdated);
             Assert.IsNotNull(user.Level);

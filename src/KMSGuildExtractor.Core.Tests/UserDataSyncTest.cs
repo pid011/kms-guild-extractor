@@ -40,13 +40,12 @@ namespace KMSGuildExtractor.Core.Tests
         {
             while (true)
             {
-                Task<UserDataRequester.SyncData> data = UserDataRequester.GetUserSyncDataAsync(name, new CancellationTokenSource().Token);
-                Task.WaitAll(data);
-                if (data.Result.Error == true || data.Result.Done == true)
+                UserDataRequester.SyncData data = UserDataRequester.GetUserSyncDataAsync(name, new CancellationTokenSource().Token).Result;
+                if (data.Error == true || data.Done == true)
                 {
-                    return data.Result;
+                    return data;
                 }
-                Task.WaitAll(Task.Delay(data.Result.Interval));
+                Task.Delay(data.Interval).Wait();
             }
         }
     }

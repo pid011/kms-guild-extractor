@@ -11,8 +11,7 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildSearchTest1()
         {
-            Task<Guild> searchTask = Guild.SearchAsync("고잉메리호", WorldID.Reboot);
-            Guild guild = searchTask.Result;
+            Guild guild = Guild.SearchAsync("고잉메리호", WorldID.Reboot).Result;
 
             Assert.AreEqual(guild.GuildID, 2210);
         }
@@ -22,8 +21,7 @@ namespace KMSGuildExtractor.Core.Tests
         {
             try
             {
-                Task<Guild> searchTask = Guild.SearchAsync("고잉메", WorldID.Reboot);
-                Guild guild = searchTask.Result;
+                Guild guild = Guild.SearchAsync("고잉메", WorldID.Reboot).Result;
             }
             catch (AggregateException e) when (e.InnerException is ParseException pe)
             {
@@ -36,8 +34,7 @@ namespace KMSGuildExtractor.Core.Tests
         {
             try
             {
-                Task<Guild> searchTask = Guild.SearchAsync("고잉메리호", WorldID.Scania);
-                Guild guild = searchTask.Result;
+                Guild guild = Guild.SearchAsync("고잉메리호", WorldID.Scania).Result;
             }
             catch (AggregateException e) when (e.InnerException is ParseException pe)
             {
@@ -48,8 +45,7 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void GuildSearchTest4()
         {
-            Task<Guild> searchTask = Guild.SearchAsync("훈장교", WorldID.Scania);
-            Guild guild = searchTask.Result;
+            Guild guild = Guild.SearchAsync("훈장교", WorldID.Scania).Result;
 
             Assert.AreEqual(guild.GuildID, 241077);
         }
