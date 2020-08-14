@@ -84,7 +84,7 @@ namespace KMSGuildExtractor.Core
                     HtmlNode guildNode = item.SelectSingleNode("./td[2]/span/a");
                     string guildName = guildNode.InnerText.Trim();
                     string guildLink = guildNode.GetAttributeValue("href", string.Empty);
-                    int guildLevel = ParseTool.GetDigitInString(item.SelectSingleNode("./td[3]").InnerText);
+                    int guildLevel = item.SelectSingleNode("./td[3]").InnerText.GetDigit();
                     (int gid, WorldID wid) = ParseValueFromGuildLink(guildLink);
 
                     if (wid == world)

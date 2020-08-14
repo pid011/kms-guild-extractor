@@ -61,25 +61,25 @@ namespace KMSGuildExtractor.Core
             try
             {
                 string lastUpdatedRaw = html.DocumentNode.SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span").InnerText;
-                int lastUpdated = ParseTool.GetDigitInString(lastUpdatedRaw);
+                int lastUpdated = lastUpdatedRaw.GetDigit();
                 DateTime subract = DateTime.Now.Subtract(TimeSpan.FromDays(lastUpdated));
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
                 string levelRaw = profile[0].InnerText;
-                int level = ParseTool.GetDigitInString(levelRaw);
+                int level = levelRaw.GetDigit();
 
                 string job = profile[1].InnerText.Trim();
 
                 string popularityRaw = profile[2].InnerText;
-                int popularity = ParseTool.GetDigitInString(popularityRaw);
+                int popularity = popularityRaw.GetDigit();
 
                 HtmlNodeCollection datas = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
 
                 string dojangFloorRaw = datas[0].SelectSingleNode(".//h1").InnerText;
-                int dojangFloor = ParseTool.GetDigitInString(dojangFloorRaw);
+                int dojangFloor = dojangFloorRaw.GetDigit();
 
                 string unionRaw = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]").InnerText;
-                int union = ParseTool.GetDigitInString(unionRaw);
+                int union = unionRaw.GetDigit();
 
                 LastUpdated = new DateTime(subract.Year, subract.Month, subract.Day);
                 Level = level;
