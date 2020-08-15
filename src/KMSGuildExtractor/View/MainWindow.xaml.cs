@@ -12,11 +12,10 @@ namespace KMSGuildExtractor.View
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        // public MainWindowViewModel MainWindowViewModel { get; } = new MainWindowViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new SearchPage());
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)

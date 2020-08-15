@@ -97,7 +97,7 @@
                     Margin="0,3,0,0">
 
           <TextBlock x:Name="VersionTextBlock"
-                     Text="{Binding Version}"
+                     Text="{Binding VersionString}"
                      TextWrapping="Wrap"
                      FontSize="15"
                      FontWeight="Regular"
@@ -124,120 +124,18 @@
                      Margin="7,0,0,0"
                      FontSize="15"
                      FontWeight="Regular"
-                     Visibility="Visible">
+                     Visibility="{Binding ReleaseLinkVisible}">
             <Hyperlink x:Name="GitHubReleaseHyperLink"
                        RequestNavigate="OpenHyperLink"
-                       NavigateUri="https://github.com/pid011/kms-guild-extractor/releases">
+                       NavigateUri="{Binding ReleaseLink}">
               <Run Text="{x:Static local:LocalizationString.updatenotify_install_new_version}" />
             </Hyperlink>
           </TextBlock>
-
         </StackPanel>
       </StackPanel>
-
-      <StackPanel VerticalAlignment="Stretch"
-                  Margin="0,50,0,0" >
-
-        <StackPanel HorizontalAlignment="Center">
-
-          <StackPanel.Resources>
-
-            <Style TargetType="{x:Type StackPanel}">
-              <Setter Property="Margin" Value="0,5,0,0"/>
-            </Style>
-
-            <Style TargetType="{x:Type TextBlock}">
-              <Setter Property="TextAlignment" Value="Right"/>
-              <Setter Property="Margin" Value="0,0,10,0"/>
-              <Setter Property="VerticalAlignment" Value="Center"/>
-              <Setter Property="FontSize" Value="15"/>
-              <Setter Property="Foreground" Value="Gray"/>
-            </Style>
-
-          </StackPanel.Resources>
-
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
-                      Height="30">
-            <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
-                       Width="65"/>
-            <ComboBox Width="150"
-                      ItemsSource="{Binding WorldList}"
-                      SelectedValue="{Binding SelectedWorld}"
-                      Style="{DynamicResource ComboBoxFlatStyle}" IsEnabled="{Binding CanEdit}">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal" Height="20">
-
-                    <Image Source="{Binding WorldLogoPath}"
-                           Stretch="Uniform"
-                           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                    <TextBlock Text="{Binding Name}">
-                      <TextBlock.Resources>
-                        <Style TargetType="{x:Type TextBlock}">
-                          <Setter Property="FontSize" Value="14"/>
-                          <Setter Property="Margin" Value="3,0,0,0"/>
-                          <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
-                        </Style>
-                      </TextBlock.Resources>
-                    </TextBlock>
-
-                  </StackPanel>
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-          </StackPanel>
-          <StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Height="30">
-              <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
-                         FontFamily="{StaticResource NanumGothic}"
-                         Width="65"/>
-              <TextBox x:Name="GuildNameInput1"
-                       TextWrapping="Wrap"
-                       Background="#111"
-                       Foreground="GhostWhite"
-                       CaretBrush="GhostWhite"
-                       BorderBrush="Transparent"
-                       HorizontalContentAlignment="Left"
-                       VerticalContentAlignment="Center"
-                       FontSize="14"
-                       FontFamily="{StaticResource NanumGothic}"
-                       Width="150"
-                       Text="{Binding GuildName, UpdateSourceTrigger=PropertyChanged}"
-                       IsEnabled="{Binding CanEdit}"/>
-            </StackPanel>
-            <TextBlock TextAlignment="Right"
-                       FontSize="11"
-                       Margin="0"
-                       VerticalAlignment="Top"
-                       Foreground="Red"
-                       Visibility="Visible"
-                       Text="{Binding GuildNameCheck}"/>
-          </StackPanel>
-
-          <Button x:Name="SearchButton"
-                  Foreground="GhostWhite"
-                  Style="{DynamicResource DarkButton}"
-                  HorizontalContentAlignment="Center"
-                  VerticalContentAlignment="Center"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Height="30"
-                  Command="{Binding SearchCommand}"
-                  Margin="0,10,0,0">
-            <TextBlock Text="{x:Static local:LocalizationString.input_search}"
-                       FontFamily="{StaticResource NanumGothic}"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch"
-                       Margin="10,3,10,3"
-                       FontWeight="Bold"/>
-          </Button>
-        </StackPanel>
-      </StackPanel>
+      <Frame x:Name="MainFrame"
+             NavigationUIVisibility="Hidden"
+             Margin="0,50,0,0"/>
     </StackPanel>
   </Grid>
 </Window>
