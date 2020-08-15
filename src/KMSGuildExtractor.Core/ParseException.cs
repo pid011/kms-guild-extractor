@@ -1,6 +1,6 @@
 using System;
 
-namespace KMSGuildExtractor.Core.Parser
+namespace KMSGuildExtractor.Core
 {
     [Serializable]
     public class ParseException : Exception

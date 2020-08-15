@@ -1,4 +1,4 @@
-namespace KMSGuildExtractor.Core.Info
+namespace KMSGuildExtractor.Core
 {
     public enum WorldID
     {

@@ -10,7 +10,7 @@ namespace KMSGuildExtractor.Core.Tests
         [TestInitialize]
         public void WaitBeforeTest()
         {
-            Task.WaitAll(Task.Delay(1500));
+            Task.Delay(1500).Wait();
         }
     }
 }
