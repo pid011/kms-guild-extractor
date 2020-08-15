@@ -127,7 +127,7 @@ namespace KMSGuildExtractor.Core
 
         private IEnumerable<(GuildPosition, User)> GetGuildMembersInHtml(HtmlDocument html)
         {
-            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>();
+            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>(30);
             try
             {
                 HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table\"]/tbody");
