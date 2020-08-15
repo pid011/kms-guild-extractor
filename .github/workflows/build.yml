@@ -1,12 +1,6 @@
 name: .NET Core Build & Test
 
-on:
-  pull_request_target:
-    branches: 
-      - main
-  push:
-    branches: 
-      - main
+on: [pull_request]
 
 jobs:
   build:
