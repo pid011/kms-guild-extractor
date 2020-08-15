@@ -21,7 +21,7 @@ namespace KMSGuildExtractor.ViewModel
             private set => SetProperty(ref _updateStatus, value ?? string.Empty, nameof(UpdateStatus));
         }
 
-        private string _updateStatus;
+        private string _updateStatus = LocalizationString.updatenotify_check_update;
 
         public Visibility ReleaseLinkVisible
         {
@@ -29,7 +29,7 @@ namespace KMSGuildExtractor.ViewModel
             private set => SetProperty(ref _releaseLinkVisible, value, nameof(ReleaseLinkVisible));
         }
 
-        private Visibility _releaseLinkVisible;
+        private Visibility _releaseLinkVisible = Visibility.Collapsed;
 
         public Uri ReleaseLink
         {
@@ -41,8 +41,6 @@ namespace KMSGuildExtractor.ViewModel
 
         public MainWindowViewModel()
         {
-            UpdateStatus = LocalizationString.updatenotify_check_update;
-            ReleaseLinkVisible = Visibility.Collapsed;
             Task.Run(InitializeUpdateStatus);
         }
 

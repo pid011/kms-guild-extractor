@@ -18,7 +18,38 @@ namespace KMSGuildExtractor.ViewModel
 
         private bool _canEdit;
 
-        public ObservableCollection<World> WorldList { get; }
+        public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
+        {
+            new World(LocalizationString.world_luna, WorldID.Luna),
+
+            new World(LocalizationString.world_scania, WorldID.Scania),
+
+            new World(LocalizationString.world_elysium, WorldID.Elysium),
+
+            new World(LocalizationString.world_croa, WorldID.Croa),
+
+            new World(LocalizationString.world_aurora, WorldID.Aurora),
+
+            new World(LocalizationString.world_bera, WorldID.Bera),
+
+            new World(LocalizationString.world_red, WorldID.Red),
+
+            new World(LocalizationString.world_union, WorldID.Union),
+
+            new World(LocalizationString.world_zenith, WorldID.Zenith),
+
+            new World(LocalizationString.world_enosis, WorldID.Enosis),
+
+            new World(LocalizationString.world_nova, WorldID.Nova),
+
+            new World(LocalizationString.world_reboot, WorldID.Reboot),
+
+            new World(LocalizationString.world_reboot2, WorldID.Reboot2),
+
+            new World(LocalizationString.world_burning, WorldID.Burning),
+
+            new World(LocalizationString.world_burning2, WorldID.Burning2)
+        };
 
         public World SelectedWorld
         {
@@ -48,45 +79,10 @@ namespace KMSGuildExtractor.ViewModel
 
         public SearchPageViewModel()
         {
-            WorldList = new ObservableCollection<World>
-            {
-                new World(LocalizationString.world_luna, WorldID.Luna),
-
-                new World(LocalizationString.world_scania, WorldID.Scania),
-
-                new World(LocalizationString.world_elysium, WorldID.Elysium),
-
-                new World(LocalizationString.world_croa, WorldID.Croa),
-
-                new World(LocalizationString.world_aurora, WorldID.Aurora),
-
-                new World(LocalizationString.world_bera, WorldID.Bera),
-
-                new World(LocalizationString.world_red, WorldID.Red),
-
-                new World(LocalizationString.world_union, WorldID.Union),
-
-                new World(LocalizationString.world_zenith, WorldID.Zenith),
-
-                new World(LocalizationString.world_enosis, WorldID.Enosis),
-
-                new World(LocalizationString.world_nova, WorldID.Nova),
-
-                new World(LocalizationString.world_reboot, WorldID.Reboot),
-
-                new World(LocalizationString.world_reboot2, WorldID.Reboot2),
-
-                new World(LocalizationString.world_burning, WorldID.Burning),
-
-                new World(LocalizationString.world_burning2, WorldID.Burning2)
-            };
-
             SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
-
+            CanEdit = true;
 
             PropertyChanged += OnPropertyChanged;
-
-            CanEdit = true;
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
