@@ -4,6 +4,7 @@ using System.Windows;
 
 using KMSGuildExtractor.Core.Utils;
 using KMSGuildExtractor.Localization;
+using KMSGuildExtractor.View;
 
 namespace KMSGuildExtractor.ViewModel
 {
@@ -39,8 +40,17 @@ namespace KMSGuildExtractor.ViewModel
 
         private Uri _releaseLink;
 
+        public object WorkView
+        {
+            get => _workView;
+            set => SetProperty(ref _workView, value, nameof(WorkView));
+        }
+
+        private object _workView;
+
         public MainWindowViewModel()
         {
+            WorkView = new SearchView(this);
             Task.Run(InitializeUpdateStatus);
         }
 

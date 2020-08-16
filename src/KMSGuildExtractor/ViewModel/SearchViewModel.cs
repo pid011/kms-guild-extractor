@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
@@ -10,6 +8,8 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class SearchViewModel : BindableBase
     {
+        private readonly MainWindowViewModel _main;
+
         public bool CanEdit
         {
             get => _canEdit;
@@ -77,8 +77,9 @@ namespace KMSGuildExtractor.ViewModel
 
         public DelegateCommand SearchCommand { get; }
 
-        public SearchViewModel()
+        public SearchViewModel(MainWindowViewModel main)
         {
+            _main = main;
             SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             CanEdit = true;
 
@@ -97,12 +98,9 @@ namespace KMSGuildExtractor.ViewModel
         private bool CanExecuteSearchCommand(object _) =>
             CanEdit && SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0;
 
-        private async void ExecuteSearchCommand(object _)
+        private void ExecuteSearchCommand(object _)
         {
-            CanEdit = false;
-            MessageBox.Show("Pressed");
-            await Task.Delay(5000);
-            CanEdit = true;
+            //_main.WorkView = new TestView(_main, GuildName);
         }
 
         public class World

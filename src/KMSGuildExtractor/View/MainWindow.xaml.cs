@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
+using KMSGuildExtractor.ViewModel;
+
 namespace KMSGuildExtractor.View
 {
     /// <summary>
@@ -15,7 +17,7 @@ namespace KMSGuildExtractor.View
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new SearchView());
+            DataContext = new MainWindowViewModel();
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)

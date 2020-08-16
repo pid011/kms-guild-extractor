@@ -1,4 +1,4 @@
-<Page x:Class="KMSGuildExtractor.View.SearchView"
+<UserControl x:Class="KMSGuildExtractor.View.SearchView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,11 +6,7 @@
       xmlns:local="clr-namespace:KMSGuildExtractor.Localization"
       xmlns:viewmodel="clr-namespace:KMSGuildExtractor.ViewModel"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="400"
-      Title="SearchPage">
-  <Page.DataContext>
-    <viewmodel:SearchViewModel/>
-  </Page.DataContext>
+      d:DesignHeight="450" d:DesignWidth="400">
   <Grid>
     <StackPanel VerticalAlignment="Stretch">
       <StackPanel HorizontalAlignment="Center">
@@ -114,4 +110,4 @@
       </StackPanel>
     </StackPanel>
   </Grid>
-</Page>
+</UserControl>

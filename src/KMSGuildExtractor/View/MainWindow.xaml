@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMSGuildExtractor.Localization"
         xmlns:viewmodel="clr-namespace:KMSGuildExtractor.ViewModel"
+        xmlns:view="clr-namespace:KMSGuildExtractor.View"
         x:Class="KMSGuildExtractor.View.MainWindow"
         mc:Ignorable="d"
         Height="700"
@@ -20,10 +21,6 @@
         Background="{x:Null}"
         Title="{Binding Title}"
         Style="{StaticResource CustomWindowStyle}">
-
-  <Window.DataContext>
-    <viewmodel:MainWindowViewModel/>
-  </Window.DataContext>
   <Grid HorizontalAlignment="Stretch">
     <Grid.RowDefinitions>
       <RowDefinition Height="30"/>
@@ -133,9 +130,9 @@
           </TextBlock>
         </StackPanel>
       </StackPanel>
-      <Frame x:Name="MainFrame"
-             NavigationUIVisibility="Hidden"
-             Margin="0,50,0,0"/>
+      <ContentControl x:Name="WorkView"
+                      Margin="0,50,0,0"
+                      Content="{Binding WorkView}"/>
     </StackPanel>
   </Grid>
 </Window>
