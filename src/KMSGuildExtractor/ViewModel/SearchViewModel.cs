@@ -8,7 +8,7 @@ using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel
 {
-    public class SearchPageViewModel : BindableBase
+    public class SearchViewModel : BindableBase
     {
         public bool CanEdit
         {
@@ -77,7 +77,7 @@ namespace KMSGuildExtractor.ViewModel
 
         public DelegateCommand SearchCommand { get; }
 
-        public SearchPageViewModel()
+        public SearchViewModel()
         {
             SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
             CanEdit = true;

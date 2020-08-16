@@ -1,4 +1,4 @@
-<Page x:Class="KMSGuildExtractor.View.SearchPage"
+<Page x:Class="KMSGuildExtractor.View.SearchView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="400"
       Title="SearchPage">
   <Page.DataContext>
-    <viewmodel:SearchPageViewModel/>
+    <viewmodel:SearchViewModel/>
   </Page.DataContext>
   <Grid>
     <StackPanel VerticalAlignment="Stretch">

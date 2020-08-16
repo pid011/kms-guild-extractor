@@ -15,7 +15,7 @@ namespace KMSGuildExtractor.View
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new SearchPage());
+            MainFrame.Navigate(new SearchView());
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)
