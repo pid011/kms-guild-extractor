@@ -1,5 +1,10 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
@@ -8,15 +13,11 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class SearchViewModel : BindableBase
     {
-        private readonly MainWindowViewModel _main;
-
         public bool CanEdit
         {
             get => _canEdit;
             private set => SetProperty(ref _canEdit, value, nameof(CanEdit));
         }
-
-        private bool _canEdit;
 
         public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
         {
@@ -56,31 +57,58 @@ namespace KMSGuildExtractor.ViewModel
             get => _selectedWorld;
             set => SetProperty(ref _selectedWorld, value, nameof(SelectedWorld));
         }
-
-        private World _selectedWorld;
-
-        public string GuildName
+        public string InputGuildName
         {
-            get => _guildName;
-            set => SetProperty(ref _guildName, value ?? string.Empty, nameof(GuildName));
+            get => _inputGuildName;
+            set => SetProperty(ref _inputGuildName, value ?? string.Empty, nameof(InputGuildName));
+        }
+        public string InputGuildNameCheck
+        {
+            get => _inputGuildNameCheck;
+            set => SetProperty(ref _inputGuildNameCheck, value ?? string.Empty, nameof(InputGuildNameCheck));
         }
 
-        private string _guildName = string.Empty;
-
-        public string GuildNameCheck
+        public string SearchResultGuildName
         {
-            get => _guildNameCheck;
-            set => SetProperty(ref _guildNameCheck, value ?? string.Empty, nameof(GuildNameCheck));
+            get => _searchResultGuildName;
+            set => SetProperty(ref _searchResultGuildName, value, nameof(SearchResultGuildName));
         }
 
-        private string _guildNameCheck = string.Empty;
+        public string SearchResultGuildWorld
+        {
+            get => _searchResultGuildWorld;
+            set => SetProperty(ref _searchResultGuildWorld, value, nameof(SearchResultGuildWorld));
+        }
+
+        public string SearchResultGuildLevel
+        {
+            get => _searchResultGuidLevel;
+            set => SetProperty(ref _searchResultGuidLevel, value, nameof(SearchResultGuildLevel));
+        }
 
         public DelegateCommand SearchCommand { get; }
+        public DelegateCommand SubmitCommand { get; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
+        private readonly MainWindowViewModel _main;
+
+        private bool _canEdit;
+        private bool _canSubmit;
+        private World _selectedWorld;
+        private string _inputGuildName = string.Empty;
+        private string _inputGuildNameCheck = string.Empty;
+        private string _searchResultGuildName = LocalizationString.search_no_result;
+        private string _searchResultGuildWorld = LocalizationString.search_no_result;
+        private string _searchResultGuidLevel = LocalizationString.search_no_result;
+
+        private CancellationTokenSource _searchCancellation;
+        private IGuild _searchResult;
 
         public SearchViewModel(MainWindowViewModel main)
         {
             _main = main;
             SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
+            SubmitCommand = new DelegateCommand(ExecuteSubmitCommand, CanExecuteSubmitCommand);
             CanEdit = true;
 
             PropertyChanged += OnPropertyChanged;
@@ -88,27 +116,81 @@ namespace KMSGuildExtractor.ViewModel
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(GuildName))
+            if (e.PropertyName == nameof(InputGuildName))
             {
-                bool valid = Guild.IsValidGuildName(GuildName);
-                GuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
+                bool valid = Guild.IsValidGuildName(InputGuildName);
+                InputGuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
+            }
+        }
+
+        private async void ExecuteSearchCommand(object _)
+        {
+            bool done = false;
+            try
+            {
+                SetSearchResultMessageSingle(LocalizationString.search_ing);
+
+                _searchCancellation = new CancellationTokenSource();
+                _searchResult = await Guild.SearchAsync(InputGuildName, SelectedWorld.Url, _searchCancellation.Token);
+
+                if (_searchResult is null)
+                {
+                    SetSearchResultMessageSingle(LocalizationString.search_no_result);
+                }
+                else
+                {
+                    SetSearchResultMessage(InputGuildName, SelectedWorld.Name, _searchResult.Level.ToString());
+                    done = true;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                SetSearchResultMessageSingle(LocalizationString.search_no_result);
+                done = false;
+            }
+            catch (ParseException)
+            {
+                SetSearchResultMessageSingle(LocalizationString.search_error);
+                done = false;
+                // Serilog로 Exception 데이터 저장하기
+            }
+            finally
+            {
+                _canSubmit = done;
+            }
+
+            void SetSearchResultMessageSingle(string singleMessage)
+            {
+                SetSearchResultMessage(singleMessage, singleMessage, singleMessage);
+            }
+
+            void SetSearchResultMessage(string name, string world, string level)
+            {
+                SearchResultGuildName = name;
+                SearchResultGuildWorld = world;
+                SearchResultGuildLevel = level;
             }
         }
 
         private bool CanExecuteSearchCommand(object _) =>
-            CanEdit && SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0;
+            CanEdit && SelectedWorld != null && InputGuildName.Length != 0 && InputGuildNameCheck.Length == 0;
 
-        private void ExecuteSearchCommand(object _)
+        private void ExecuteSubmitCommand(object _)
         {
+            MessageBox.Show(_searchResult is null
+                ? "search result is null"
+                : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
             //_main.WorkView = new TestView(_main, GuildName);
         }
+
+        private bool CanExecuteSubmitCommand(object _) => _canSubmit;
 
         public class World
         {
             public string Name { get; }
 
-            public string WorldLogoPath =>
-                $"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png";
+            public Uri WorldLogoPath =>
+                new Uri($"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png");
 
             public WorldID Url { get; }
 

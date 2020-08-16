@@ -204,4 +204,25 @@
   <data name="world_burning2" xml:space="preserve">
     <value>버닝2</value>
   </data>
+  <data name="guild_submit" xml:space="preserve">
+    <value>길드원 목록 가져오기</value>
+  </data>
+  <data name="search_error" xml:space="preserve">
+    <value>데이터를 불러오지 못했습니다.</value>
+  </data>
+  <data name="search_ing" xml:space="preserve">
+    <value>검색 중 입니다...</value>
+  </data>
+  <data name="search_no_result" xml:space="preserve">
+    <value>검색결과가 없습니다.</value>
+  </data>
+  <data name="search_result_level" xml:space="preserve">
+    <value>레벨</value>
+  </data>
+  <data name="search_result_name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="search_result_world" xml:space="preserve">
+    <value>월드</value>
+  </data>
 </root>
