@@ -158,7 +158,7 @@ indent_size = 2
 
 # Xml files
 [*.{xaml,xml,stylecop,resx,ruleset}]
-indent_size = 2
+tab_width = 4
 
 # Xml config files
 [*.{props,targets,config,nuspec}]

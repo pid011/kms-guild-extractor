@@ -7,6 +7,7 @@ using System.Windows;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
+using KMSGuildExtractor.View;
 
 namespace KMSGuildExtractor.ViewModel
 {
@@ -114,7 +115,7 @@ namespace KMSGuildExtractor.ViewModel
         private string _searchResultGuidLevel = LocalizationString.search_no_result;
 
         private CancellationTokenSource _searchCancellation;
-        private IGuild _searchResult;
+        private Guild _searchResult;
 
         public SearchViewModel(MainWindowViewModel main)
         {
@@ -156,7 +157,7 @@ namespace KMSGuildExtractor.ViewModel
                 }
                 else
                 {
-                    SetSearchResultMessage(InputGuildName, SelectedWorld.Name, _searchResult.Level.ToString());
+                    SetSearchResultMessage(InputGuildName, SelectedWorld.Name, $"{_searchResult.Level}Lv");
                     done = true;
                 }
             }
@@ -195,10 +196,10 @@ namespace KMSGuildExtractor.ViewModel
 
         private void ExecuteSubmitCommand(object _)
         {
-            MessageBox.Show(_searchResult is null
-                ? "search result is null"
-                : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
-            //_main.WorkView = new TestView(_main, GuildName);
+            //MessageBox.Show(_searchResult is null
+            //    ? "search result is null"
+            //    : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
+            _main.WorkView = new DataLoadView(_main, _searchResult);
         }
 
         public class World

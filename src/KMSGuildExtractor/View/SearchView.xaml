@@ -7,190 +7,157 @@
              xmlns:viewmodel="clr-namespace:KMSGuildExtractor.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400">
-  <Grid>
-    <StackPanel VerticalAlignment="Stretch">
-      <StackPanel HorizontalAlignment="Center">
+    <Grid>
+        <Grid VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="60*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Width="150"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0,5,0,0"/>
+                        </Style>
 
-        <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
+                        </Style>
 
-          <Style TargetType="{x:Type StackPanel}">
-            <Setter Property="Margin" Value="0,5,0,0"/>
-          </Style>
+                    </StackPanel.Resources>
+                    <StackPanel>
+                        <Label Content="{x:Static local:LocalizationString.input_name_server}"
+                               FontSize="11"/>
+                        <ComboBox Width="150"
+                                  ItemsSource="{Binding WorldList}"
+                                  SelectedValue="{Binding SelectedWorld}"
+                                  Style="{DynamicResource ComboBoxFlatStyle}"
+                                  IsEnabled="{Binding CanEdit}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding WorldLogoPath}"
+                                               Stretch="Uniform"
+                                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                        <Label Content="{Binding Name}">
+                                            <Label.Resources>
+                                                <Style TargetType="{x:Type Label}">
+                                                    <Setter Property="Margin" Value="3,0,0,0"/>
+                                                    <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
+                                                    <Setter Property="Foreground" Value="GhostWhite"/>
+                                                </Style>
+                                            </Label.Resources>
+                                        </Label>
 
-          <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="TextAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="Gray"/>
-          </Style>
-
-        </StackPanel.Resources>
-
-        <StackPanel Orientation="Horizontal"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    Height="30">
-          <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
-                     Width="65"/>
-          <ComboBox Width="150"
-                    ItemsSource="{Binding WorldList}"
-                    SelectedValue="{Binding SelectedWorld}"
-                    Style="{DynamicResource ComboBoxFlatStyle}" IsEnabled="{Binding CanEdit}">
-            <ComboBox.ItemTemplate>
-              <DataTemplate>
-                <StackPanel Orientation="Horizontal" Height="20">
-
-                  <Image Source="{Binding WorldLogoPath}"
-                         Stretch="Uniform"
-                         RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                  <TextBlock Text="{Binding Name}">
-                    <TextBlock.Resources>
-                      <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="Margin" Value="3,0,0,0"/>
-                        <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
-                      </Style>
-                    </TextBlock.Resources>
-                  </TextBlock>
-
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <StackPanel>
+                            <Label Content="{x:Static local:LocalizationString.input_name_guild}"
+                                   FontSize="11"/>
+                            <TextBox x:Name="GuildNameInput1"
+                                     TextWrapping="Wrap"
+                                     Background="#111"
+                                     Foreground="GhostWhite"
+                                     CaretBrush="GhostWhite"
+                                     BorderBrush="Transparent"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"
+                                     FontSize="14"
+                                     FontFamily="{StaticResource NanumGothic}"
+                                     Width="150"
+                                     Height="25"
+                                     Text="{Binding InputGuildName, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding CanEdit}"/>
+                        </StackPanel>
+                        <Label HorizontalAlignment="Right"
+                               FontSize="11"
+                               Foreground="Red"
+                               Visibility="Visible"
+                               Content="{Binding InputGuildNameCheck}"/>
+                    </StackPanel>
                 </StackPanel>
-              </DataTemplate>
-            </ComboBox.ItemTemplate>
-          </ComboBox>
-        </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
-                      Height="30">
-            <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
-                       FontFamily="{StaticResource NanumGothic}"
-                       Width="65"/>
-            <TextBox x:Name="GuildNameInput1"
-                     TextWrapping="Wrap"
-                     Background="#111"
-                     Foreground="GhostWhite"
-                     CaretBrush="GhostWhite"
-                     BorderBrush="Transparent"
-                     HorizontalContentAlignment="Left"
-                     VerticalContentAlignment="Center"
-                     FontSize="14"
-                     FontFamily="{StaticResource NanumGothic}"
-                     Width="150"
-                     Text="{Binding InputGuildName, UpdateSourceTrigger=PropertyChanged}"
-                     IsEnabled="{Binding CanEdit}"/>
-          </StackPanel>
-          <TextBlock TextAlignment="Right"
-                     FontSize="11"
-                     Margin="0"
-                     VerticalAlignment="Top"
-                     Foreground="Red"
-                     Visibility="Visible"
-                     Text="{Binding InputGuildNameCheck}"/>
-        </StackPanel>
+                <Button x:Name="SearchButton"
+                        Foreground="GhostWhite"
+                        Style="{DynamicResource DarkButton}"
+                        Command="{Binding SearchCommand}"
+                        IsEnabled="{Binding CanSearch}"
+                        Height="30">
+                    <Label Content="{x:Static local:LocalizationString.input_search}"
+                           Foreground="GhostWhite"
+                           FontFamily="{StaticResource NanumGothic}"
+                           FontSize="15"
+                           FontWeight="Bold"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" Width="150">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="150"/>
+                            <Setter Property="Margin" Value="0,0,0,5"/>
+                        </Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="FontFamily" Value="{StaticResource NanumGothic}"/>
+                        </Style>
 
-        <Button x:Name="SearchButton"
-                Foreground="GhostWhite"
-                Style="{DynamicResource DarkButton}"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Height="30"
-                Command="{Binding SearchCommand}"
-                Margin="0,10,0,0" IsEnabled="{Binding CanSearch}">
-          <TextBlock Text="{x:Static local:LocalizationString.input_search}"
-                     FontFamily="{StaticResource NanumGothic}"
-                     HorizontalAlignment="Stretch"
-                     VerticalAlignment="Stretch"
-                     Margin="10,3,10,3"
-                     FontWeight="Bold"/>
-        </Button>
-      </StackPanel>
-      <StackPanel HorizontalAlignment="Center" Margin="0,50,0,0">
-
-        <StackPanel.Resources>
-
-          <Style TargetType="{x:Type StackPanel}">
-            <Setter Property="Margin" Value="0,5,0,0"/>
-          </Style>
-
-          <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="TextAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="Gray"/>
-          </Style>
-
-        </StackPanel.Resources>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Left">
-            <TextBlock Text="{x:Static local:LocalizationString.search_result_name}"
-                       FontFamily="{StaticResource NanumGothic}"
-                       Width="65"/>
-            <TextBlock x:Name="GuildNameTextBlock"
-                     TextWrapping="Wrap"
-                     Foreground="GhostWhite"
-                     FontSize="14"
-                     FontFamily="{StaticResource NanumGothic}"
-                     Text="{Binding SearchResultGuildName}"/>
-          </StackPanel>
-        </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Left">
-            <TextBlock Text="{x:Static local:LocalizationString.search_result_world}"
-                       FontFamily="{StaticResource NanumGothic}"
-                       Width="65"/>
-            <TextBlock x:Name="GuildWorldTextBlock"
-                     TextWrapping="Wrap"
-                     Foreground="GhostWhite"
-                     FontSize="14"
-                     FontFamily="{StaticResource NanumGothic}"
-                     Text="{Binding SearchResultGuildWorld}"/>
-          </StackPanel>
-        </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Left">
-            <TextBlock Text="{x:Static local:LocalizationString.search_result_level}"
-                       FontFamily="{StaticResource NanumGothic}"
-                       Width="65"/>
-            <TextBlock x:Name="GuildLevelTextBlock"
-                     TextWrapping="Wrap"
-                     Foreground="GhostWhite"
-                     FontSize="14"
-                     FontFamily="{StaticResource NanumGothic}"
-                     Text="{Binding SearchResultGuildLevel}"/>
-          </StackPanel>
-        </StackPanel>
-
-        <Button x:Name="SubmitButton"
-                Foreground="GhostWhite"
-                Style="{DynamicResource DarkButton}"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Height="30"
-                Command="{Binding SubmitCommand}"
-                Margin="0,10,0,0"
-                IsEnabled="{Binding CanSubmit}">
-          <TextBlock Text="{x:Static local:LocalizationString.guild_submit}"
-                     FontFamily="{StaticResource NanumGothic}"
-                     HorizontalAlignment="Stretch"
-                     VerticalAlignment="Stretch"
-                     Margin="10,3,10,3"
-                     FontWeight="Bold"/>
-        </Button>
-      </StackPanel>
-
-    </StackPanel>
-  </Grid>
+                    </StackPanel.Resources>
+                    <StackPanel>
+                        <Label Content="{x:Static local:LocalizationString.search_result_name}"
+                                   FontSize="11"/>
+                        <Label x:Name="GuildNameTextBlock"
+                                   Height="25"
+                                   Background="#111111"
+                                   FontSize="14"
+                                   FontFamily="{StaticResource NanumGothic}"
+                                   Content="{Binding SearchResultGuildName}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="{x:Static local:LocalizationString.search_result_world}"
+                                   FontSize="11"/>
+                        <Label x:Name="GuildWorldTextBlock"
+                                   Height="25"
+                                   Background="#111111"
+                                   FontSize="14"
+                                   FontFamily="{StaticResource NanumGothic}"
+                                   Content="{Binding SearchResultGuildWorld}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="{x:Static local:LocalizationString.search_result_level}"
+                                   FontSize="11"/>
+                        <Label x:Name="GuildLevelTextBlock"
+                                   Height="25"
+                                   Background="#111111"
+                                   FontSize="14"
+                                   FontFamily="{StaticResource NanumGothic}"
+                                   Content="{Binding SearchResultGuildLevel}"/>
+                    </StackPanel>
+                    <Button x:Name="SubmitButton"
+                            Margin="0,10,0,0"
+                            Style="{DynamicResource DarkButton}"
+                            Height="30"
+                            Command="{Binding SubmitCommand}"
+                            IsEnabled="{Binding CanSubmit}">
+                        <Label Content="{x:Static local:LocalizationString.guild_submit}"
+                               Foreground="GhostWhite"
+                               FontFamily="{StaticResource NanumGothic}"
+                               FontSize="15"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               FontWeight="Bold"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>
