@@ -99,7 +99,7 @@
                 HorizontalAlignment="Center"
                 Height="30"
                 Command="{Binding SearchCommand}"
-                Margin="0,10,0,0">
+                Margin="0,10,0,0" IsEnabled="{Binding CanSearch}">
           <TextBlock Text="{x:Static local:LocalizationString.input_search}"
                      FontFamily="{StaticResource NanumGothic}"
                      HorizontalAlignment="Stretch"
@@ -180,7 +180,8 @@
                 HorizontalAlignment="Center"
                 Height="30"
                 Command="{Binding SubmitCommand}"
-                Margin="0,10,0,0">
+                Margin="0,10,0,0"
+                IsEnabled="{Binding CanSubmit}">
           <TextBlock Text="{x:Static local:LocalizationString.guild_submit}"
                      FontFamily="{StaticResource NanumGothic}"
                      HorizontalAlignment="Stretch"

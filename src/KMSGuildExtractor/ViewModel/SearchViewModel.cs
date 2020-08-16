@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
@@ -17,6 +16,18 @@ namespace KMSGuildExtractor.ViewModel
         {
             get => _canEdit;
             private set => SetProperty(ref _canEdit, value, nameof(CanEdit));
+        }
+
+        public bool CanSearch
+        {
+            get => _canSearch;
+            private set => SetProperty(ref _canSearch, value, nameof(CanSearch));
+        }
+
+        public bool CanSubmit
+        {
+            get => _canSubmit;
+            private set => SetProperty(ref _canSubmit, value, nameof(CanSubmit));
         }
 
         public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
@@ -93,6 +104,7 @@ namespace KMSGuildExtractor.ViewModel
         private readonly MainWindowViewModel _main;
 
         private bool _canEdit;
+        private bool _canSearch;
         private bool _canSubmit;
         private World _selectedWorld;
         private string _inputGuildName = string.Empty;
@@ -107,10 +119,11 @@ namespace KMSGuildExtractor.ViewModel
         public SearchViewModel(MainWindowViewModel main)
         {
             _main = main;
-            SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
-            SubmitCommand = new DelegateCommand(ExecuteSubmitCommand, CanExecuteSubmitCommand);
+            SearchCommand = new DelegateCommand(ExecuteSearchCommand);
+            SubmitCommand = new DelegateCommand(ExecuteSubmitCommand);
             CanEdit = true;
-
+            CanSearch = false;
+            CanSubmit = false;
             PropertyChanged += OnPropertyChanged;
         }
 
@@ -120,12 +133,16 @@ namespace KMSGuildExtractor.ViewModel
             {
                 bool valid = Guild.IsValidGuildName(InputGuildName);
                 InputGuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
+                CanSearch = CanEdit && SelectedWorld != null && InputGuildName.Length != 0 && valid;
             }
         }
 
         private async void ExecuteSearchCommand(object _)
         {
             bool done = false;
+            CanEdit = false;
+            CanSearch = false;
+            CanSubmit = false;
             try
             {
                 SetSearchResultMessageSingle(LocalizationString.search_ing);
@@ -156,7 +173,11 @@ namespace KMSGuildExtractor.ViewModel
             }
             finally
             {
-                _canSubmit = done;
+                CanEdit = true;
+
+                await Task.Delay(1000);
+                CanSearch = true;
+                CanSubmit = done;
             }
 
             void SetSearchResultMessageSingle(string singleMessage)
@@ -172,9 +193,6 @@ namespace KMSGuildExtractor.ViewModel
             }
         }
 
-        private bool CanExecuteSearchCommand(object _) =>
-            CanEdit && SelectedWorld != null && InputGuildName.Length != 0 && InputGuildNameCheck.Length == 0;
-
         private void ExecuteSubmitCommand(object _)
         {
             MessageBox.Show(_searchResult is null
@@ -182,8 +200,6 @@ namespace KMSGuildExtractor.ViewModel
                 : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
             //_main.WorkView = new TestView(_main, GuildName);
         }
-
-        private bool CanExecuteSubmitCommand(object _) => _canSubmit;
 
         public class World
         {
