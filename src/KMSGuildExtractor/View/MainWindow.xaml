@@ -24,7 +24,7 @@
 
             <Image Source="pack://application:,,,/resources/icons/icon.png"
                    Stretch="None"
-                   Visibility="Visible" 
+                   Visibility="Visible"
                    ToolTip="{x:Static local:LocalizationString.info_image_tooltip}">
                 <Image.Effect>
                     <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10"/>

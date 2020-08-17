@@ -17,5 +17,26 @@
                VerticalAlignment="Center"
                Stretch="None"
                RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <ListBox x:Name="MemberListView"
+                  ItemsSource="{Binding MemberList}"
+                  Visibility="{Binding MemberListVisivility}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <Label Content="{Binding Name}"
+                               Width="100"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                        <Label Content="{Binding Position}"
+                               Width="80" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                        <Label Content="{Binding Status}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
