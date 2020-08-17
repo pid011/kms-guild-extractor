@@ -10,8 +10,6 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        public string Title => $"{LocalizationString.title} {VersionString}";
-
         public Version AppVersion => typeof(App).Assembly.GetName().Version;
 
         public string VersionString => $"v{AppVersion.ToString(3)}";
