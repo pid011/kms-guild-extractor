@@ -10,10 +10,10 @@ namespace KMSGuildExtractor.View
     /// </summary>
     public partial class DataLoadView : UserControl
     {
-        public DataLoadView(MainWindowViewModel main, Guild guildData)
+        public DataLoadView(Guild guildData)
         {
             InitializeComponent();
-            DataContext = new DataLoadViewModel(main, guildData);
+            DataContext = new DataLoadViewModel(guildData);
         }
     }
 }

@@ -17,26 +17,56 @@
                VerticalAlignment="Center"
                Stretch="None"
                RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <ListBox x:Name="MemberListView"
-                  ItemsSource="{Binding MemberList}"
-                  Visibility="{Binding MemberListVisivility}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center">
-                        <Label Content="{Binding Name}"
-                               Width="100"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"/>
-                        <Label Content="{Binding Position}"
-                               Width="80" VerticalAlignment="Center"
-                               HorizontalAlignment="Center"/>
-                        <Label Content="{Binding Status}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <StackPanel Orientation="Vertical"
+                    Visibility="{Binding MemberListVisivility}">
+            <TextBlock Padding="5"
+                       HorizontalAlignment="Center">
+                <Run FontWeight="Bold" Foreground="Red" Text="{Binding GuildSummary}" FontSize="15"/>
+            </TextBlock>
+            <ListBox x:Name="MemberListView"
+                     ItemsSource="{Binding MemberList}"
+                     Width="370"
+                     Height="350"
+                     BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Padding" Value="3"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="{Binding Name}"
+                                   Width="100"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Stretch"/>
+                            <TextBlock Text="{Binding Position}"
+                                   Width="80"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Status}"
+                                   Width="150"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Stretch"
+                                   Background="Orange"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,20,0,0">
+                <Button Width="150"
+                        IsEnabled="{Binding CanLoad}"
+                        Command="{Binding LoadCommand}">
+                    <Run FontSize="14" Text="{x:Static local:LocalizationString.button_load_data}"/>
+                </Button>
+                <Button Width="150"
+                        IsEnabled="{Binding CanExtract}"
+                        Command="{Binding ExtractCommand}">
+                    <Run FontSize="14" Text="{x:Static local:LocalizationString.button_extract_data}"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

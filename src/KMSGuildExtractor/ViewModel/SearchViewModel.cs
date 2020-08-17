@@ -156,7 +156,7 @@ namespace KMSGuildExtractor.ViewModel
                 }
                 else
                 {
-                    SetSearchResultMessage(InputGuildName, SelectedWorld.Name, $"{_searchResult.Level}Lv");
+                    SetSearchResultMessage(InputGuildName, SelectedWorld.Name, $"{_searchResult.Level}Lv.");
                     done = true;
                 }
             }
@@ -198,7 +198,7 @@ namespace KMSGuildExtractor.ViewModel
             //MessageBox.Show(_searchResult is null
             //    ? "search result is null"
             //    : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
-            _main.WorkView = new DataLoadView(_main, _searchResult);
+            _main.WorkView = new DataLoadView(_searchResult);
         }
 
         public class World

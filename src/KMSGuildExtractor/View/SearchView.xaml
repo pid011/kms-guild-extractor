@@ -17,8 +17,13 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0,0,0,5"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <StackPanel>
-                        <Label Content="{x:Static local:LocalizationString.input_name_server}"
+                        <TextBlock Text="{x:Static local:LocalizationString.input_name_server}"
                                FontSize="11"/>
                         <ComboBox ItemsSource="{Binding WorldList}"
                                   SelectedValue="{Binding SelectedWorld}"
@@ -29,7 +34,10 @@
                                         <Image Source="{Binding WorldLogoPath}"
                                                Stretch="Uniform"
                                                RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                                        <Label Content="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Name}"
+                                                   Margin="5,0,0,0"
+                                                   FontSize="14"
+                                                   VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
@@ -37,7 +45,7 @@
                     </StackPanel>
                     <StackPanel>
                         <StackPanel>
-                            <Label Content="{x:Static local:LocalizationString.input_name_guild}"
+                            <TextBlock Text="{x:Static local:LocalizationString.input_name_guild}"
                                    FontSize="11"/>
                             <TextBox x:Name="GuildNameInput1"
                                      Height="30"
@@ -48,11 +56,12 @@
                                      Text="{Binding InputGuildName, UpdateSourceTrigger=PropertyChanged}"
                                      IsEnabled="{Binding CanEdit}"/>
                         </StackPanel>
-                        <Label HorizontalAlignment="Right"
-                               FontSize="11"
-                               Foreground="Red"
-                               Visibility="Visible"
-                               Content="{Binding InputGuildNameCheck}"/>
+                        <TextBlock HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   FontSize="11"
+                                   Foreground="Red"
+                                   Visibility="Visible"
+                                   Text="{Binding InputGuildNameCheck}"/>
                     </StackPanel>
                 </StackPanel>
                 <Button x:Name="SearchButton"
@@ -69,33 +78,36 @@
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type StackPanel}">
                             <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="Margin" Value="0,0,0,5"/>
                         </Style>
 
                     </StackPanel.Resources>
                     <StackPanel>
-                        <Label Content="{x:Static local:LocalizationString.search_result_name}"
-                               FontSize="11"/>
-                        <Label x:Name="GuildNameTextBlock"
-                               FontSize="14"
-                               Background="LightGray"
-                               Content="{Binding SearchResultGuildName}"/>
+                        <TextBlock Text="{x:Static local:LocalizationString.search_result_name}"
+                                   FontSize="11"/>
+                        <TextBlock x:Name="GuildNameTextBlock"
+                                   FontSize="14"
+                                   Background="LightGray"
+                                   Padding="3"
+                                   Text="{Binding SearchResultGuildName}"/>
                     </StackPanel>
                     <StackPanel>
-                        <Label Content="{x:Static local:LocalizationString.search_result_world}"
-                               FontSize="11"/>
-                        <Label x:Name="GuildWorldTextBlock"
-                               FontSize="14"
-                               Background="LightGray"
-                               Content="{Binding SearchResultGuildWorld}"/>
+                        <TextBlock Text="{x:Static local:LocalizationString.search_result_world}"
+                                   FontSize="11"/>
+                        <TextBlock x:Name="GuildWorldTextBlock"
+                                   FontSize="14"
+                                   Background="LightGray"
+                                   Padding="3"
+                               Text="{Binding SearchResultGuildWorld}"/>
                     </StackPanel>
                     <StackPanel>
-                        <Label Content="{x:Static local:LocalizationString.search_result_level}"
-                               FontSize="11"/>
-                        <Label x:Name="GuildLevelTextBlock"
-                               FontSize="14"
-                               Background="LightGray"
-                               Content="{Binding SearchResultGuildLevel}"/>
+                        <TextBlock Text="{x:Static local:LocalizationString.search_result_level}"
+                                   FontSize="11"/>
+                        <TextBlock x:Name="GuildLevelTextBlock"
+                                   FontSize="14"
+                                   Background="LightGray"
+                                   Padding="3"
+                                   Text="{Binding SearchResultGuildLevel}"/>
                     </StackPanel>
                     <Button x:Name="SubmitButton"
                             Margin="0,10,0,0"

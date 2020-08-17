@@ -234,4 +234,22 @@
   <data name="guild_position_staff" xml:space="preserve">
     <value>부마스터</value>
   </data>
+  <data name="button_extract_data" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="button_load_data" xml:space="preserve">
+    <value>유저정보 불러오기</value>
+  </data>
+  <data name="load_done" xml:space="preserve">
+    <value>완료</value>
+  </data>
+  <data name="load_ready" xml:space="preserve">
+    <value>준비됨</value>
+  </data>
+  <data name="load_syncing" xml:space="preserve">
+    <value>데이터를 동기화하는 중</value>
+  </data>
+  <data name="load_working" xml:space="preserve">
+    <value>데이터를 불러오는 중</value>
+  </data>
 </root>

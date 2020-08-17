@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
+using System.Windows.Media;
 
 using KMSGuildExtractor.Core;
+using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel
 {
@@ -27,21 +24,48 @@ namespace KMSGuildExtractor.ViewModel
             set => SetProperty(ref _memberListVisivility, value, nameof(MemberListVisivility));
         }
 
-        public ObservableCollection<ListViewData> MemberList { get; } = new ObservableCollection<ListViewData>();
+        public string GuildSummary
+        {
+            get => _guildSummary;
+            set => SetProperty(ref _guildSummary, value, nameof(GuildSummary));
+        }
 
-        private readonly MainWindowViewModel _main;
+        public ObservableCollection<ListViewData> MemberList { get; } = new ObservableCollection<ListViewData>();
+        public bool CanLoad
+        {
+            get => _canLoad;
+            set => _canLoad = SetProperty(ref _canLoad, value, nameof(CanLoad));
+        }
+        public bool CanExtract
+        {
+            get => _canExtract;
+            set => SetProperty(ref _canExtract, value, nameof(CanExtract));
+        }
+
+        public DelegateCommand LoadCommand { get; }
+        public DelegateCommand ExtractCommand { get; }
+
         private readonly Guild _guild;
 
         private Visibility _initializeLoading;
         private Visibility _memberListVisivility;
+        private string _guildSummary = string.Empty;
+        private bool _canLoad;
+        private bool _canExtract;
 
         private CancellationTokenSource _guildMemberLoadCancellation;
-        private ConcurrentQueue<(int number, User data)> _userWorkQueue;
+        //private ConcurrentQueue<(int number, User data)> _userWorkQueue;
 
-        public DataLoadViewModel(MainWindowViewModel main, Guild guildData)
+        public DataLoadViewModel(Guild guildData)
         {
-            _main = main;
             _guild = guildData;
+            GuildSummary = $"{_guild.Name}, {_guild.World.ToLocalizedString()}, {_guild.Level}Lv.";
+
+            CanLoad = true;
+            CanExtract = false;
+
+            LoadCommand = new DelegateCommand(ExecuteLoadCommand);
+            ExtractCommand = new DelegateCommand(ExecuteExtractCommand);
 
             _ = Task.Run(LoadGuildMember);
         }
@@ -64,9 +88,9 @@ namespace KMSGuildExtractor.ViewModel
                     await Application.Current.Dispatcher.InvokeAsync(() => MemberList.Add(new ListViewData
                     {
                         Name = user.Name,
-                        Position = position.ToLocalizedString(),
-                        Status = "준비됨"
-                    }));
+                        Position = position.ToLocalizedString()
+                    }.SetStatus(ListViewData.StatusSet.Ready)
+                    ));
                 }
             }
             catch (ParseException)
@@ -79,11 +103,57 @@ namespace KMSGuildExtractor.ViewModel
             }
         }
 
+        private void ExecuteExtractCommand(object _)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExecuteLoadCommand(object _)
+        {
+            throw new NotImplementedException();
+        }
+
         internal class ListViewData
         {
+            public enum StatusSet
+            {
+                Ready, Syncing, Loading, Done
+            }
+
             public string Name { get; set; }
             public string Position { get; set; }
             public string Status { get; set; }
+            public Color StatusColor { get; set; }
+
+            public ListViewData SetStatus(StatusSet status)
+            {
+                // 준비됨                 Colors.Orange
+                // 데이터를 동기화하는 중   Colors.LightSkyBlue
+                // 데이터를 불러오는 중     Colors.LightSteelBlue
+                // 완료                   Colors.LightGreen
+
+                switch (status)
+                {
+                    case StatusSet.Ready:
+                        Status = LocalizationString.load_ready;
+                        StatusColor = Colors.Orange;
+                        break;
+                    case StatusSet.Syncing:
+                        Status = LocalizationString.load_syncing;
+                        StatusColor = Colors.LightSkyBlue;
+                        break;
+                    case StatusSet.Loading:
+                        Status = LocalizationString.load_working;
+                        StatusColor = Colors.LightSteelBlue;
+                        break;
+                    case StatusSet.Done:
+                        Status = LocalizationString.load_done;
+                        StatusColor = Colors.LightGreen;
+                        break;
+                }
+
+                return this;
+            }
         }
     }
 }
