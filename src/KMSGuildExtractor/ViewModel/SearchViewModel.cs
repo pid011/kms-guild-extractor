@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
@@ -33,35 +32,35 @@ namespace KMSGuildExtractor.ViewModel
 
         public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
         {
-            new World(LocalizationString.world_luna, WorldID.Luna),
+            new World(WorldID.Luna),
 
-            new World(LocalizationString.world_scania, WorldID.Scania),
+            new World(WorldID.Scania),
 
-            new World(LocalizationString.world_elysium, WorldID.Elysium),
+            new World(WorldID.Elysium),
 
-            new World(LocalizationString.world_croa, WorldID.Croa),
+            new World(WorldID.Croa),
 
-            new World(LocalizationString.world_aurora, WorldID.Aurora),
+            new World(WorldID.Aurora),
 
-            new World(LocalizationString.world_bera, WorldID.Bera),
+            new World(WorldID.Bera),
 
-            new World(LocalizationString.world_red, WorldID.Red),
+            new World(WorldID.Red),
 
-            new World(LocalizationString.world_union, WorldID.Union),
+            new World(WorldID.Union),
 
-            new World(LocalizationString.world_zenith, WorldID.Zenith),
+            new World(WorldID.Zenith),
 
-            new World(LocalizationString.world_enosis, WorldID.Enosis),
+            new World(WorldID.Enosis),
 
-            new World(LocalizationString.world_nova, WorldID.Nova),
+            new World(WorldID.Nova),
 
-            new World(LocalizationString.world_reboot, WorldID.Reboot),
+            new World(WorldID.Reboot),
 
-            new World(LocalizationString.world_reboot2, WorldID.Reboot2),
+            new World(WorldID.Reboot2),
 
-            new World(LocalizationString.world_burning, WorldID.Burning),
+            new World(WorldID.Burning),
 
-            new World(LocalizationString.world_burning2, WorldID.Burning2)
+            new World(WorldID.Burning2)
         };
 
         public World SelectedWorld
@@ -211,9 +210,9 @@ namespace KMSGuildExtractor.ViewModel
 
             public WorldID Url { get; }
 
-            public World(string name, WorldID url)
+            public World(WorldID url)
             {
-                Name = name;
+                Name = url.ToLocalizedString();
                 Url = url;
             }
         }

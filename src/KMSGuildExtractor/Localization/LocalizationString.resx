@@ -225,4 +225,13 @@
   <data name="search_result_world" xml:space="preserve">
     <value>월드</value>
   </data>
+  <data name="guild_position_member" xml:space="preserve">
+    <value>길드원</value>
+  </data>
+  <data name="guild_position_owner" xml:space="preserve">
+    <value>마스터</value>
+  </data>
+  <data name="guild_position_staff" xml:space="preserve">
+    <value>부마스터</value>
+  </data>
 </root>

@@ -61,6 +61,33 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 길드원.
+        /// </summary>
+        public static string guild_position_member {
+            get {
+                return ResourceManager.GetString("guild_position_member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 마스터.
+        /// </summary>
+        public static string guild_position_owner {
+            get {
+                return ResourceManager.GetString("guild_position_owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 부마스터.
+        /// </summary>
+        public static string guild_position_staff {
+            get {
+                return ResourceManager.GetString("guild_position_staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 길드원 목록 가져오기.
         /// </summary>
         public static string guild_submit {
