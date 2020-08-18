@@ -10,7 +10,7 @@ using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel
 {
-    internal class DataLoadViewModel : BindableBase
+    public class DataLoadViewModel : BindableBase
     {
         public Visibility InitializeLoading
         {
@@ -113,7 +113,7 @@ namespace KMSGuildExtractor.ViewModel
             throw new NotImplementedException();
         }
 
-        internal class ListViewData
+        public class ListViewData
         {
             public enum State
             {
