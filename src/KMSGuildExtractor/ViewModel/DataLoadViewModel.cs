@@ -89,7 +89,7 @@ namespace KMSGuildExtractor.ViewModel
                     {
                         Name = user.Name,
                         Position = position.ToLocalizedString()
-                    }.SetStatus(ListViewData.StatusSet.Ready)
+                    }.SetStatus(ListViewData.State.Ready)
                     ));
                 }
             }
@@ -115,7 +115,7 @@ namespace KMSGuildExtractor.ViewModel
 
         internal class ListViewData
         {
-            public enum StatusSet
+            public enum State
             {
                 Ready, Syncing, Loading, Done
             }
@@ -125,7 +125,7 @@ namespace KMSGuildExtractor.ViewModel
             public string Status { get; set; }
             public Color StatusColor { get; set; }
 
-            public ListViewData SetStatus(StatusSet status)
+            public ListViewData SetStatus(State status)
             {
                 // 준비됨                 Colors.Orange
                 // 데이터를 동기화하는 중   Colors.LightSkyBlue
@@ -134,19 +134,19 @@ namespace KMSGuildExtractor.ViewModel
 
                 switch (status)
                 {
-                    case StatusSet.Ready:
+                    case State.Ready:
                         Status = LocalizationString.load_ready;
                         StatusColor = Colors.Orange;
                         break;
-                    case StatusSet.Syncing:
+                    case State.Syncing:
                         Status = LocalizationString.load_syncing;
                         StatusColor = Colors.LightSkyBlue;
                         break;
-                    case StatusSet.Loading:
+                    case State.Loading:
                         Status = LocalizationString.load_working;
                         StatusColor = Colors.LightSteelBlue;
                         break;
-                    case StatusSet.Done:
+                    case State.Done:
                         Status = LocalizationString.load_done;
                         StatusColor = Colors.LightGreen;
                         break;
