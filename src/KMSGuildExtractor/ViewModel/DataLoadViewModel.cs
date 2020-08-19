@@ -1,5 +1,6 @@
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,148 +13,191 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class DataLoadViewModel : BindableBase
     {
-        public Visibility InitializeLoading
+        private enum State
         {
-            get => _initializeLoading;
-            set => SetProperty(ref _initializeLoading, value, nameof(InitializeLoading));
+            GettingMemberList, GettingMemberdata, Done, Error
         }
 
-        public Visibility MemberListVisivility
+        public Visibility LoadingVisibility
         {
-            get => _memberListVisivility;
-            set => SetProperty(ref _memberListVisivility, value, nameof(MemberListVisivility));
+            get => _loadingVisibility;
+            set => SetProperty(ref _loadingVisibility, value, nameof(LoadingVisibility));
         }
 
-        public string GuildSummary
+        public Visibility DoneVisibility
         {
-            get => _guildSummary;
-            set => SetProperty(ref _guildSummary, value, nameof(GuildSummary));
+            get => _doneVisibility;
+            set => SetProperty(ref _doneVisibility, value, nameof(DoneVisibility));
         }
 
-        public ObservableCollection<ListViewData> MemberList { get; } = new ObservableCollection<ListViewData>();
-        public bool CanLoad
+        public Visibility ErrorVisibility
         {
-            get => _canLoad;
-            set => _canLoad = SetProperty(ref _canLoad, value, nameof(CanLoad));
+            get => _errorVisibility;
+            set => SetProperty(ref _errorVisibility, value, nameof(ErrorVisibility));
         }
+
+        public string StateMessage
+        {
+            get => _stateMessage;
+            set => SetProperty(ref _stateMessage, value, nameof(StateMessage));
+        }
+
+        public Brush StateColor
+        {
+            get => _stateColor;
+            set => SetProperty(ref _stateColor, value, nameof(StateColor));
+        }
+
         public bool CanExtract
         {
             get => _canExtract;
             set => SetProperty(ref _canExtract, value, nameof(CanExtract));
         }
 
-        public DelegateCommand LoadCommand { get; }
         public DelegateCommand ExtractCommand { get; }
 
         private readonly Guild _guild;
 
-        private Visibility _initializeLoading;
-        private Visibility _memberListVisivility;
-        private string _guildSummary = string.Empty;
-        private bool _canLoad;
+        private Visibility _loadingVisibility;
+        private Visibility _errorVisibility;
+        private Visibility _doneVisibility;
         private bool _canExtract;
+        private string _stateMessage = string.Empty;
+        private Brush _stateColor;
 
-        private CancellationTokenSource _guildMemberLoadCancellation;
-        //private ConcurrentQueue<(int number, User data)> _userWorkQueue;
+        private CancellationTokenSource _taskCancellation;
 
         public DataLoadViewModel(Guild guildData)
         {
             _guild = guildData;
-            GuildSummary = $"{_guild.Name}, {_guild.World.ToLocalizedString()}, {_guild.Level}Lv.";
-
-            CanLoad = true;
             CanExtract = false;
-
-            LoadCommand = new DelegateCommand(ExecuteLoadCommand);
             ExtractCommand = new DelegateCommand(ExecuteExtractCommand);
-
-            _ = Task.Run(LoadGuildMember);
+            Task.Run(LoadData);
         }
 
-        private async Task LoadGuildMember()
+        private async Task LoadData()
         {
-            _guildMemberLoadCancellation = new CancellationTokenSource();
+            int max;
+            int count = 0;
+            int errorCount = 0;
+
+            ConcurrentQueue<int> memberIndex;
+
             try
             {
-                MemberListVisivility = Visibility.Collapsed;
-                InitializeLoading = Visibility.Visible;
+                _taskCancellation = new CancellationTokenSource();
 
-                await _guild.LoadGuildMembersAsync(_guildMemberLoadCancellation.Token);
+                StateMessage = LocalizationString.state_get_members;
+                SetState(State.GettingMemberList);
 
-                InitializeLoading = Visibility.Collapsed;
-                MemberListVisivility = Visibility.Visible;
+                await _guild.LoadGuildMembersAsync(_taskCancellation.Token);
 
-                foreach ((GuildPosition position, User user) in _guild.Members)
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() => MemberList.Add(new ListViewData
-                    {
-                        Name = user.Name,
-                        Position = position.ToLocalizedString()
-                    }.SetStatus(ListViewData.State.Ready)
-                    ));
-                }
-            }
-            catch (ParseException)
-            {
-                return;
+                max = _guild.Members.Count;
+                memberIndex = new ConcurrentQueue<int>(Enumerable.Range(0, _guild.Members.Count));
+
+                StateMessage = string.Format(LocalizationString.state_get_data, max, 0);
+                SetState(State.GettingMemberdata);
+
+                Task loadTask1 = Load();
+                Task loadTask2 = Load();
+                Task loadTask3 = Load();
+
+                await loadTask1;
+                await loadTask2;
+                await loadTask3;
             }
             catch (TaskCanceledException)
             {
                 return;
             }
+            catch (Exception)
+            {
+                errorCount++;
+            }
+            finally
+            {
+                if (errorCount == 0)
+                {
+                    StateMessage = LocalizationString.state_done;
+                    SetState(State.Done);
+
+                    CanExtract = true;
+                }
+                else
+                {
+                    StateMessage = $"Error Count: {errorCount}";
+                    SetState(State.Error);
+                    CanExtract = false;
+                }
+            }
+
+            async Task Load()
+            {
+                while (memberIndex.TryDequeue(out int idx))
+                {
+                    try
+                    {
+                        await _guild.Members[idx].data.RequestSyncAsync(_taskCancellation.Token);
+                        await _guild.Members[idx].data.LoadUserDetailAsync(_taskCancellation.Token);
+                    }
+                    catch (Exception)
+                    {
+                        errorCount++;
+                    }
+                    finally
+                    {
+                        count++;
+                        StateMessage = string.Format(LocalizationString.state_get_data, max, count);
+                        await Task.Delay(2000);
+                    }
+                }
+            }
         }
 
         private void ExecuteExtractCommand(object _)
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Extracted");
         }
 
-        private void ExecuteLoadCommand(object _)
+        private void SetState(State state)
         {
-            throw new NotImplementedException();
-        }
-
-        public class ListViewData
-        {
-            public enum State
+            StateColor = GetStateColor(state);
+            switch (state)
             {
-                Ready, Syncing, Loading, Done
-            }
-
-            public string Name { get; set; }
-            public string Position { get; set; }
-            public string Status { get; set; }
-            public Color StatusColor { get; set; }
-
-            public ListViewData SetStatus(State status)
-            {
-                // 준비됨                 Colors.Orange
-                // 데이터를 동기화하는 중   Colors.LightSkyBlue
-                // 데이터를 불러오는 중     Colors.LightSteelBlue
-                // 완료                   Colors.LightGreen
-
-                switch (status)
-                {
-                    case State.Ready:
-                        Status = LocalizationString.load_ready;
-                        StatusColor = Colors.Orange;
-                        break;
-                    case State.Syncing:
-                        Status = LocalizationString.load_syncing;
-                        StatusColor = Colors.LightSkyBlue;
-                        break;
-                    case State.Loading:
-                        Status = LocalizationString.load_working;
-                        StatusColor = Colors.LightSteelBlue;
-                        break;
-                    case State.Done:
-                        Status = LocalizationString.load_done;
-                        StatusColor = Colors.LightGreen;
-                        break;
-                }
-
-                return this;
+                case State.GettingMemberList:
+                    DoneVisibility = Visibility.Collapsed;
+                    ErrorVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Visible;
+                    break;
+                case State.GettingMemberdata:
+                    DoneVisibility = Visibility.Collapsed;
+                    ErrorVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Visible;
+                    break;
+                case State.Done:
+                    ErrorVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Collapsed;
+                    DoneVisibility = Visibility.Visible;
+                    break;
+                case State.Error:
+                    DoneVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Collapsed;
+                    ErrorVisibility = Visibility.Visible;
+                    break;
             }
         }
+
+        private Brush GetStateColor(State state) => state switch
+        {
+            State.GettingMemberList => Brushes.Orange,
+
+            State.GettingMemberdata => Brushes.LightSkyBlue,
+
+            State.Done => Brushes.LightGreen,
+
+            State.Error => Brushes.Red,
+
+            _ => Brushes.Transparent,
+        };
     }
 }

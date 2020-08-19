@@ -240,16 +240,16 @@
   <data name="button_load_data" xml:space="preserve">
     <value>유저정보 불러오기</value>
   </data>
-  <data name="load_done" xml:space="preserve">
-    <value>완료</value>
+  <data name="state_done" xml:space="preserve">
+    <value>모든 작업을 완료하였습니다.</value>
   </data>
-  <data name="load_ready" xml:space="preserve">
-    <value>준비됨</value>
+  <data name="state_error" xml:space="preserve">
+    <value>정보를 불러오는 도중 에러가 발생했습니다.</value>
   </data>
-  <data name="load_syncing" xml:space="preserve">
-    <value>데이터를 동기화하는 중</value>
+  <data name="state_get_data" xml:space="preserve">
+    <value>현재까지 {0}명의 길드원 중 {1}명의 정보를 가져왔습니다.</value>
   </data>
-  <data name="load_working" xml:space="preserve">
-    <value>데이터를 불러오는 중</value>
+  <data name="state_get_members" xml:space="preserve">
+    <value>길드원 목록을 가져오는 중입니다...</value>
   </data>
 </root>
