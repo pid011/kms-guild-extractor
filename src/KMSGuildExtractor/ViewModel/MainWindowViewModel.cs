@@ -1,18 +1,18 @@
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-using KMSGuildExtractor.Core;
+using KMSGuildExtractor.Core.Utils;
 using KMSGuildExtractor.Localization;
+using KMSGuildExtractor.View;
 
 namespace KMSGuildExtractor.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        public string Title => $"{LocalizationString.title} {Version}";
+        public Version AppVersion => typeof(App).Assembly.GetName().Version;
 
-        public string Version { get; } = $"v{typeof(App).Assembly.GetName().Version.ToString(3)}";
+        public string VersionString => $"v{AppVersion.ToString(3)}";
 
         public string UpdateStatus
         {
@@ -20,121 +20,52 @@ namespace KMSGuildExtractor.ViewModel
             private set => SetProperty(ref _updateStatus, value ?? string.Empty, nameof(UpdateStatus));
         }
 
-        private string _updateStatus;
+        private string _updateStatus = LocalizationString.updatenotify_check_update;
 
-        public bool CanEdit
+        public Visibility ReleaseLinkVisible
         {
-            get => _canEdit;
-            private set => SetProperty(ref _canEdit, value, nameof(CanEdit));
+            get => _releaseLinkVisible;
+            private set => SetProperty(ref _releaseLinkVisible, value, nameof(ReleaseLinkVisible));
         }
 
-        private bool _canEdit;
+        private Visibility _releaseLinkVisible = Visibility.Collapsed;
 
-        public ObservableCollection<World> WorldList { get; }
-
-        public World SelectedWorld
+        public Uri ReleaseLink
         {
-            get => _selectedWorld;
-            set => SetProperty(ref _selectedWorld, value, nameof(SelectedWorld));
+            get => _releaseLink;
+            private set => SetProperty(ref _releaseLink, value, nameof(ReleaseLink));
         }
 
-        private World _selectedWorld;
+        private Uri _releaseLink;
 
-        public string GuildName
+        public object WorkView
         {
-            get => _guildName;
-            set => SetProperty(ref _guildName, value ?? string.Empty, nameof(GuildName));
+            get => _workView;
+            set => SetProperty(ref _workView, value, nameof(WorkView));
         }
 
-        private string _guildName = string.Empty;
-
-        public string GuildNameCheck
-        {
-            get => _guildNameCheck;
-            set => SetProperty(ref _guildNameCheck, value ?? string.Empty, nameof(GuildNameCheck));
-        }
-
-        private string _guildNameCheck = string.Empty;
-
-        public DelegateCommand SearchCommand { get; }
+        private object _workView;
 
         public MainWindowViewModel()
         {
-            WorldList = new ObservableCollection<World>
-            {
-                new World(LocalizationString.world_luna, WorldID.Luna),
-
-                new World(LocalizationString.world_scania, WorldID.Scania),
-
-                new World(LocalizationString.world_elysium, WorldID.Elysium),
-
-                new World(LocalizationString.world_croa, WorldID.Croa),
-
-                new World(LocalizationString.world_aurora, WorldID.Aurora),
-
-                new World(LocalizationString.world_bera, WorldID.Bera),
-
-                new World(LocalizationString.world_red, WorldID.Red),
-
-                new World(LocalizationString.world_union, WorldID.Union),
-
-                new World(LocalizationString.world_zenith, WorldID.Zenith),
-
-                new World(LocalizationString.world_enosis, WorldID.Enosis),
-
-                new World(LocalizationString.world_nova, WorldID.Nova),
-
-                new World(LocalizationString.world_reboot, WorldID.Reboot),
-
-                new World(LocalizationString.world_reboot2, WorldID.Reboot2),
-
-                new World(LocalizationString.world_burning, WorldID.Burning),
-
-                new World(LocalizationString.world_burning2, WorldID.Burning2)
-            };
-
-            SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
-
-            UpdateStatus = LocalizationString.updatenotify_check_update;
-            PropertyChanged += MainWindowViewModel_PropertyChanged;
-
-            CanEdit = true;
+            WorkView = new SearchView(this);
+            Task.Run(InitializeUpdateStatus);
         }
 
-        private void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async Task InitializeUpdateStatus()
         {
-            if (e.PropertyName == nameof(GuildName))
+            (bool compare, string url) = await Update.CompareVersionAsync(AppVersion);
+
+            if (compare)
             {
-                bool valid = Guild.IsValidGuildName(GuildName);
-                GuildNameCheck = valid ? string.Empty : LocalizationString.input_wrong_guild_name;
+                UpdateStatus = LocalizationString.updatenotify_already_updated;
+                ReleaseLinkVisible = Visibility.Collapsed;
+                return;
             }
-        }
 
-        private bool CanExecuteSearchCommand(object _) =>
-            CanEdit && SelectedWorld != null && GuildName.Length != 0 && GuildNameCheck.Length == 0;
-
-        private async void ExecuteSearchCommand(object _)
-        {
-            CanEdit = false;
-            MessageBox.Show("Pressed");
-            await Task.Delay(5000);
-            CanEdit = true;
-        }
-
-        public class World
-        {
-            public string Name { get; }
-
-            public string WorldLogoPath =>
-                $"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png";
-
-            public WorldID Url { get; }
-
-            public World(string name, WorldID url)
-            {
-                Name = name;
-                Url = url;
-            }
+            ReleaseLink = new Uri(url);
+            UpdateStatus = LocalizationString.updatenotify_new_version_update;
+            ReleaseLinkVisible = Visibility.Visible;
         }
     }
 }

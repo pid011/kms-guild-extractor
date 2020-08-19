@@ -61,6 +61,60 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 내보내기.
+        /// </summary>
+        public static string button_extract_data {
+            get {
+                return ResourceManager.GetString("button_extract_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 유저정보 불러오기.
+        /// </summary>
+        public static string button_load_data {
+            get {
+                return ResourceManager.GetString("button_load_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 길드원.
+        /// </summary>
+        public static string guild_position_member {
+            get {
+                return ResourceManager.GetString("guild_position_member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 마스터.
+        /// </summary>
+        public static string guild_position_owner {
+            get {
+                return ResourceManager.GetString("guild_position_owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 부마스터.
+        /// </summary>
+        public static string guild_position_staff {
+            get {
+                return ResourceManager.GetString("guild_position_staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 길드원 목록 가져오기.
+        /// </summary>
+        public static string guild_submit {
+            get {
+                return ResourceManager.GetString("guild_submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sepi.
         /// </summary>
         public static string info_author_name {
@@ -111,6 +165,96 @@ namespace KMSGuildExtractor.Localization {
         public static string input_wrong_guild_name {
             get {
                 return ResourceManager.GetString("input_wrong_guild_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 데이터를 불러오지 못했습니다..
+        /// </summary>
+        public static string search_error {
+            get {
+                return ResourceManager.GetString("search_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 검색 중 입니다....
+        /// </summary>
+        public static string search_ing {
+            get {
+                return ResourceManager.GetString("search_ing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 검색결과가 없습니다..
+        /// </summary>
+        public static string search_no_result {
+            get {
+                return ResourceManager.GetString("search_no_result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 레벨.
+        /// </summary>
+        public static string search_result_level {
+            get {
+                return ResourceManager.GetString("search_result_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 이름.
+        /// </summary>
+        public static string search_result_name {
+            get {
+                return ResourceManager.GetString("search_result_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 월드.
+        /// </summary>
+        public static string search_result_world {
+            get {
+                return ResourceManager.GetString("search_result_world", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 모든 작업을 완료하였습니다..
+        /// </summary>
+        public static string state_done {
+            get {
+                return ResourceManager.GetString("state_done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 정보를 불러오는 도중 에러가 발생했습니다..
+        /// </summary>
+        public static string state_error {
+            get {
+                return ResourceManager.GetString("state_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 현재까지 {0}명의 길드원 중 {1}명의 정보를 가져왔습니다..
+        /// </summary>
+        public static string state_get_data {
+            get {
+                return ResourceManager.GetString("state_get_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 길드원 목록을 가져오는 중입니다....
+        /// </summary>
+        public static string state_get_members {
+            get {
+                return ResourceManager.GetString("state_get_members", resourceCulture);
             }
         }
         

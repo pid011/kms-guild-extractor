@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
   </ItemGroup>
   
@@ -43,6 +47,15 @@
     <Resource Include="resources\icons\worlds\scania.png" />
     <Resource Include="resources\icons\worlds\union.png" />
     <Resource Include="resources\icons\worlds\zenith.png" />
+    <Resource Include="resources\images\done.gif" />
+    <Resource Include="resources\images\error.png" />
+    <Resource Include="resources\images\loading.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="resources\images\done.gif" />
+    <None Remove="resources\images\error.png" />
+    <None Remove="resources\images\loading.gif" />
   </ItemGroup>
 
   <ItemGroup>

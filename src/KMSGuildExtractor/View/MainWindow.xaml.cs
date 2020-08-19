@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
+using KMSGuildExtractor.ViewModel;
+
 namespace KMSGuildExtractor.View
 {
     /// <summary>
@@ -12,11 +14,10 @@ namespace KMSGuildExtractor.View
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        // public MainWindowViewModel MainWindowViewModel { get; } = new MainWindowViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
 
         private void OpenHyperLink(object sender, RequestNavigateEventArgs e)

@@ -204,4 +204,52 @@
   <data name="world_burning2" xml:space="preserve">
     <value>버닝2</value>
   </data>
+  <data name="guild_submit" xml:space="preserve">
+    <value>길드원 목록 가져오기</value>
+  </data>
+  <data name="search_error" xml:space="preserve">
+    <value>데이터를 불러오지 못했습니다.</value>
+  </data>
+  <data name="search_ing" xml:space="preserve">
+    <value>검색 중 입니다...</value>
+  </data>
+  <data name="search_no_result" xml:space="preserve">
+    <value>검색결과가 없습니다.</value>
+  </data>
+  <data name="search_result_level" xml:space="preserve">
+    <value>레벨</value>
+  </data>
+  <data name="search_result_name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="search_result_world" xml:space="preserve">
+    <value>월드</value>
+  </data>
+  <data name="guild_position_member" xml:space="preserve">
+    <value>길드원</value>
+  </data>
+  <data name="guild_position_owner" xml:space="preserve">
+    <value>마스터</value>
+  </data>
+  <data name="guild_position_staff" xml:space="preserve">
+    <value>부마스터</value>
+  </data>
+  <data name="button_extract_data" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="button_load_data" xml:space="preserve">
+    <value>유저정보 불러오기</value>
+  </data>
+  <data name="state_done" xml:space="preserve">
+    <value>모든 작업을 완료하였습니다.</value>
+  </data>
+  <data name="state_error" xml:space="preserve">
+    <value>정보를 불러오는 도중 에러가 발생했습니다.</value>
+  </data>
+  <data name="state_get_data" xml:space="preserve">
+    <value>현재까지 {0}명의 길드원 중 {1}명의 정보를 가져왔습니다.</value>
+  </data>
+  <data name="state_get_members" xml:space="preserve">
+    <value>길드원 목록을 가져오는 중입니다...</value>
+  </data>
 </root>
