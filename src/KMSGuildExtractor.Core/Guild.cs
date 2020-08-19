@@ -79,9 +79,14 @@ namespace KMSGuildExtractor.Core
             {
                 HtmlNode rankNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table2\"]/tbody");
 
-                foreach (HtmlNode item in rankNode.SelectNodes(".//tr[@class=\"\"]"))
+                if (rankNode is null)
                 {
-                    HtmlNode guildNode = item.SelectSingleNode("./td[2]/span/a");
+                    return null;
+                }
+
+                foreach (HtmlNode item in rankNode.SelectNodes("./tr"))
+                {
+                    HtmlNode guildNode = item.SelectSingleNode("./td[2]/span//a");
                     string guildName = guildNode.InnerText.Trim();
                     string guildLink = guildNode.GetAttributeValue("href", string.Empty);
                     int guildLevel = item.SelectSingleNode("./td[3]").InnerText.GetDigit();

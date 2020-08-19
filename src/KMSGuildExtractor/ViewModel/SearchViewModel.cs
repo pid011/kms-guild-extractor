@@ -100,7 +100,6 @@ namespace KMSGuildExtractor.ViewModel
         public DelegateCommand SearchCommand { get; }
         public DelegateCommand SubmitCommand { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
         private readonly MainWindowViewModel _main;
 
         private bool _canEdit;
