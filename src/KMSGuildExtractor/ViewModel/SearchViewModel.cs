@@ -216,6 +216,5 @@ namespace KMSGuildExtractor.ViewModel
                 Url = url;
             }
         }
-
     }
 }
