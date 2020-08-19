@@ -11,7 +11,7 @@ using KMSGuildExtractor.Localization;
 
 namespace KMSGuildExtractor.ViewModel
 {
-    public class DataLoadViewModel : BindableBase
+    public class ExtractViewModel : BindableBase
     {
         private enum State
         {
@@ -67,7 +67,7 @@ namespace KMSGuildExtractor.ViewModel
 
         private CancellationTokenSource _taskCancellation;
 
-        public DataLoadViewModel(Guild guildData)
+        public ExtractViewModel(Guild guildData)
         {
             _guild = guildData;
             CanExtract = false;
@@ -156,6 +156,7 @@ namespace KMSGuildExtractor.ViewModel
 
         private void ExecuteExtractCommand(object _)
         {
+            // TODO: 가져온 데이터를 엑셀로 내보내기
             MessageBox.Show("Extracted");
         }
 

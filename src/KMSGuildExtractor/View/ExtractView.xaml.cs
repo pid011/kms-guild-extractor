@@ -13,7 +13,7 @@ namespace KMSGuildExtractor.View
         public DataLoadView(Guild guildData)
         {
             InitializeComponent();
-            DataContext = new DataLoadViewModel(guildData);
+            DataContext = new ExtractViewModel(guildData);
         }
     }
 }

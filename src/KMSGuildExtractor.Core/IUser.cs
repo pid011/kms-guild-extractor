@@ -1,5 +1,3 @@
-using System;
-
 namespace KMSGuildExtractor.Core
 {
     public interface IUser : IStatus
