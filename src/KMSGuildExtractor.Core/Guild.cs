@@ -19,7 +19,7 @@ namespace KMSGuildExtractor.Core
 
         public string Name { get; }
 
-        public int? Level { get; private set; }
+        public int Level { get; private set; }
 
         public IList<(GuildPosition position, User data)> Members { get; private set; }
 

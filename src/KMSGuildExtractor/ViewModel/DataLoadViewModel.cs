@@ -140,7 +140,7 @@ namespace KMSGuildExtractor.ViewModel
                         await _guild.Members[idx].data.RequestSyncAsync(_taskCancellation.Token);
                         await _guild.Members[idx].data.LoadUserDetailAsync(_taskCancellation.Token);
                     }
-                    catch (Exception)
+                    catch (Exception) // TODO: UserNotFoundException 예외 거르기
                     {
                         errorCount++;
                     }
