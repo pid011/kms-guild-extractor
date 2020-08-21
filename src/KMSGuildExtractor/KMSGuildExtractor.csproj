@@ -62,17 +62,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Excel.dll">
-      <Guid>00020813-0000-0000-c000-000000000046</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-    </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Localization\LocalizationString.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
