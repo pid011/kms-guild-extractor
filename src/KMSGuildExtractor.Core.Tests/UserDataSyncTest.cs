@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,7 +46,7 @@ namespace KMSGuildExtractor.Core.Tests
                 {
                     return data;
                 }
-                Task.Delay(data.Interval).Wait();
+                Task.Delay(data.Interval ?? 2000, new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token).Wait();
             }
         }
     }

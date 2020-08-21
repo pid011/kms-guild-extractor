@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>KMSGuildExtractor.App</StartupObject>
     <ApplicationIcon>.\resources\icons\icon.ico</ApplicationIcon>
-    <Version>0.1.3</Version>
+    <Version>0.1.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Resource Include="resources\excel\template.xlsx" />
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
     <Resource Include="resources\fonts\NanumGothic-Regular.ttf" />
   </ItemGroup>
@@ -53,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="resources\excel\template.xlsx" />
     <None Remove="resources\images\done.gif" />
     <None Remove="resources\images\error.png" />
     <None Remove="resources\images\loading.gif" />

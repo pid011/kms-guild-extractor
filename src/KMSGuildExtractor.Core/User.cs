@@ -21,9 +21,9 @@ namespace KMSGuildExtractor.Core
         public string Name { get; private set; }
 
         /// <summary>
-        /// 플레이어의 레벨
+        /// 플레이어의 레벨. 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public int Level { get; private set; }
+        public int? Level { get; private set; }
 
         /// <summary>
         /// 플레이어가 마지막으로 활동한 날짜. 현재 날짜에서 마지막 활동일을 뺀 일 수를 반환한다.<br/>
@@ -32,24 +32,24 @@ namespace KMSGuildExtractor.Core
         public int? LastUpdated { get; private set; }
 
         /// <summary>
-        /// 플레이어의 직업
+        /// 플레이어의 직업. 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public string Job { get; private set; }
+        public string? Job { get; private set; }
 
         /// <summary>
-        /// 플레이어의 인기도
+        /// 플레이어의 인기도. 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public int Popularity { get; private set; }
+        public int? Popularity { get; private set; }
 
         /// <summary>
-        /// 무릉 층 수. 만약 무릉을 클리어 한지 너무 오래되었거나 데이터가 없으면 0을 반환한다.
+        /// 무릉 층 수. 만약 무릉을 클리어 한지 너무 오래되었거나 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public int DojangFloor { get; private set; }
+        public int? DojangFloor { get; private set; }
 
         /// <summary>
-        /// 플레이어의 유니온 레벨. 본캐에서만 유니온 레벨이 보이며, 데이터가 없을 경우 0을 반환한다.
+        /// 플레이어의 유니온 레벨. 본캐에서만 유니온 레벨이 보이며, 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public int UnionLevel { get; private set; }
+        public int? UnionLevel { get; private set; }
 
         public User(string name, WorldID world)
         {
@@ -67,17 +67,22 @@ namespace KMSGuildExtractor.Core
         {
             while (true)
             {
-                UserDataRequester.SyncData data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
+                UserDataRequester.SyncData? data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
 
-                if (data.Error)
+                if (data is null)
                 {
-                    throw new UserSyncException(data.Message);
+                    throw new NullReferenceException($"Cannot parse user sync json data : {Name}");
                 }
-                if (data.Done)
+
+                if (data.Error == true)
+                {
+                    throw new UserSyncException(Name, data?.Message ?? string.Empty);
+                }
+                if (data.Done == true)
                 {
                     return;
                 }
-                await Task.Delay(data.Interval, cancellation);
+                await Task.Delay(data?.Interval ?? 2000, cancellation);
             }
         }
 
@@ -85,25 +90,25 @@ namespace KMSGuildExtractor.Core
         {
             try
             {
-                string lastUpdatedRaw = html.DocumentNode.SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?.InnerText;
-                int? lastUpdated = lastUpdatedRaw?.GetDigit();
+                int? lastUpdated =
+                    html
+                    .DocumentNode
+                    .SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?
+                    .InnerText?
+                    .GetDigit();
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
-                string levelRaw = profile[0].InnerText;
-                int level = levelRaw.GetDigit();
+                int? level = profile[0]?.InnerText?.GetDigit();
 
-                string job = profile[1].InnerText.Trim();
+                string? job = profile[1]?.InnerText?.Trim();
 
-                string popularityRaw = profile[2].InnerText;
-                int popularity = popularityRaw.GetDigit();
+                int? popularity = profile[2]?.InnerText?.GetDigit();
 
                 HtmlNodeCollection datas = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
 
-                string dojangFloorRaw = datas[0].SelectSingleNode(".//h1")?.InnerText ?? "0";
-                int dojangFloor = dojangFloorRaw.GetDigit();
+                int? dojangFloor = datas[0].SelectSingleNode(".//h1")?.InnerText?.GetDigit();
 
-                string unionRaw = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText ?? "0";
-                int union = unionRaw.GetDigit();
+                int? union = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText?.GetDigit();
 
                 LastUpdated = lastUpdated;
                 Level = level;
@@ -114,7 +119,7 @@ namespace KMSGuildExtractor.Core
             }
             catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
-                throw new UserNotFoundException();
+                throw new UserNotFoundException(Name);
             }
             catch (NullReferenceException e)
             {

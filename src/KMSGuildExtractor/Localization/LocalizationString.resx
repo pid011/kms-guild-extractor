@@ -252,4 +252,28 @@
   <data name="state_get_members" xml:space="preserve">
     <value>길드원 목록을 가져오는 중입니다...</value>
   </data>
+  <data name="data_dojang_floor" xml:space="preserve">
+    <value>무릉</value>
+  </data>
+  <data name="data_job" xml:space="preserve">
+    <value>직업</value>
+  </data>
+  <data name="data_lastupdated" xml:space="preserve">
+    <value>마지막 활동 일</value>
+  </data>
+  <data name="data_level" xml:space="preserve">
+    <value>레벨</value>
+  </data>
+  <data name="data_popularity" xml:space="preserve">
+    <value>인기도</value>
+  </data>
+  <data name="data_position" xml:space="preserve">
+    <value>직위</value>
+  </data>
+  <data name="data_union_level" xml:space="preserve">
+    <value>유니온</value>
+  </data>
+  <data name="data_user_name" xml:space="preserve">
+    <value>유저이름</value>
+  </data>
 </root>

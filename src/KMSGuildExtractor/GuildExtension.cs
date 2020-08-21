@@ -7,7 +7,7 @@ namespace KMSGuildExtractor
     {
         public static string ToLocalizedString(this WorldID world) => world switch
         {
-            WorldID.Unknown => null,
+            WorldID.Unknown => "Unknown",
             WorldID.Scania => LocalizationString.world_scania,
             WorldID.Bera => LocalizationString.world_bera,
             WorldID.Luna => LocalizationString.world_luna,
@@ -24,7 +24,7 @@ namespace KMSGuildExtractor
             WorldID.Burning2 => LocalizationString.world_burning2,
             WorldID.Arcane => LocalizationString.world_arcane,
             WorldID.Nova => LocalizationString.world_nova,
-            _ => null,
+            _ => string.Empty
         };
 
         public static string ToLocalizedString(this GuildPosition position) => position switch
@@ -32,7 +32,7 @@ namespace KMSGuildExtractor
             GuildPosition.Owner => LocalizationString.guild_position_owner,
             GuildPosition.Staff => LocalizationString.guild_position_staff,
             GuildPosition.Member => LocalizationString.guild_position_member,
-            _ => null,
+            _ => string.Empty
         };
     }
 }

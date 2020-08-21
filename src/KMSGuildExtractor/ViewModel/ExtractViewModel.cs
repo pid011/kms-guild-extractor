@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,13 +10,15 @@ using System.Windows.Media;
 using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
 
+using Microsoft.Win32;
+
 namespace KMSGuildExtractor.ViewModel
 {
     public class ExtractViewModel : BindableBase
     {
         private enum State
         {
-            GettingMemberList, GettingMemberdata, Done, Error
+            Ready, GettingMemberList, GettingMemberdata, Done, Error
         }
 
         public Visibility LoadingVisibility
@@ -63,14 +66,14 @@ namespace KMSGuildExtractor.ViewModel
         private Visibility _doneVisibility;
         private bool _canExtract;
         private string _stateMessage = string.Empty;
-        private Brush _stateColor;
-
-        private CancellationTokenSource _taskCancellation;
+        private Brush _stateColor = Brushes.Transparent;
 
         public ExtractViewModel(Guild guildData)
         {
             _guild = guildData;
             CanExtract = false;
+            SetState(State.Ready);
+            StateMessage = string.Empty;
             ExtractCommand = new DelegateCommand(ExecuteExtractCommand);
             Task.Run(LoadData);
         }
@@ -85,13 +88,10 @@ namespace KMSGuildExtractor.ViewModel
 
             try
             {
-                _taskCancellation = new CancellationTokenSource();
-
                 StateMessage = LocalizationString.state_get_members;
                 SetState(State.GettingMemberList);
 
-                await _guild.LoadGuildMembersAsync(_taskCancellation.Token);
-
+                await _guild.LoadGuildMembersAsync();
                 max = _guild.Members.Count;
                 memberIndex = new ConcurrentQueue<int>(Enumerable.Range(0, _guild.Members.Count));
 
@@ -137,8 +137,18 @@ namespace KMSGuildExtractor.ViewModel
                 {
                     try
                     {
-                        await _guild.Members[idx].data.RequestSyncAsync(_taskCancellation.Token);
-                        await _guild.Members[idx].data.LoadUserDetailAsync(_taskCancellation.Token);
+                        await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+                        await _guild.Members[idx].data.LoadUserDetailAsync();
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        errorCount++;
+                    }
+                    catch (UserSyncException)
+                    {
+                    }
+                    catch (UserNotFoundException)
+                    {
                     }
                     catch (Exception) // TODO: UserNotFoundException 예외 거르기
                     {
@@ -154,10 +164,31 @@ namespace KMSGuildExtractor.ViewModel
             }
         }
 
-        private void ExecuteExtractCommand(object _)
+        private async void ExecuteExtractCommand(object _)
         {
-            // TODO: 가져온 데이터를 엑셀로 내보내기
-            MessageBox.Show("Extracted");
+            CanExtract = false;
+
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "CSV file (*.csv)|*.csv",
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                };
+
+                if (dialog.ShowDialog() ?? false)
+                {
+                    await DataExtract.CreateCSVAsync(dialog.FileName, _guild);
+                }
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                CanExtract = true;
+            }
         }
 
         private void SetState(State state)
@@ -165,6 +196,11 @@ namespace KMSGuildExtractor.ViewModel
             StateColor = GetStateColor(state);
             switch (state)
             {
+                case State.Ready:
+                    ErrorVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Collapsed;
+                    DoneVisibility = Visibility.Visible;
+                    break;
                 case State.GettingMemberList:
                     DoneVisibility = Visibility.Collapsed;
                     ErrorVisibility = Visibility.Collapsed;
@@ -190,6 +226,8 @@ namespace KMSGuildExtractor.ViewModel
 
         private Brush GetStateColor(State state) => state switch
         {
+            State.Ready => Brushes.Gray,
+
             State.GettingMemberList => Brushes.Orange,
 
             State.GettingMemberdata => Brushes.LightSkyBlue,
