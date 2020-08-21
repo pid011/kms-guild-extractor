@@ -35,12 +35,12 @@ namespace KMSGuildExtractor
                     .AppendJoin(Seperater,
                                 GetCSVString(user.Name),
                                 GetCSVString(position.ToLocalizedString()),
-                                user.Level ?? -1,
+                                user.Level ?? 0,
                                 GetCSVString(user.Job),
                                 user.LastUpdated ?? -1,
-                                user.Popularity ?? -1,
-                                user.DojangFloor ?? -1,
-                                user.UnionLevel ?? -1
+                                user.Popularity ?? 0,
+                                user.DojangFloor ?? 0,
+                                user.UnionLevel ?? 0
                                 )
                     .AppendLine();
             }
