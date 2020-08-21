@@ -79,6 +79,78 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 무릉.
+        /// </summary>
+        public static string data_dojang_floor {
+            get {
+                return ResourceManager.GetString("data_dojang_floor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 직업.
+        /// </summary>
+        public static string data_job {
+            get {
+                return ResourceManager.GetString("data_job", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 마지막 활동 일.
+        /// </summary>
+        public static string data_lastupdated {
+            get {
+                return ResourceManager.GetString("data_lastupdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 레벨.
+        /// </summary>
+        public static string data_level {
+            get {
+                return ResourceManager.GetString("data_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 인기도.
+        /// </summary>
+        public static string data_popularity {
+            get {
+                return ResourceManager.GetString("data_popularity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 직위.
+        /// </summary>
+        public static string data_position {
+            get {
+                return ResourceManager.GetString("data_position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 유니온.
+        /// </summary>
+        public static string data_union_level {
+            get {
+                return ResourceManager.GetString("data_union_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 유저이름.
+        /// </summary>
+        public static string data_user_name {
+            get {
+                return ResourceManager.GetString("data_user_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 길드원.
         /// </summary>
         public static string guild_position_member {

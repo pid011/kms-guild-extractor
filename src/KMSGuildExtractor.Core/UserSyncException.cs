@@ -5,6 +5,11 @@ namespace KMSGuildExtractor.Core
     [Serializable]
     public class UserSyncException : Exception
     {
-        public UserSyncException(string message) : base(message) { }
+        public string Name { get; }
+
+        public UserSyncException(string name, string message) : base(message)
+        {
+            Name = name;
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace KMSGuildExtractor.Core
 
         public string Name { get; }
 
-        public int Level { get; private set; }
+        public int? Level { get; private set; }
 
         public IList<(GuildPosition position, User data)> Members { get; private set; }
 
@@ -89,7 +89,7 @@ namespace KMSGuildExtractor.Core
                     HtmlNode guildNode = item.SelectSingleNode("./td[2]/span//a");
                     string guildName = guildNode.InnerText.Trim();
                     string guildLink = guildNode.GetAttributeValue("href", string.Empty);
-                    int guildLevel = item.SelectSingleNode("./td[3]").InnerText.GetDigit();
+                    int guildLevel = item.SelectSingleNode("./td[3]").InnerText.GetDigit() ?? 0;
                     (int gid, WorldID wid) = ParseValueFromGuildLink(guildLink);
 
                     if (wid == world)

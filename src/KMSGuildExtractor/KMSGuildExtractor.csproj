@@ -18,6 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Resource Include="resources\excel\template.xlsx" />
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
     <Resource Include="resources\fonts\NanumGothic-Regular.ttf" />
   </ItemGroup>
@@ -53,9 +54,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="resources\excel\template.xlsx" />
     <None Remove="resources\images\done.gif" />
     <None Remove="resources\images\error.png" />
     <None Remove="resources\images\loading.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Excel.dll">
+      <Guid>00020813-0000-0000-c000-000000000046</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
   </ItemGroup>
 
   <ItemGroup>
