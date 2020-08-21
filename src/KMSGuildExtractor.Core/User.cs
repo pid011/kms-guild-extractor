@@ -34,7 +34,7 @@ namespace KMSGuildExtractor.Core
         /// <summary>
         /// 플레이어의 직업. 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public string Job { get; private set; }
+        public string? Job { get; private set; }
 
         /// <summary>
         /// 플레이어의 인기도. 데이터가 없으면 null을 반환한다.
@@ -67,17 +67,22 @@ namespace KMSGuildExtractor.Core
         {
             while (true)
             {
-                UserDataRequester.SyncData data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
+                UserDataRequester.SyncData? data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
 
-                if (data.Error)
+                if (data is null)
                 {
-                    throw new UserSyncException(Name, data.Message);
+                    throw new NullReferenceException($"Cannot parse user sync json data : {Name}");
                 }
-                if (data.Done)
+
+                if (data.Error == true)
+                {
+                    throw new UserSyncException(Name, data?.Message ?? string.Empty);
+                }
+                if (data.Done == true)
                 {
                     return;
                 }
-                await Task.Delay(data.Interval, cancellation);
+                await Task.Delay(data?.Interval ?? 2000, cancellation);
             }
         }
 
@@ -85,13 +90,17 @@ namespace KMSGuildExtractor.Core
         {
             try
             {
-                string lastUpdatedRaw = html.DocumentNode.SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?.InnerText;
-                int? lastUpdated = lastUpdatedRaw?.GetDigit();
+                int? lastUpdated =
+                    html
+                    .DocumentNode
+                    .SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?
+                    .InnerText?
+                    .GetDigit();
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
                 int? level = profile[0]?.InnerText?.GetDigit();
 
-                string job = profile[1]?.InnerText?.Trim();
+                string? job = profile[1]?.InnerText?.Trim();
 
                 int? popularity = profile[2]?.InnerText?.GetDigit();
 

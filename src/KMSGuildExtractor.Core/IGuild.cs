@@ -5,6 +5,6 @@ namespace KMSGuildExtractor.Core
     public interface IGuild : IStatus
     {
         public int GuildID { get; }
-        public IList<(GuildPosition position, User data)> Members { get; }
+        public IReadOnlyList<(GuildPosition position, User data)> Members { get; }
     }
 }

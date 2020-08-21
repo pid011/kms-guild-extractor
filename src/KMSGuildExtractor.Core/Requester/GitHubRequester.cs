@@ -11,7 +11,7 @@ namespace KMSGuildExtractor.Core.Requester
     {
         private const string LatestReleaseLink = "https://api.github.com/repos/pid011/kms-guild-extractor/releases/latest";
 
-        public static async Task<ReleaseData> GetLastReleaseAsync(CancellationToken cancellationToken = default)
+        public static async Task<ReleaseData?> GetLastReleaseAsync(CancellationToken cancellationToken = default)
         {
             using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, LatestReleaseLink);
             request.Headers.Add("User-Agent", "kms-guild-extractor");
@@ -29,10 +29,10 @@ namespace KMSGuildExtractor.Core.Requester
         public class ReleaseData
         {
             [JsonPropertyName("html_url")]
-            public string Url { get; set; }
+            public string? Url { get; set; }
 
             [JsonPropertyName("tag_name")]
-            public string TagName { get; set; }
+            public string? TagName { get; set; }
         }
     }
 }

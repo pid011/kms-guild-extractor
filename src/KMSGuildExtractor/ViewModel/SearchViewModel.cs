@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 using KMSGuildExtractor.Core;
@@ -63,7 +62,7 @@ namespace KMSGuildExtractor.ViewModel
             new World(WorldID.Burning2)
         };
 
-        public World SelectedWorld
+        public World? SelectedWorld
         {
             get => _selectedWorld;
             set => SetProperty(ref _selectedWorld, value, nameof(SelectedWorld));
@@ -105,15 +104,13 @@ namespace KMSGuildExtractor.ViewModel
         private bool _canEdit;
         private bool _canSearch;
         private bool _canSubmit;
-        private World _selectedWorld;
+        private World? _selectedWorld;
         private string _inputGuildName = string.Empty;
         private string _inputGuildNameCheck = string.Empty;
         private string _searchResultGuildName = LocalizationString.search_no_result;
         private string _searchResultGuildWorld = LocalizationString.search_no_result;
         private string _searchResultGuidLevel = LocalizationString.search_no_result;
-
-        private CancellationTokenSource _searchCancellation;
-        private Guild _searchResult;
+        private Guild? _searchResult;
 
         public SearchViewModel(MainWindowViewModel main)
         {
@@ -144,10 +141,15 @@ namespace KMSGuildExtractor.ViewModel
             CanSubmit = false;
             try
             {
+                if (SelectedWorld is null)
+                {
+                    done = false;
+                    return;
+                }
+
                 SetSearchResultMessageSingle(LocalizationString.search_ing);
 
-                _searchCancellation = new CancellationTokenSource();
-                _searchResult = await Guild.SearchAsync(InputGuildName, SelectedWorld.Url, _searchCancellation.Token);
+                _searchResult = await Guild.SearchAsync(InputGuildName, SelectedWorld.Url);
 
                 if (_searchResult is null)
                 {
@@ -172,11 +174,11 @@ namespace KMSGuildExtractor.ViewModel
             }
             finally
             {
-                CanEdit = true;
+                CanSubmit = done;
 
                 await Task.Delay(1000);
+                CanEdit = true;
                 CanSearch = true;
-                CanSubmit = done;
             }
 
             void SetSearchResultMessageSingle(string singleMessage)
@@ -194,9 +196,10 @@ namespace KMSGuildExtractor.ViewModel
 
         private void ExecuteSubmitCommand(object _)
         {
-            //MessageBox.Show(_searchResult is null
-            //    ? "search result is null"
-            //    : $"{_searchResult.Name}, {_searchResult.World}, {_searchResult.Level}, {_searchResult.GuildID}");
+            if (_searchResult is null)
+            {
+                return;
+            }
             _main.WorkView = new DataLoadView(_searchResult);
         }
 

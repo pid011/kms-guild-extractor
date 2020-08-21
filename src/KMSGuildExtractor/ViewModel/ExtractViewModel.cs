@@ -65,10 +65,8 @@ namespace KMSGuildExtractor.ViewModel
         private Visibility _errorVisibility;
         private Visibility _doneVisibility;
         private bool _canExtract;
-        private string _stateMessage;
-        private Brush _stateColor;
-
-        private CancellationTokenSource _taskCancellation;
+        private string _stateMessage = string.Empty;
+        private Brush _stateColor = Brushes.Transparent;
 
         public ExtractViewModel(Guild guildData)
         {
@@ -90,13 +88,10 @@ namespace KMSGuildExtractor.ViewModel
 
             try
             {
-                _taskCancellation = new CancellationTokenSource();
-
                 StateMessage = LocalizationString.state_get_members;
                 SetState(State.GettingMemberList);
 
-                await _guild.LoadGuildMembersAsync(_taskCancellation.Token);
-
+                await _guild.LoadGuildMembersAsync();
                 max = _guild.Members.Count;
                 memberIndex = new ConcurrentQueue<int>(Enumerable.Range(0, _guild.Members.Count));
 
@@ -142,8 +137,12 @@ namespace KMSGuildExtractor.ViewModel
                 {
                     try
                     {
-                        await _guild.Members[idx].data.RequestSyncAsync(_taskCancellation.Token);
-                        await _guild.Members[idx].data.LoadUserDetailAsync(_taskCancellation.Token);
+                        await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+                        await _guild.Members[idx].data.LoadUserDetailAsync();
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        errorCount++;
                     }
                     catch (UserSyncException)
                     {

@@ -10,7 +10,7 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        public Version AppVersion => typeof(App).Assembly.GetName().Version;
+        public Version AppVersion => typeof(App).Assembly.GetName().Version ?? new Version(1, 0);
 
         public string VersionString => $"v{AppVersion.ToString(3)}";
 
@@ -30,21 +30,21 @@ namespace KMSGuildExtractor.ViewModel
 
         private Visibility _releaseLinkVisible = Visibility.Collapsed;
 
-        public Uri ReleaseLink
+        public Uri? ReleaseLink
         {
             get => _releaseLink;
             private set => SetProperty(ref _releaseLink, value, nameof(ReleaseLink));
         }
 
-        private Uri _releaseLink;
+        private Uri? _releaseLink;
 
-        public object WorkView
+        public object? WorkView
         {
             get => _workView;
             set => SetProperty(ref _workView, value, nameof(WorkView));
         }
 
-        private object _workView;
+        private object? _workView;
 
         public MainWindowViewModel()
         {
@@ -54,9 +54,9 @@ namespace KMSGuildExtractor.ViewModel
 
         private async Task InitializeUpdateStatus()
         {
-            (bool compare, string url) = await Update.CompareVersionAsync(AppVersion);
+            (bool compare, string? url) = await Update.CompareVersionAsync(AppVersion);
 
-            if (compare)
+            if (compare || url is null)
             {
                 UpdateStatus = LocalizationString.updatenotify_already_updated;
                 ReleaseLinkVisible = Visibility.Collapsed;

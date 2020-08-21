@@ -14,7 +14,7 @@ namespace KMSGuildExtractor.ViewModel
             _canExecute = canExecute;
         }
 
-        public DelegateCommand(Action<object> execute) : this(execute, null)
+        public DelegateCommand(Action<object> execute) : this(execute, (_) => true)
         {
         }
 
