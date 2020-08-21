@@ -10,7 +10,6 @@ namespace KMSGuildExtractor
     public class DataExtract
     {
         private const char Seperater = ',';
-        private const string MapleGGLink = "https://maple.gg/u/";
 
         public static async Task CreateCSVAsync(string path, IGuild guildData)
         {
