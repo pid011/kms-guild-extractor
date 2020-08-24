@@ -295,6 +295,15 @@ namespace KMSGuildExtractor.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 작업이 취소되었습니다..
+        /// </summary>
+        public static string state_canceled {
+            get {
+                return ResourceManager.GetString("state_canceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 모든 작업을 완료하였습니다..
         /// </summary>
         public static string state_done {

@@ -6,6 +6,8 @@ using KMSGuildExtractor.Core.Utils;
 using KMSGuildExtractor.Localization;
 using KMSGuildExtractor.View;
 
+using Serilog;
+
 namespace KMSGuildExtractor.ViewModel
 {
     public class MainWindowViewModel : BindableBase
@@ -54,18 +56,25 @@ namespace KMSGuildExtractor.ViewModel
 
         private async Task InitializeUpdateStatus()
         {
-            (bool compare, string? url) = await Update.CompareVersionAsync(AppVersion);
-
-            if (compare || url is null)
+            try
             {
-                UpdateStatus = LocalizationString.updatenotify_already_updated;
-                ReleaseLinkVisible = Visibility.Collapsed;
-                return;
-            }
+                (bool compare, string? url) = await Update.CompareVersionAsync(AppVersion);
 
-            ReleaseLink = new Uri(url);
-            UpdateStatus = LocalizationString.updatenotify_new_version_update;
-            ReleaseLinkVisible = Visibility.Visible;
+                if (compare || url is null)
+                {
+                    UpdateStatus = LocalizationString.updatenotify_already_updated;
+                    ReleaseLinkVisible = Visibility.Collapsed;
+                    return;
+                }
+
+                ReleaseLink = new Uri(url);
+                UpdateStatus = LocalizationString.updatenotify_new_version_update;
+                ReleaseLinkVisible = Visibility.Visible;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+            }
         }
     }
 }
