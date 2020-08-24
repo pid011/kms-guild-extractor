@@ -63,6 +63,12 @@ namespace KMSGuildExtractor.Core
             SetUserDetail(html);
         }
 
+        /// <summary>
+        /// maple.gg에 유저 데이터 동기화를 요청한다.
+        /// </summary>
+        /// <param name="cancellation"></param>
+        /// <returns>정상적으로 동기화되면 메서드 종료. 아니면 <see cref="UserSyncException"/> 예외 발생</returns>
+        /// <exception cref="UserSyncException"/>
         public async Task RequestSyncAsync(CancellationToken cancellation = default)
         {
             while (true)

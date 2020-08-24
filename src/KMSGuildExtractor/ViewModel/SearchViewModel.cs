@@ -7,6 +7,8 @@ using KMSGuildExtractor.Core;
 using KMSGuildExtractor.Localization;
 using KMSGuildExtractor.View;
 
+using Serilog;
+
 namespace KMSGuildExtractor.ViewModel
 {
     public class SearchViewModel : BindableBase
@@ -166,11 +168,11 @@ namespace KMSGuildExtractor.ViewModel
                 SetSearchResultMessageSingle(LocalizationString.search_no_result);
                 done = false;
             }
-            catch (ParseException)
+            catch (ParseException e)
             {
                 SetSearchResultMessageSingle(LocalizationString.search_error);
                 done = false;
-                // Serilog로 Exception 데이터 저장하기
+                Log.Error(e.ToString());
             }
             finally
             {

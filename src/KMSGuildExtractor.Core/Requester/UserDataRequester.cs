@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -21,11 +22,28 @@ namespace KMSGuildExtractor.Core.Requester
                 throw new ArgumentException("User name cannot be empty.", nameof(name));
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, string.Format(UserSyncUrl, name));
-            using HttpResponseMessage response = await s_client.SendAsync(request, cancellation);
+            byte[] jsonByte = new byte[0];
 
-            byte[] json = await response.Content.ReadAsByteArrayAsync();
-            return JsonSerializer.Deserialize<SyncData>(json.AsSpan());
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, string.Format(UserSyncUrl, name));
+                using HttpResponseMessage response = await s_client.SendAsync(request, cancellation);
+
+                jsonByte = await response.Content.ReadAsByteArrayAsync();
+                return JsonSerializer.Deserialize<SyncData>(jsonByte.AsSpan());
+            }
+            catch (JsonException e)
+            {
+                throw new UserSyncException(name, "Faild to parse user sync json data.", e, Encoding.UTF8.GetString(jsonByte));
+            }
+            catch (HttpRequestException e)
+            {
+                throw new UserSyncException(name, "Faild to request user sync data", e);
+            }
+            catch (Exception e)
+            {
+                throw new UserSyncException(name, "Faild to get user sync data", e);
+            }
         }
 
         public static async Task<HtmlDocument> GetUserDataHtmlAsync(string name, CancellationToken cancellation = default)

@@ -12,6 +12,8 @@ using KMSGuildExtractor.Localization;
 
 using Microsoft.Win32;
 
+using Serilog;
+
 namespace KMSGuildExtractor.ViewModel
 {
     public class ExtractViewModel : BindableBase
@@ -75,10 +77,10 @@ namespace KMSGuildExtractor.ViewModel
             SetState(State.Ready);
             StateMessage = string.Empty;
             ExtractCommand = new DelegateCommand(ExecuteExtractCommand);
-            Task.Run(LoadData);
+            Task.Run(LoadDataAsync);
         }
 
-        private async Task LoadData()
+        private async Task LoadDataAsync()
         {
             int max;
             int count = 0;
@@ -86,81 +88,104 @@ namespace KMSGuildExtractor.ViewModel
 
             ConcurrentQueue<int> memberIndex;
 
+            Log.Information("LoadData - guild name: {GuildName}, guild id: {GuildID}", _guild.Name, _guild.GuildID);
+
             try
             {
                 StateMessage = LocalizationString.state_get_members;
                 SetState(State.GettingMemberList);
 
+                Log.Information("Getting guild members...");
                 await _guild.LoadGuildMembersAsync();
+                Log.Information("Done. Member count: {Count}", _guild.Members.Count);
                 max = _guild.Members.Count;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Faild to get guild members. guild name: {GuildName}", _guild.Name);
+                return;
+            }
+
+            try
+            {
                 memberIndex = new ConcurrentQueue<int>(Enumerable.Range(0, _guild.Members.Count));
 
                 StateMessage = string.Format(LocalizationString.state_get_data, max, 0);
                 SetState(State.GettingMemberdata);
 
-                Task loadTask1 = Load();
-                Task loadTask2 = Load();
-                Task loadTask3 = Load();
+                Task loadTask1 = LoadAsync(1);
+                Task loadTask2 = LoadAsync(2);
+                Task loadTask3 = LoadAsync(3);
 
                 await loadTask1;
                 await loadTask2;
                 await loadTask3;
+
+                Log.Information("Load Task completed.");
+
+                StateMessage = LocalizationString.state_done;
+                SetState(State.Done);
+
+                CanExtract = true;
             }
             catch (TaskCanceledException)
             {
-                return;
-            }
-            catch (Exception)
-            {
-                errorCount++;
+                Log.Information("Load Task canceled.");
+
+                StateMessage = LocalizationString.state_canceled;
+                SetState(State.Error);
+
+                CanExtract = false;
             }
             finally
             {
-                if (errorCount == 0)
-                {
-                    StateMessage = LocalizationString.state_done;
-                    SetState(State.Done);
-
-                    CanExtract = true;
-                }
-                else
-                {
-                    StateMessage = $"Error Count: {errorCount}";
-                    SetState(State.Error);
-                    CanExtract = false;
-                }
+                Log.Information("Error Count: {Count}", errorCount);
             }
 
-            async Task Load()
+            async Task LoadAsync(int taskNumber)
             {
                 while (memberIndex.TryDequeue(out int idx))
                 {
                     try
                     {
+                        Log.Information("[task.{TaskNumber}] Syncing member n.{Index} - name: {Name}", taskNumber, idx, _guild.Members[idx].data.Name);
                         await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+                        Log.Information("[task.{TaskNumber}] Successfuly synced member n.{Index}", taskNumber, idx);
+
+                        Log.Information("[task.{TaskNumber}] Getting member details n.{Index} - name: {Name}", taskNumber, idx, _guild.Members[idx].data.Name);
                         await _guild.Members[idx].data.LoadUserDetailAsync();
+                        Log.Information("[task.{TaskNumber}] Successfuly getting member details n.{Index}", taskNumber, idx);
                     }
                     catch (TaskCanceledException)
                     {
-                        errorCount++;
                     }
-                    catch (UserSyncException)
+                    catch (UserSyncException e) when (e.RawJsonValue != null)
                     {
+                        Log.Error(e, "[task.{TaskNumber}] Faild to parse sync data. user name: {UserName}\n[Raw json data]\n{Json}", taskNumber, _guild.Members[idx].data.Name, e.RawJsonValue);
                     }
-                    catch (UserNotFoundException)
+                    catch (UserSyncException e)
                     {
+                        Log.Error(e, "[task.{TaskNumber}] Faild to sync user data. user name: {UserName}", taskNumber, _guild.Members[idx].data.Name);
                     }
-                    catch (Exception) // TODO: UserNotFoundException 예외 거르기
+                    catch (UserNotFoundException e)
                     {
-                        errorCount++;
+                        Log.Error(e, "[task.{TaskNumber}] User {UserName} doesn't found in maple.gg.", taskNumber, _guild.Members[idx].data.Name);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "[task{TaskNumber}] Faild to get user data. user name: {UserName}", taskNumber, _guild.Members[idx].data.Name);
                     }
                     finally
                     {
                         count++;
-                        StateMessage = string.Format(LocalizationString.state_get_data, max, count);
+                        string msg = string.Format(LocalizationString.state_get_data, max, count);
+                        Log.Information(msg);
+                        StateMessage = msg;
                         await Task.Delay(2000);
                     }
                 }
+
+                Log.Information("[task.{TaskNumber}] Done.", taskNumber);
             }
         }
 
@@ -183,7 +208,12 @@ namespace KMSGuildExtractor.ViewModel
             }
             catch (IOException e)
             {
+                Log.Error(e, "File IO Exception");
                 MessageBox.Show(e.Message);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Faild to extract data to csv");
             }
             finally
             {

@@ -276,4 +276,7 @@
   <data name="data_user_name" xml:space="preserve">
     <value>유저이름</value>
   </data>
+  <data name="state_canceled" xml:space="preserve">
+    <value>작업이 취소되었습니다.</value>
+  </data>
 </root>
