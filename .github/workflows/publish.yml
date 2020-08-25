@@ -28,9 +28,6 @@ jobs:
     name: Build
     needs: job1
     runs-on: windows-latest
-    strategy:
-      matrix:
-        targetPlatform: [win-x86, win-x64]
 
     env:
       AppName: KMSGuildExtractor
@@ -52,7 +49,9 @@ jobs:
         run: dotnet restore
 
       - name: Publish app
-        run: dotnet publish .\$env:WpfProjectDir -c Release -r ${{ matrix.targetPlatform }} -p:PublishSingleFile=true -p:PublishTrimmed=true
+        run: |
+          dotnet publish -c release --no-restore .\${{ env.WpfProjectDir }} -p:PublishDir=.\.publish
+          Compress-Archive .\${{ env.WpfProjectDir }}\.publish\* ${{ env.AppName }}.zip
 
       - name: Update release asset
         id: upload-release-asset
@@ -61,6 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.job1.outputs.upload_url }}
-          asset_path: .\${{ env.WpfProjectDir }}\bin\Release\netcoreapp3.1\${{ matrix.targetPlatform }}\publish\${{ env.AppName }}.exe
-          asset_name: ${{ env.AppName }}_${{ matrix.targetPlatform }}.exe
-          asset_content_type: application/octet-stream
+          asset_path: ${{ env.AppName }}.zip
+          asset_name: ${{ env.AppName }}.zip
+          asset_content_type: application/zip
