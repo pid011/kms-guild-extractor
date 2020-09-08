@@ -33,34 +33,22 @@ namespace KMSGuildExtractor.ViewModel
 
         public ObservableCollection<World> WorldList { get; } = new ObservableCollection<World>
         {
-            new World(WorldID.Luna),
 
             new World(WorldID.Scania),
-
-            new World(WorldID.Elysium),
-
-            new World(WorldID.Croa),
-
-            new World(WorldID.Aurora),
-
             new World(WorldID.Bera),
-
-            new World(WorldID.Red),
-
-            new World(WorldID.Union),
-
+            new World(WorldID.Luna),
             new World(WorldID.Zenith),
-
+            new World(WorldID.Croa),
+            new World(WorldID.Union),
+            new World(WorldID.Elysium),
             new World(WorldID.Enosis),
-
+            new World(WorldID.Red),
+            new World(WorldID.Aurora),
             new World(WorldID.Nova),
-
+            new World(WorldID.Arcane),
             new World(WorldID.Reboot),
-
             new World(WorldID.Reboot2),
-
             new World(WorldID.Burning),
-
             new World(WorldID.Burning2)
         };
 
