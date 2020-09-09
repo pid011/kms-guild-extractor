@@ -190,7 +190,7 @@ namespace KMSGuildExtractor.ViewModel
             {
                 return;
             }
-            _main.WorkView = new DataLoadView(_searchResult);
+            _main.WorkView = new ExtractView(_searchResult);
         }
 
         public class World

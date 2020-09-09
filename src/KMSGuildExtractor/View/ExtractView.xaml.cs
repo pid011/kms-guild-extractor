@@ -6,11 +6,11 @@ using KMSGuildExtractor.ViewModel;
 namespace KMSGuildExtractor.View
 {
     /// <summary>
-    /// Interaction logic for DataLoadView.xaml
+    /// Interaction logic for ExtractView.xaml
     /// </summary>
-    public partial class DataLoadView : UserControl
+    public partial class ExtractView : UserControl
     {
-        public DataLoadView(Guild guildData)
+        public ExtractView(Guild guildData)
         {
             InitializeComponent();
             DataContext = new ExtractViewModel(guildData);
