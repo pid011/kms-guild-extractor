@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -205,6 +206,9 @@ namespace KMSGuildExtractor.ViewModel
                 if (dialog.ShowDialog() ?? false)
                 {
                     await DataExtract.CreateCSVAsync(dialog.FileName, _guild);
+
+                    var dir = Path.GetDirectoryName(dialog.FileName);
+                    Process.Start("explorer.exe", dir);
                 }
             }
             catch (IOException e)
