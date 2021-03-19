@@ -12,8 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59CE2521-F492-4CFC-A324-EB498B0A090F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.github\workflows\build.yml = .github\workflows\build.yml
-		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\ci.yml = .github\workflows\ci.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -75,7 +74,7 @@ Global
 		{C128FE60-3B1E-4079-9E98-3D09A2942FB0} = {42807082-F660-4B4F-A8EE-98685822BA16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0639AF34-E939-4498-A130-E0B9C96CE159}
 		RESX_NeutralResourcesLanguage = ko-KR
+		SolutionGuid = {0639AF34-E939-4498-A130-E0B9C96CE159}
 	EndGlobalSection
 EndGlobal
