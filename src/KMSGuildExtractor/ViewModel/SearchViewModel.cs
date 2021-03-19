@@ -198,7 +198,7 @@ namespace KMSGuildExtractor.ViewModel
             public string Name { get; }
 
             public Uri WorldLogoPath =>
-                new Uri($"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png");
+                new($"pack://application:,,,/resources/icons/worlds/{Url.ToString().ToLower()}.png");
 
             public WorldID Url { get; }
 

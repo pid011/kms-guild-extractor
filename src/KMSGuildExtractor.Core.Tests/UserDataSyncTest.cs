@@ -37,7 +37,7 @@ namespace KMSGuildExtractor.Core.Tests
             Assert.AreEqual(check.Done, true);
         }
 
-        private UserDataRequester.SyncData WaitForSyncing(string name)
+        private static UserDataRequester.SyncData WaitForSyncing(string name)
         {
             while (true)
             {

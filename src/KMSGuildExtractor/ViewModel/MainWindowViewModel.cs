@@ -12,9 +12,9 @@ namespace KMSGuildExtractor.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        public Version AppVersion => typeof(App).Assembly.GetName().Version ?? new Version(1, 0);
+        public static Version AppVersion => typeof(App).Assembly.GetName().Version ?? new Version(1, 0);
 
-        public string VersionString => $"v{AppVersion.ToString(3)}";
+        public static string VersionString => $"v{AppVersion.ToString(3)}";
 
         public string UpdateStatus
         {

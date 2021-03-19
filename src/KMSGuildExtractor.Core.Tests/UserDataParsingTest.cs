@@ -8,7 +8,7 @@ namespace KMSGuildExtractor.Core.Tests
         [TestMethod]
         public void UserDataParsingTest1()
         {
-            User user = new User("캡틴이름뭐해", WorldID.Reboot);
+            User user = new("캡틴이름뭐해", WorldID.Reboot);
             user.LoadUserDetailAsync().Wait();
 
             Assert.IsNotNull(user.LastUpdated);

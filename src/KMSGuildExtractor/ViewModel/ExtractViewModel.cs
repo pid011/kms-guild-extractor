@@ -195,7 +195,7 @@ namespace KMSGuildExtractor.ViewModel
 
             try
             {
-                SaveFileDialog dialog = new SaveFileDialog
+                SaveFileDialog dialog = new()
                 {
                     Filter = "CSV file (*.csv)|*.csv",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -254,7 +254,7 @@ namespace KMSGuildExtractor.ViewModel
             }
         }
 
-        private Brush GetStateColor(State state) => state switch
+        private static Brush GetStateColor(State state) => state switch
         {
             State.Ready => Brushes.Gray,
 

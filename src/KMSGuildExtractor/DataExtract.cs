@@ -13,8 +13,8 @@ namespace KMSGuildExtractor
 
         public static async Task CreateCSVAsync(string path, IGuild guildData)
         {
-            using FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
-            using StreamWriter writer = new StreamWriter(fs, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)); // utf-8-bom
+            using FileStream fs = new(path, FileMode.Create, FileAccess.Write);
+            using StreamWriter writer = new(fs, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)); // utf-8-bom
 
             StringBuilder builder = new StringBuilder()
                 .AppendJoin(Seperater,
