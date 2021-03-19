@@ -52,7 +52,7 @@ namespace KMSGuildExtractor.ViewModel
             new World(WorldID.Burning2)
         };
 
-        public World? SelectedWorld
+        public World SelectedWorld
         {
             get => _selectedWorld;
             set => SetProperty(ref _selectedWorld, value, nameof(SelectedWorld));
@@ -94,13 +94,13 @@ namespace KMSGuildExtractor.ViewModel
         private bool _canEdit;
         private bool _canSearch;
         private bool _canSubmit;
-        private World? _selectedWorld;
+        private World _selectedWorld;
         private string _inputGuildName = string.Empty;
         private string _inputGuildNameCheck = string.Empty;
         private string _searchResultGuildName = LocalizationString.search_no_result;
         private string _searchResultGuildWorld = LocalizationString.search_no_result;
         private string _searchResultGuidLevel = LocalizationString.search_no_result;
-        private Guild? _searchResult;
+        private Guild _searchResult;
 
         public SearchViewModel(MainWindowViewModel main)
         {

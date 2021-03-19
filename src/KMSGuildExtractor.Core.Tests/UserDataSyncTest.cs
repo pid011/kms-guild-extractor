@@ -20,14 +20,14 @@ namespace KMSGuildExtractor.Core.Tests
             Assert.AreEqual(check.Message, "캐릭터를 찾을 수 없습니다.");
         }
 
-        [TestMethod]
-        public void UserDataSyncTest2()
-        {
-            UserDataRequester.SyncData check = WaitForSyncing("캡틴이름뮈헤");
+        //[TestMethod]
+        //public void UserDataSyncTest2()
+        //{
+        //    UserDataRequester.SyncData check = WaitForSyncing("캡틴이름뮈헤");
 
-            Assert.AreEqual(check.Error, true);
-            Assert.AreEqual(check.Message, "갱신에 실패했습니다. (캐릭터를 찾을 수 없습니다.)");
-        }
+        //    Assert.AreEqual(check.Error, true);
+        //    Assert.AreEqual(check.Message, "갱신에 실패했습니다. (캐릭터를 찾을 수 없습니다.)");
+        //}
 
         [TestMethod]
         public void UserDataSyncTest3()

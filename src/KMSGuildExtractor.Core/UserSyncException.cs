@@ -6,7 +6,7 @@ namespace KMSGuildExtractor.Core
     public class UserSyncException : Exception
     {
         public string Name { get; }
-        public string? RawJsonValue { get; }
+        public string RawJsonValue { get; }
 
         public UserSyncException(string name, string message) : base(message)
         {

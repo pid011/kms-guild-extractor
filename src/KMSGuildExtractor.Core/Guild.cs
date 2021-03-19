@@ -31,7 +31,7 @@ namespace KMSGuildExtractor.Core
             Members = new List<(GuildPosition position, User data)>();
         }
 
-        public static async Task<Guild?> SearchAsync(string name, WorldID wid, CancellationToken cancellation = default)
+        public static async Task<Guild> SearchAsync(string name, WorldID wid, CancellationToken cancellation = default)
         {
             HtmlDocument html = await GuildDataRequester.GetGuildSearchHtmlAsync(name, cancellation);
 
@@ -74,7 +74,7 @@ namespace KMSGuildExtractor.Core
             }
         }
 
-        private static Guild? FindGuildInHtml(HtmlDocument html, WorldID world)
+        private static Guild FindGuildInHtml(HtmlDocument html, WorldID world)
         {
             try
             {

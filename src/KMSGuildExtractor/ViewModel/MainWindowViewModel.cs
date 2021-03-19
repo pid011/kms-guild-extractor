@@ -32,21 +32,21 @@ namespace KMSGuildExtractor.ViewModel
 
         private Visibility _releaseLinkVisible = Visibility.Collapsed;
 
-        public Uri? ReleaseLink
+        public Uri ReleaseLink
         {
             get => _releaseLink;
             private set => SetProperty(ref _releaseLink, value, nameof(ReleaseLink));
         }
 
-        private Uri? _releaseLink;
+        private Uri _releaseLink;
 
-        public object? WorkView
+        public object WorkView
         {
             get => _workView;
             set => SetProperty(ref _workView, value, nameof(WorkView));
         }
 
-        private object? _workView;
+        private object _workView;
 
         public MainWindowViewModel()
         {
@@ -58,7 +58,7 @@ namespace KMSGuildExtractor.ViewModel
         {
             try
             {
-                (bool compare, string? url) = await Update.CompareVersionAsync(AppVersion);
+                (bool compare, string url) = await Update.CompareVersionAsync(AppVersion);
 
                 if (compare || url is null)
                 {

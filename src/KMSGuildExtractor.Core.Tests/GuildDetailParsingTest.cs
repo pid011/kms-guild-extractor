@@ -16,13 +16,13 @@ namespace KMSGuildExtractor.Core.Tests
             Assert.IsTrue(guild.Members.Any(u => u.data.Name == "캡틴이름뭐해"));
         }
 
-        [TestMethod]
-        public void GuildDetailParsingTest2()
-        {
-            Guild guild = Guild.SearchAsync("훈장교", WorldID.Scania).Result;
-            guild.LoadGuildMembersAsync().Wait();
+        //[TestMethod]
+        //public void GuildDetailParsingTest2()
+        //{
+        //    Guild guild = Guild.SearchAsync("훈장교", WorldID.Scania).Result;
+        //    guild.LoadGuildMembersAsync().Wait();
 
-            Assert.IsTrue(guild.Members.Any(u => u.data.Name == "신남" && u.position == GuildPosition.Owner));
-        }
+        //    Assert.IsTrue(guild.Members.Any(u => u.data.Name == "신남" && u.position == GuildPosition.Owner));
+        //}
     }
 }

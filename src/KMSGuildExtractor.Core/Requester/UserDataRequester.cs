@@ -15,7 +15,7 @@ namespace KMSGuildExtractor.Core.Requester
         private const string UserDataUrl = "https://maple.gg/u/{0}";
         private const string UserSyncUrl = UserDataUrl + "/sync";
 
-        public static async Task<SyncData?> GetUserSyncDataAsync(string name, CancellationToken cancellation = default)
+        public static async Task<SyncData> GetUserSyncDataAsync(string name, CancellationToken cancellation = default)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -65,7 +65,7 @@ namespace KMSGuildExtractor.Core.Requester
             public bool? Done { get; set; }
 
             [JsonPropertyName("message")]
-            public string? Message { get; set; }
+            public string Message { get; set; }
 
             [JsonPropertyName("interval")]
             public int? Interval { get; set; }

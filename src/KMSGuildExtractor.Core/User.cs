@@ -34,7 +34,7 @@ namespace KMSGuildExtractor.Core
         /// <summary>
         /// 플레이어의 직업. 데이터가 없으면 null을 반환한다.
         /// </summary>
-        public string? Job { get; private set; }
+        public string Job { get; private set; }
 
         /// <summary>
         /// 플레이어의 인기도. 데이터가 없으면 null을 반환한다.
@@ -73,7 +73,7 @@ namespace KMSGuildExtractor.Core
         {
             while (true)
             {
-                UserDataRequester.SyncData? data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
+                UserDataRequester.SyncData data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
 
                 if (data is null)
                 {
@@ -106,7 +106,7 @@ namespace KMSGuildExtractor.Core
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
                 int? level = profile[0]?.InnerText?.GetDigit();
 
-                string? job = profile[1]?.InnerText?.Trim();
+                string job = profile[1]?.InnerText?.Trim();
 
                 int? popularity = profile[2]?.InnerText?.GetDigit();
 
