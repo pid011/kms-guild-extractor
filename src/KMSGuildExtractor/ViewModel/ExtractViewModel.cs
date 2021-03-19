@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -113,13 +114,13 @@ namespace KMSGuildExtractor.ViewModel
                 StateMessage = string.Format(LocalizationString.state_get_data, max, 0);
                 SetState(State.GettingMemberdata);
 
-                Task loadTask1 = LoadAsync(1);
-                Task loadTask2 = LoadAsync(2);
-                Task loadTask3 = LoadAsync(3);
+                List<Task> loadTaskes = new()
+                {
+                    LoadAsync(1),
+                    LoadAsync(2)
+                };
 
-                await loadTask1;
-                await loadTask2;
-                await loadTask3;
+                await Task.WhenAll(loadTaskes);
 
                 Log.Information("Load Task completed.");
 
