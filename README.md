@@ -4,9 +4,9 @@
 
 ## 설치방법
 
-<https://dotnet.microsoft.com/download/dotnet-core/current/runtime>
+<https://dotnet.microsoft.com/download/dotnet/current/runtime>
 
-위의 링크로 들어가 .NET Core Runtime을 설치해주세요. **(필수)**
+위의 링크로 들어가 .NET Runtime을 설치해주세요. **(필수)**
 
 런타임을 설치한 후에 아래 링크로 들어가 최신 버전의 릴리즈 압축파일을 다운받아 사용하면 됩니다.
 
