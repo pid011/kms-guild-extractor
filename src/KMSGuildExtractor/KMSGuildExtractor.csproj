@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>KMSGuildExtractor.App</StartupObject>
     <ApplicationIcon>.\resources\icons\icon.ico</ApplicationIcon>
@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\KMSGuildExtractor.Core\KMSGuildExtractor.Core.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Resource Include="resources\excel\template.xlsx" />
     <Resource Include="resources\fonts\NanumGothic-Bold.ttf" />
