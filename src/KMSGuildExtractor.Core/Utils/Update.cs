@@ -18,7 +18,16 @@ namespace KMSGuildExtractor.Core.Utils
 
             string versionString = $"v{target.ToString(3)}";
             GitHubRequester.ReleaseData data = await GitHubRequester.GetLastReleaseAsync(cancellationToken);
-            return (versionString == data?.TagName, data?.Url);
+
+            if (data is null)
+            {
+                return (false, null);
+            }
+
+            bool compare = data != null && versionString.CompareTo(data.TagName) >= 0;
+            string url = data?.Url;
+
+            return (compare, url);
         }
     }
 }
