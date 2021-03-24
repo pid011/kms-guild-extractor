@@ -2,6 +2,9 @@
 
 길드원 정보를 크롤링하여 csv파일로 추출할 수 있습니다.
 
+## Discussions
+툴과 관련된 문의나 건의사항은 [GitHub Discussions](https://github.com/pid011/kms-guild-extractor/discussions)로 부탁드립니다!
+
 ## 설치방법
 
 <https://dotnet.microsoft.com/download/dotnet/current/runtime>
