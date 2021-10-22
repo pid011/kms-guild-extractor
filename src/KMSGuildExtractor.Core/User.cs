@@ -101,20 +101,20 @@ namespace KMSGuildExtractor.Core
                     .DocumentNode
                     .SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?
                     .InnerText?
-                    .GetDigit();
+                    .ParseInt();
 
                 HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
-                int? level = profile[0]?.InnerText?.GetDigit();
+                int? level = profile[0]?.InnerText?.ParseLevel();
 
                 string job = profile[1]?.InnerText?.Trim();
 
-                int? popularity = profile[2]?.InnerText?.GetDigit();
+                int? popularity = profile[2]?.InnerText?.ParseInt();
 
                 HtmlNodeCollection datas = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
 
-                int? dojangFloor = datas[0].SelectSingleNode(".//h1")?.InnerText?.GetDigit();
+                int? dojangFloor = datas[0].SelectSingleNode(".//h1")?.InnerText?.ParseInt();
 
-                int? union = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText?.GetDigit();
+                int? union = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
 
                 LastUpdated = lastUpdated;
                 Level = level;

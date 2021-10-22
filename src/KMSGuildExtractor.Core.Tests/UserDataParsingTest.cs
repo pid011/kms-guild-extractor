@@ -18,5 +18,12 @@ namespace KMSGuildExtractor.Core.Tests
             Assert.IsNotNull(user.DojangFloor);
             Assert.IsNotNull(user.UnionLevel);
         }
+
+        [TestMethod]
+        public void LevelDataParsingTest()
+        {
+            var levelRaw = "Lv.260(37.014%)";
+            Assert.IsNotNull(levelRaw.ParseLevel());
+        }
     }
 }
