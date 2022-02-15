@@ -53,7 +53,7 @@ namespace KMSGuildExtractor.Core
 
         public async Task LoadGuildMembersAsync(CancellationToken cancellation = default)
         {
-            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>(200);
+            List<(GuildPosition, User)> members = new(200);
             int i = 1;
 
             while (true)
@@ -134,7 +134,7 @@ namespace KMSGuildExtractor.Core
 
         private IEnumerable<(GuildPosition, User)> GetGuildMembersInHtml(HtmlDocument html)
         {
-            List<(GuildPosition, User)> members = new List<(GuildPosition, User)>(30);
+            List<(GuildPosition, User)> members = new(30);
             try
             {
                 HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table\"]/tbody");
@@ -161,7 +161,7 @@ namespace KMSGuildExtractor.Core
             };
         }
 
-        private bool IsNextPageExist(HtmlDocument html)
+        private static bool IsNextPageExist(HtmlDocument html)
         {
             try
             {

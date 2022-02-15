@@ -146,36 +146,60 @@ namespace KMSGuildExtractor.ViewModel
 
             async Task LoadAsync(int taskNumber)
             {
+                var prefix = $"[task.{taskNumber}] ";
+
                 while (memberIndex.TryDequeue(out int idx))
                 {
+                    var userName = _guild.Members[idx].data.Name;
                     try
                     {
-                        Log.Information("[task.{TaskNumber}] Syncing member n.{Index} - name: {Name}", taskNumber, idx, _guild.Members[idx].data.Name);
-                        await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
-                        Log.Information("[task.{TaskNumber}] Successfuly synced member n.{Index}", taskNumber, idx);
+                        Log.Information($"{prefix}Syncing member n.{idx} - name: {userName}");
 
-                        Log.Information("[task.{TaskNumber}] Getting member details n.{Index} - name: {Name}", taskNumber, idx, _guild.Members[idx].data.Name);
+                        var syncRequestCount = 0;
+                        while (true)
+                        {
+                            try
+                            {
+                                syncRequestCount++;
+                                await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+                            }
+                            catch (UserSyncException e) when (e.RawJsonValue != null)
+                            {
+                                Log.Error(e, $"{prefix}Faild to parse sync data. user name: {userName}\n[Raw json data]\n{e.RawJsonValue}");
+                                return;
+                            }
+                            catch (UserSyncException e)
+                            {
+                                Debug.WriteLine($"{prefix}Faild to sync user data. ({syncRequestCount}) user name: {userName}");
+                                Log.Warning(e, $"{prefix}Faild to sync user data. ({syncRequestCount}) user name: {userName}");
+                                if (syncRequestCount > 6)
+                                {
+                                    return;
+                                }
+
+                                Log.Information("Try again in 10 seconds.");
+                                await Task.Delay(TimeSpan.FromSeconds(10));
+                                continue;
+                            }
+                            break;
+                        }
+
+                        Log.Information($"{prefix}Successfuly synced member n.{idx}");
+
+                        Log.Information($"{prefix}Getting member details n.{idx} - name: {userName}");
                         await _guild.Members[idx].data.LoadUserDetailAsync();
-                        Log.Information("[task.{TaskNumber}] Successfuly getting member details n.{Index}", taskNumber, idx);
+                        Log.Information($"{prefix}Successfuly getting member details n.{idx}");
                     }
                     catch (TaskCanceledException)
                     {
                     }
-                    catch (UserSyncException e) when (e.RawJsonValue != null)
-                    {
-                        Log.Error(e, "[task.{TaskNumber}] Faild to parse sync data. user name: {UserName}\n[Raw json data]\n{Json}", taskNumber, _guild.Members[idx].data.Name, e.RawJsonValue);
-                    }
-                    catch (UserSyncException e)
-                    {
-                        Log.Error(e, "[task.{TaskNumber}] Faild to sync user data. user name: {UserName}", taskNumber, _guild.Members[idx].data.Name);
-                    }
                     catch (UserNotFoundException e)
                     {
-                        Log.Error(e, "[task.{TaskNumber}] User {UserName} doesn't found in maple.gg.", taskNumber, _guild.Members[idx].data.Name);
+                        Log.Error(e, $"{prefix}User {userName} doesn't found in maple.gg.");
                     }
                     catch (Exception e)
                     {
-                        Log.Error(e, "[task{TaskNumber}] Faild to get user data. user name: {UserName}", taskNumber, _guild.Members[idx].data.Name);
+                        Log.Error(e, $"{prefix}Faild to get user data. user name: {userName}");
                     }
                     finally
                     {
@@ -187,7 +211,7 @@ namespace KMSGuildExtractor.ViewModel
                     }
                 }
 
-                Log.Information("[task.{TaskNumber}] Done.", taskNumber);
+                Log.Information($"{prefix}Done.");
             }
         }
 

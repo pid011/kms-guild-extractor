@@ -22,19 +22,21 @@ namespace KMSGuildExtractor.Core.Requester
                 throw new ArgumentException("User name cannot be empty.", nameof(name));
             }
 
-            byte[] jsonByte = new byte[0];
-
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, string.Format(UserSyncUrl, name));
                 using HttpResponseMessage response = await s_client.SendAsync(request, cancellation);
 
-                jsonByte = await response.Content.ReadAsByteArrayAsync();
-                return JsonSerializer.Deserialize<SyncData>(jsonByte.AsSpan());
-            }
-            catch (JsonException e)
-            {
-                throw new UserSyncException(name, "Faild to parse user sync json data.", e, Encoding.UTF8.GetString(jsonByte));
+                var jsonByte = await response.Content.ReadAsByteArrayAsync(cancellation);
+
+                try
+                {
+                    return JsonSerializer.Deserialize<SyncData>(jsonByte.AsSpan());
+                }
+                catch (JsonException e)
+                {
+                    throw new UserSyncException(name, "Faild to parse user sync json data.", e, Encoding.UTF8.GetString(jsonByte));
+                }
             }
             catch (HttpRequestException e)
             {
@@ -59,16 +61,16 @@ namespace KMSGuildExtractor.Core.Requester
         public class SyncData
         {
             [JsonPropertyName("error")]
-            public bool? Error { get; set; }
+            public bool? Error { get; init; }
 
             [JsonPropertyName("done")]
-            public bool? Done { get; set; }
+            public bool? Done { get; init; }
 
             [JsonPropertyName("message")]
-            public string Message { get; set; }
+            public string Message { get; init; }
 
             [JsonPropertyName("interval")]
-            public int? Interval { get; set; }
+            public int? Interval { get; init; }
         }
     }
 }
