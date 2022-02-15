@@ -207,7 +207,7 @@ namespace KMSGuildExtractor.ViewModel
                         string msg = string.Format(LocalizationString.state_get_data, max, count);
                         Log.Information(msg);
                         StateMessage = msg;
-                        await Task.Delay(2000);
+                        await Task.Delay(1000);
                     }
                 }
 
