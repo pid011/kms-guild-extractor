@@ -1,4 +1,4 @@
-name: app-publish
+name: ci
 
 on:
   create:
