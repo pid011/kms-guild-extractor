@@ -1,10 +1,16 @@
-name: ci
+name: app-publish
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
 
 jobs:
-  run:
+  publish:
     runs-on: windows-latest
+
     env:
       AppName: KMSGuildExtractor
       WpfProjectDir: src\KMSGuildExtractor
@@ -25,13 +31,11 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
 
       - name: Publish app
-        if: startsWith(github.ref, 'refs/tags/')
         run: |
           dotnet publish -c release --no-restore .\${{ env.WpfProjectDir }} -p:PublishDir=.\.publish
           Compress-Archive .\${{ env.WpfProjectDir }}\.publish\* ${{ env.AppName }}.zip
 
       - name: Update release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

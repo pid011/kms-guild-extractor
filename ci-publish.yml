@@ -1,0 +1,45 @@
+name: Publish new version app
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+jobs:
+  publish:
+    runs-on: windows-latest
+
+    env:
+      AppName: KMSGuildExtractor
+      WpfProjectDir: src\KMSGuildExtractor
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+
+      - name: Publish app
+        run: |
+          dotnet publish -c release --no-restore .\${{ env.WpfProjectDir }} -p:PublishDir=.\.publish
+          Compress-Archive .\${{ env.WpfProjectDir }}\.publish\* ${{ env.AppName }}.zip
+
+      - name: Update release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ github.ref }}
+          draft: true
+          files: ${{ env.AppName }}.zip
