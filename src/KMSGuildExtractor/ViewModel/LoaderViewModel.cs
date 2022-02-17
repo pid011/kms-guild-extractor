@@ -18,7 +18,7 @@ using Serilog;
 
 namespace KMSGuildExtractor.ViewModel
 {
-    public class ExtractViewModel : BindableBase
+    public class LoaderViewModel : BindableBase
     {
         private enum State
         {
@@ -72,7 +72,7 @@ namespace KMSGuildExtractor.ViewModel
         private string _stateMessage = string.Empty;
         private Brush _stateColor = Brushes.Transparent;
 
-        public ExtractViewModel(Guild guildData)
+        public LoaderViewModel(Guild guildData)
         {
             _guild = guildData;
             CanExtract = false;

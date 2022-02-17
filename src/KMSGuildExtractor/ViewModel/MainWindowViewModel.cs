@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -58,7 +59,8 @@ namespace KMSGuildExtractor.ViewModel
         {
             try
             {
-                (bool compare, string url) = await Update.CompareVersionAsync(AppVersion);
+                var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+                (bool compare, string url) = await Update.CompareVersionAsync(AppVersion, timeout.Token);
 
                 if (compare || url is null)
                 {
