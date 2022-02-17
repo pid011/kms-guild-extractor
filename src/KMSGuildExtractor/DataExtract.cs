@@ -32,22 +32,32 @@ namespace KMSGuildExtractor
             foreach ((GuildPosition position, User user) in guildData.Members)
             {
                 builder = builder
-                    .AppendJoin(Seperater,
-                                GetCSVString(user.Name),
-                                GetCSVString(position.ToLocalizedString()),
-                                user.Level ?? 0,
-                                GetCSVString(user.Job),
-                                user.LastUpdated ?? -1,
-                                user.Popularity ?? 0,
-                                user.DojangFloor ?? 0,
-                                user.UnionLevel ?? 0
-                                )
+                    .AppendJoin(
+                        Seperater,
+                        GetCSVString(user.Name),
+                        GetCSVString(position.ToLocalizedString()),
+                        user.Level ?? 0,
+                        GetCSVString(user.Job),
+                        user.LastUpdated ?? -1,
+                        user.Popularity ?? 0,
+                        user.DojangFloor ?? 0,
+                        user.UnionLevel ?? 0)
                     .AppendLine();
             }
 
             await writer.WriteAsync(builder);
         }
 
-        private static string GetCSVString<T>(T obj) => obj is null ? "\"---\"" : $"\"{obj}\"";
+        private static string GetCSVString<T>(T obj)
+        {
+            if (obj is null)
+            {
+                return "NULL";
+            }
+
+            return obj.ToString().IndexOf(Seperater) < 0
+                ? $"{obj}"
+                : $"\"{obj}\"";
+        }
     }
 }

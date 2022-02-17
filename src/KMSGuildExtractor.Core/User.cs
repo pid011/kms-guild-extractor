@@ -74,21 +74,21 @@ namespace KMSGuildExtractor.Core
             while (true)
             {
                 UserDataRequester.SyncData data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
-
                 if (data is null)
                 {
                     throw new NullReferenceException($"Cannot parse user sync json data : {Name}");
                 }
 
-                if (data.Error == true)
-                {
-                    throw new UserSyncException(Name, data?.Message ?? string.Empty);
-                }
-                if (data.Done == true)
+                if (data.Done is true)
                 {
                     return;
                 }
-                await Task.Delay(data?.Interval ?? 2000, cancellation);
+
+                if (data.Error is true)
+                {
+                    throw new UserSyncException(Name, data.Message ?? string.Empty);
+                }
+                await Task.Delay(data.Interval ?? 2000, cancellation);
             }
         }
 
