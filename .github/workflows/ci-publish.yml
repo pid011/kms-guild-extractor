@@ -1,7 +1,7 @@
 name: app-publish
 
 on:
-  push:
+  create:
     branches:
       - main
     tags:
