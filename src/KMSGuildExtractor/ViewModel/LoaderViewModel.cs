@@ -101,7 +101,7 @@ namespace KMSGuildExtractor.ViewModel
             DisplayLog(State.GettingMemberdata, string.Format(LocalizationString.state_get_data, _guild.Members.Count, 0));
             try
             {
-                Log.Information("Start sync user informations in maple.gg");
+                Log.Information("Start get user informations from maple.gg");
 
                 /* maple.gg 서버 부담이 심한거 같아 동기화 기능 제외
                 {
@@ -120,7 +120,7 @@ namespace KMSGuildExtractor.ViewModel
                     var progress = new Progress<string>(name =>
                     {
                         ++count;
-                        Log.Information($"Succefully synced user '{name}'");
+                        // Log.Information($"Succefully get user information '{name}' ({count}/{_guild.Members.Count})");
                         DisplayLog(State.GettingMemberdata, $"'{name}' 유저 정보 가져오기 완료 ({count}/{_guild.Members.Count})");
                     });
                     await RequestMembersInfoAsync(_guild, progress, default);
@@ -204,7 +204,7 @@ namespace KMSGuildExtractor.ViewModel
             var tasks = new List<Task>();
             foreach (GuildMember member in guild.Members)
             {
-                Debug.WriteLine($"Start information load process user '{member.Info.Name}'");
+                Debug.WriteLine($"[{member.Info.Name}] Start information load process");
 
                 Task task = RequestAsync(member, progress, cancellation);
                 tasks.Add(task);
