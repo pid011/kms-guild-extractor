@@ -2,8 +2,6 @@ name: Publish app
 
 on:
   push:
-    branches:
-      - main
     tags:
       - v*
 
