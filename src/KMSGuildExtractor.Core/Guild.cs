@@ -21,19 +21,19 @@ namespace KMSGuildExtractor.Core
 
         public int? Level { get; private set; }
 
-        public IReadOnlyList<(GuildPosition position, User data)> Members { get; private set; }
+        public IReadOnlyList<GuildMember> Members { get; private set; }
 
         public Guild(string name, WorldID world, int guildID)
         {
             Name = name;
             World = world;
             GuildID = guildID;
-            Members = new List<(GuildPosition position, User data)>();
+            Members = new List<GuildMember>();
         }
 
         public static async Task<Guild> SearchAsync(string name, WorldID wid, CancellationToken cancellation = default)
         {
-            HtmlDocument html = await GuildDataRequester.GetGuildSearchHtmlAsync(name, cancellation);
+            HtmlDocument html = await GuildDataRequester.RequestGuildSearchHtmlAsync(name, cancellation);
 
             return FindGuildInHtml(html, wid);
         }
@@ -53,12 +53,12 @@ namespace KMSGuildExtractor.Core
 
         public async Task LoadGuildMembersAsync(CancellationToken cancellation = default)
         {
-            List<(GuildPosition, User)> members = new(200);
-            int i = 1;
+            var members = new List<GuildMember>(200);
 
+            int i = 1;
             while (true)
             {
-                HtmlDocument html = await GuildDataRequester.GetGuildOrganizationHtmlAsync(GuildID, World, cancellation, i);
+                HtmlDocument html = await GuildDataRequester.RequestGuildHtmlAsync(GuildID, World, i, cancellation);
                 members.AddRange(GetGuildMembersInHtml(html));
 
                 if (IsNextPageExist(html))
@@ -132,18 +132,19 @@ namespace KMSGuildExtractor.Core
             }
         }
 
-        private IEnumerable<(GuildPosition, User)> GetGuildMembersInHtml(HtmlDocument html)
+        private IEnumerable<GuildMember> GetGuildMembersInHtml(HtmlDocument html)
         {
-            List<(GuildPosition, User)> members = new(30);
             try
             {
+                var members = new List<GuildMember>(50);
                 HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table\"]/tbody");
 
                 foreach (HtmlNode item in guildOrgNode.Descendants("tr"))
                 {
                     string position = item.SelectSingleNode("./td[1]").InnerText.Trim();
                     string name = item.SelectSingleNode("./td[2]/dl/dt/a").InnerText.Trim();
-                    members.Add((ParseGuildPosition(position), new User(name, World)));
+                    var member = new GuildMember(ParseGuildPosition(position), new User(name, World));
+                    members.Add(member);
                 }
 
                 return members;

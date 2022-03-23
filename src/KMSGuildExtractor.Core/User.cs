@@ -57,27 +57,21 @@ namespace KMSGuildExtractor.Core
             World = world;
         }
 
-        public async Task LoadUserDetailAsync(CancellationToken cancellation = default)
-        {
-            HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(Name, cancellation);
-            SetUserDetail(html);
-        }
-
         /// <summary>
         /// maple.gg에 유저 데이터 동기화를 요청한다.
         /// </summary>
+        /// <remarks>
+        /// 별다른 에러 메시지가 없으면 성공 응답을 받을 때 까지 일정 간격으로 재 요청함.
+        /// </remarks>
         /// <param name="cancellation"></param>
         /// <returns>정상적으로 동기화되면 메서드 종료. 아니면 <see cref="UserSyncException"/> 예외 발생</returns>
-        /// <exception cref="UserSyncException"/>
+        /// <exception cref="NullReferenceException">응답으로 받은 json에서 데이터를 파싱하지 못했을 때 발생</exception>
+        /// <exception cref="UserSyncException">동기화 실패 응답을 받았을 때 발생. 관련 내용은 <see cref="UserDataRequester.SyncData.Message"/>에 표시됩니다.</exception>
         public async Task RequestSyncAsync(CancellationToken cancellation = default)
         {
             while (true)
             {
                 UserDataRequester.SyncData data = await UserDataRequester.GetUserSyncDataAsync(Name, cancellation);
-                if (data is null)
-                {
-                    throw new NullReferenceException($"Cannot parse user sync json data : {Name}");
-                }
 
                 if (data.Done is true)
                 {
@@ -90,6 +84,20 @@ namespace KMSGuildExtractor.Core
                 }
                 await Task.Delay(data.Interval ?? 2000, cancellation);
             }
+        }
+
+
+        /// <summary>
+        /// maple.gg에서 유저 정보를 가져옵니다.
+        /// </summary>
+        /// <param name="cancellation"></param>
+        /// <returns></returns>
+        /// <exception cref="ParseException">웹페이지 파싱에 실패했을 때 발생</exception>
+        /// <exception cref="UserNotFoundException">maple.gg에서 유저 검색에 실패했을 때 발생</exception>
+        public async Task LoadUserDetailAsync(CancellationToken cancellation = default)
+        {
+            HtmlDocument html = await UserDataRequester.GetUserDataHtmlAsync(Name, cancellation);
+            SetUserDetail(html);
         }
 
         private void SetUserDetail(HtmlDocument html)

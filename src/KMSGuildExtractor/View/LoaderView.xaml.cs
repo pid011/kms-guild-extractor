@@ -6,14 +6,14 @@ using KMSGuildExtractor.ViewModel;
 namespace KMSGuildExtractor.View
 {
     /// <summary>
-    /// Interaction logic for ExtractView.xaml
+    /// Interaction logic for LoaderView.xaml
     /// </summary>
-    public partial class ExtractView : UserControl
+    public partial class LoaderView : UserControl
     {
-        public ExtractView(Guild guildData)
+        public LoaderView(Guild guildData)
         {
             InitializeComponent();
-            DataContext = new ExtractViewModel(guildData);
+            DataContext = new LoaderViewModel(guildData);
         }
     }
 }

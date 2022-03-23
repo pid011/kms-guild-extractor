@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +16,7 @@ using Serilog;
 
 namespace KMSGuildExtractor.ViewModel
 {
-    public class ExtractViewModel : BindableBase
+    public class LoaderViewModel : BindableBase
     {
         private enum State
         {
@@ -72,7 +70,7 @@ namespace KMSGuildExtractor.ViewModel
         private string _stateMessage = string.Empty;
         private Brush _stateColor = Brushes.Transparent;
 
-        public ExtractViewModel(Guild guildData)
+        public LoaderViewModel(Guild guildData)
         {
             _guild = guildData;
             CanExtract = false;
@@ -84,134 +82,152 @@ namespace KMSGuildExtractor.ViewModel
 
         private async Task LoadDataAsync()
         {
-            int max;
-            int count = 0;
-            int errorCount = 0;
+            Log.Information($"LoadData - GuildName: {_guild.Name}, GuildId: {_guild.GuildID}");
 
-            ConcurrentQueue<int> memberIndex;
-
-            Log.Information("LoadData - guild name: {GuildName}, guild id: {GuildID}", _guild.Name, _guild.GuildID);
-
+            DisplayLog(State.GettingMemberList, LocalizationString.state_get_members);
             try
             {
-                StateMessage = LocalizationString.state_get_members;
-                SetState(State.GettingMemberList);
-
                 Log.Information("Getting guild members...");
                 await _guild.LoadGuildMembersAsync();
-                Log.Information("Done. Member count: {Count}", _guild.Members.Count);
-                max = _guild.Members.Count;
+                Log.Information($"Done. Member count: {_guild.Members.Count}");
             }
             catch (Exception e)
             {
-                Log.Error(e, "Faild to get guild members. guild name: {GuildName}", _guild.Name);
+                Log.Error(e, $"Faild to get guild members. guild name: {_guild.Name}");
+                DisplayLog(State.Error, LocalizationString.state_error);
                 return;
             }
 
+            DisplayLog(State.GettingMemberdata, string.Format(LocalizationString.state_get_data, _guild.Members.Count, 0));
             try
             {
-                memberIndex = new ConcurrentQueue<int>(Enumerable.Range(0, _guild.Members.Count));
+                Log.Information("Start sync user informations in maple.gg");
 
-                StateMessage = string.Format(LocalizationString.state_get_data, max, 0);
-                SetState(State.GettingMemberdata);
-
-                List<Task> loadTaskes = new()
+                /* maple.gg 서버 부담이 심한거 같아 동기화 기능 제외
                 {
-                    LoadAsync(1),
-                    LoadAsync(2)
-                };
+                    var count = 0;
+                    var progress = new Progress<string>(name =>
+                    {
+                        ++count;
+                        Log.Information($"Succefully synced user '{name}'");
+                        DisplayLog(State.GettingMemberdata, $"'{name}' 유저 정보 업데이트 완료 ({count}/{_guild.Members.Count})");
+                    });
+                    await RequestInfoUpdateAsync(_guild, progress, default);
+                }
+                */
+                {
+                    var count = 0;
+                    var progress = new Progress<string>(name =>
+                    {
+                        ++count;
+                        Log.Information($"Succefully synced user '{name}'");
+                        DisplayLog(State.GettingMemberdata, $"'{name}' 유저 정보 가져오기 완료 ({count}/{_guild.Members.Count})");
+                    });
+                    await RequestMembersInfoAsync(_guild, progress, default);
+                }
 
-                await Task.WhenAll(loadTaskes);
-
-                Log.Information("Load Task completed.");
-
-                StateMessage = LocalizationString.state_done;
-                SetState(State.Done);
-
+                Log.Information($"Done.");
+                DisplayLog(State.Done, LocalizationString.state_done);
                 CanExtract = true;
             }
             catch (TaskCanceledException)
             {
                 Log.Information("Load Task canceled.");
-
-                StateMessage = LocalizationString.state_canceled;
-                SetState(State.Error);
-
+                DisplayLog(State.Error, LocalizationString.state_canceled);
                 CanExtract = false;
             }
-            finally
+            catch (Exception e)
             {
-                Log.Information("Error Count: {Count}", errorCount);
+                Log.Error(e, "Faild to load member data!");
+                DisplayLog(State.Error, LocalizationString.state_error);
+                CanExtract = false;
             }
+        }
 
-            async Task LoadAsync(int taskNumber)
+        /* maple.gg 서버 부담이 심한거 같아 동기화 기능 제외
+        private static async Task RequestInfoUpdateAsync(Guild guild, IProgress<string> progress, CancellationToken cancellation)
+        {
+            var tasks = new List<Task>();
+            foreach (GuildMember member in guild.Members)
             {
-                var prefix = $"[task.{taskNumber}] ";
+                Debug.WriteLine($"Start sync process user '{member.Info.Name}'");
 
-                while (memberIndex.TryDequeue(out int idx))
+                Task task = RequestAsync(member, progress, cancellation);
+                tasks.Add(task);
+                await Task.Delay(TimeSpan.FromSeconds(5), cancellation);
+            }
+            await Task.WhenAll(tasks);
+
+            static async Task RequestAsync(GuildMember member, IProgress<string> progress, CancellationToken cancellation)
+            {
+                string userName = member.Info.Name;
+                User info = member.Info;
+
+                int retryCount = 0;
+                while (true)
                 {
-                    var userName = _guild.Members[idx].data.Name;
+                    Log.Information($"[{userName}] Trying to request information sync to maple.gg");
                     try
                     {
-                        Log.Information($"{prefix}Syncing member n.{idx} - name: {userName}");
+                        await info.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+                    }
+                    catch (UserSyncException e) when (e.RawJsonValue != null)
+                    {
+                        Log.Error(e, $"[{userName}] Faild to parse sync data.\n[Raw json data]\n{e.RawJsonValue}");
+                        return;
+                    }
+                    catch (UserSyncException e)
+                    {
+                        Debug.WriteLine($"[{userName}] Faild to sync user data.");
+                        Log.Warning(e, $"[{userName}] Faild to sync user data.");
 
-                        var syncRequestCount = 0;
-                        while (true)
+                        if (retryCount < 5)
                         {
-                            try
-                            {
-                                syncRequestCount++;
-                                await _guild.Members[idx].data.RequestSyncAsync(new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
-                            }
-                            catch (UserSyncException e) when (e.RawJsonValue != null)
-                            {
-                                Log.Error(e, $"{prefix}Faild to parse sync data. user name: {userName}\n[Raw json data]\n{e.RawJsonValue}");
-                                return;
-                            }
-                            catch (UserSyncException e)
-                            {
-                                Debug.WriteLine($"{prefix}Faild to sync user data. ({syncRequestCount}) user name: {userName}");
-                                Log.Warning(e, $"{prefix}Faild to sync user data. ({syncRequestCount}) user name: {userName}");
-                                if (syncRequestCount > 6)
-                                {
-                                    return;
-                                }
-
-                                Log.Information("Try again in 10 seconds.");
-                                await Task.Delay(TimeSpan.FromSeconds(10));
-                                continue;
-                            }
-                            break;
+                            Log.Warning(e, $"[{userName}] Try again after 31 seconds.");
+                            await Task.Delay(TimeSpan.FromSeconds(31), cancellation);
+                            ++retryCount;
+                            continue;
                         }
 
-                        Log.Information($"{prefix}Successfuly synced member n.{idx}");
+                        return;
+                    }
 
-                        Log.Information($"{prefix}Getting member details n.{idx} - name: {userName}");
-                        await _guild.Members[idx].data.LoadUserDetailAsync();
-                        Log.Information($"{prefix}Successfuly getting member details n.{idx}");
-                    }
-                    catch (TaskCanceledException)
-                    {
-                    }
-                    catch (UserNotFoundException e)
-                    {
-                        Log.Error(e, $"{prefix}User {userName} doesn't found in maple.gg.");
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e, $"{prefix}Faild to get user data. user name: {userName}");
-                    }
-                    finally
-                    {
-                        count++;
-                        string msg = string.Format(LocalizationString.state_get_data, max, count);
-                        Log.Information(msg);
-                        StateMessage = msg;
-                        await Task.Delay(1000);
-                    }
+                    break;
                 }
+                Log.Information($"[{userName}] Successfuly synced.");
+                progress.Report(userName);
+            }
+        }
+        */
+        private static async Task RequestMembersInfoAsync(Guild guild, IProgress<string> progress, CancellationToken cancellation)
+        {
+            var tasks = new List<Task>();
+            foreach (GuildMember member in guild.Members)
+            {
+                Debug.WriteLine($"Start information load process user '{member.Info.Name}'");
 
-                Log.Information($"{prefix}Done.");
+                Task task = RequestAsync(member, progress, cancellation);
+                tasks.Add(task);
+                await Task.Delay(750, cancellation);
+            }
+            await Task.WhenAll(tasks);
+
+            static async Task RequestAsync(GuildMember member, IProgress<string> progress, CancellationToken cancellation)
+            {
+                string userName = member.Info.Name;
+                User info = member.Info;
+
+                try
+                {
+                    await info.LoadUserDetailAsync(cancellation);
+                }
+                catch (UserNotFoundException)
+                {
+                    Log.Information($"[{userName}] Cannot found user in maple.gg");
+                    return;
+                }
+                Log.Information($"[{userName}] Successfuly loaded.");
+                progress.Report(userName);
             }
         }
 
@@ -248,6 +264,12 @@ namespace KMSGuildExtractor.ViewModel
             {
                 CanExtract = true;
             }
+        }
+
+        private void DisplayLog(State state, string text)
+        {
+            SetState(state);
+            StateMessage = text;
         }
 
         private void SetState(State state)

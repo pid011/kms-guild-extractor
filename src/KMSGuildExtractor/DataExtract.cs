@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,30 +19,31 @@ namespace KMSGuildExtractor
 
             StringBuilder builder = new StringBuilder()
                 .AppendJoin(Seperater,
-                            GetCSVString(LocalizationString.data_user_name),
-                            GetCSVString(LocalizationString.data_position),
-                            GetCSVString(LocalizationString.data_level),
-                            GetCSVString(LocalizationString.data_job),
-                            GetCSVString(LocalizationString.data_lastupdated),
-                            GetCSVString(LocalizationString.data_popularity),
-                            GetCSVString(LocalizationString.data_dojang_floor),
-                            GetCSVString(LocalizationString.data_union_level)
-                            )
+                            LocalizationString.data_user_name,
+                            LocalizationString.data_position,
+                            LocalizationString.data_level,
+                            LocalizationString.data_job,
+                            LocalizationString.data_lastupdated,
+                            LocalizationString.data_popularity,
+                            LocalizationString.data_dojang_floor,
+                            LocalizationString.data_union_level,
+                            "maple.gg")
                 .AppendLine();
 
-            foreach ((GuildPosition position, User user) in guildData.Members)
+            foreach (GuildMember member in guildData.Members.OrderBy(m => (int)m.Position))
             {
-                builder = builder
+                builder
                     .AppendJoin(
                         Seperater,
-                        GetCSVString(user.Name),
-                        GetCSVString(position.ToLocalizedString()),
-                        user.Level ?? 0,
-                        GetCSVString(user.Job),
-                        user.LastUpdated ?? -1,
-                        user.Popularity ?? 0,
-                        user.DojangFloor ?? 0,
-                        user.UnionLevel ?? 0)
+                        GetCSVString(member.Info.Name),
+                        GetCSVString(member.Position.ToLocalizedString()),
+                        GetCSVString(member.Info.Level ?? 0),
+                        GetCSVString(member.Info.Job),
+                        GetCSVString(member.Info.LastUpdated ?? -1),
+                        GetCSVString(member.Info.Popularity ?? 0),
+                        GetCSVString(member.Info.DojangFloor ?? 0),
+                        GetCSVString(member.Info.UnionLevel ?? 0),
+                        GetCSVString($"https://maple.gg/u/{member.Info.Name}"))
                     .AppendLine();
             }
 
@@ -55,9 +57,7 @@ namespace KMSGuildExtractor
                 return "NULL";
             }
 
-            return obj.ToString().IndexOf(Seperater) < 0
-                ? $"{obj}"
-                : $"\"{obj}\"";
+            return obj is string ? $"\"{obj}\"" : $"{obj}";
         }
     }
 }

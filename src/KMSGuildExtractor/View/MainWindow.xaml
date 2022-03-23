@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMSGuildExtractor.Localization"
+        xmlns:viewmodel="clr-namespace:KMSGuildExtractor.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         x:Class="KMSGuildExtractor.View.MainWindow"
         mc:Ignorable="d"
         Height="700"
