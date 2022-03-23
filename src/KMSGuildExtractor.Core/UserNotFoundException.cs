@@ -7,6 +7,9 @@ namespace KMSGuildExtractor.Core
     {
         public string Name { get; }
 
-        public UserNotFoundException(string name) => Name = name;
+        public UserNotFoundException(string name) : base($"Cannot found User '{name}'")
+        {
+            Name = name;
+        }
     }
 }

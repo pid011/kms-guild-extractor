@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,19 +30,19 @@ namespace KMSGuildExtractor
                             )
                 .AppendLine();
 
-            foreach ((GuildPosition position, User user) in guildData.Members)
+            foreach (GuildMember member in guildData.Members.OrderBy(m => (int)m.Position))
             {
-                builder = builder
+                builder
                     .AppendJoin(
                         Seperater,
-                        GetCSVString(user.Name),
-                        GetCSVString(position.ToLocalizedString()),
-                        user.Level ?? 0,
-                        GetCSVString(user.Job),
-                        user.LastUpdated ?? -1,
-                        user.Popularity ?? 0,
-                        user.DojangFloor ?? 0,
-                        user.UnionLevel ?? 0)
+                        GetCSVString(member.Info.Name),
+                        GetCSVString(member.Position.ToLocalizedString()),
+                        member.Info.Level ?? 0,
+                        GetCSVString(member.Info.Job),
+                        member.Info.LastUpdated ?? -1,
+                        member.Info.Popularity ?? 0,
+                        member.Info.DojangFloor ?? 0,
+                        member.Info.UnionLevel ?? 0)
                     .AppendLine();
             }
 
