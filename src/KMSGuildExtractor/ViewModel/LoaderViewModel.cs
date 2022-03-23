@@ -121,7 +121,7 @@ namespace KMSGuildExtractor.ViewModel
                     {
                         ++count;
                         Log.Information($"Succefully synced user '{name}'");
-                        DisplayLog(State.GettingMemberdata, $"'{name}' 유저 정보 로드 완료 ({count}/{_guild.Members.Count})");
+                        DisplayLog(State.GettingMemberdata, $"'{name}' 유저 정보 가져오기 완료 ({count}/{_guild.Members.Count})");
                     });
                     await RequestMembersInfoAsync(_guild, progress, default);
                 }
