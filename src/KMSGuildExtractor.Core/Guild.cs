@@ -112,7 +112,7 @@ namespace KMSGuildExtractor.Core
                 MatchCollection matches = Regex.Matches(url, @"(?:\?|&|;)([^=]+)=([^&|;]+)");
                 (int gid, WorldID wid) = (-1, WorldID.Unknown);
 
-                foreach (Match match in matches)
+                foreach (Match match in matches.Cast<Match>())
                 {
                     string[] param = match.Value.Split('=');
                     int tmp = int.Parse(param[1]);
