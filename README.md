@@ -7,7 +7,7 @@
 
 ## 설치방법
 
-<https://dotnet.microsoft.com/en-us/download>
+<https://dotnet.microsoft.com/ko-kr/download>
 
 위의 링크로 들어가 .NET Runtime을 설치해주세요. **(필수)**
 
