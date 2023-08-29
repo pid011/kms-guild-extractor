@@ -119,7 +119,7 @@ namespace KMSGuildExtractor.Core
 
             static (string imgUrl, int? lastUpdated) ParseProfile(HtmlDocument html)
             {
-                HtmlNode profile = html.DocumentNode.SelectSingleNode("//div[@class=\"row row-small character-avatar-row\"]");
+                HtmlNode profile = html.DocumentNode.SelectSingleNode(".//div[@class=\"row row-small character-avatar-row\"]");
                 string imgUrl = string.Empty; // TODO: Parse character image url
                 int? lastUpdated = profile?.SelectSingleNode("./div[2]//span")?.InnerText?.ParseInt();
 
@@ -128,7 +128,7 @@ namespace KMSGuildExtractor.Core
 
             static (int? level, string job, int? popularity) ParseInformation(HtmlDocument html)
             {
-                HtmlNodeCollection information = html.DocumentNode.SelectNodes("//li[@class=\"user-summary-item\"]");
+                HtmlNodeCollection information = html.DocumentNode.SelectNodes(".//li[@class=\"user-summary-item\"]");
                 int? level = information[1]?.InnerText?.ParseLevel();
                 string job = information[2]?.InnerText?.Trim();
                 int? popularity = information[3]?.InnerText?.ParseInt();
@@ -138,9 +138,9 @@ namespace KMSGuildExtractor.Core
 
             static (int? dojang, int? union) ParseTitle(HtmlDocument html)
             {
-                HtmlNodeCollection title = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
-                int? dojang = title[0].SelectSingleNode("//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
-                int? union = title[2].SelectSingleNode("//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
+                HtmlNodeCollection title = html.DocumentNode.SelectNodes(".//section[@class=\"box user-summary-box\"]");
+                int? dojang = title[0].SelectSingleNode(".//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
+                int? union = title[2].SelectSingleNode(".//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
 
                 return (dojang, union);
             }

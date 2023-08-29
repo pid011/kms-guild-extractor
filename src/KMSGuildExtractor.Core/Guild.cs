@@ -73,7 +73,7 @@ namespace KMSGuildExtractor.Core
         {
             try
             {
-                HtmlNode rankNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table2\"]/tbody");
+                HtmlNode rankNode = html.DocumentNode.SelectSingleNode(".//table[@class=\"rank_table2\"]/tbody");
 
                 if (rankNode is null)
                 {
@@ -132,7 +132,7 @@ namespace KMSGuildExtractor.Core
             try
             {
                 var members = new List<GuildMember>(50);
-                HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode("//table[@class=\"rank_table\"]/tbody");
+                HtmlNode guildOrgNode = html.DocumentNode.SelectSingleNode(".//table[@class=\"rank_table\"]/tbody");
 
                 foreach (HtmlNode item in guildOrgNode.Descendants("tr"))
                 {
@@ -161,7 +161,7 @@ namespace KMSGuildExtractor.Core
         {
             try
             {
-                HtmlNode node = html.DocumentNode.SelectSingleNode("//span[@class=\"cm_next\"]/a");
+                HtmlNode node = html.DocumentNode.SelectSingleNode(".//span[@class=\"cm_next\"]/a");
                 return node.HasAttributes;
             }
             catch (NullReferenceException e)
