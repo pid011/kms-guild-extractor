@@ -11,7 +11,7 @@ using KMSGuildExtractor.Core.Requester;
 
 namespace KMSGuildExtractor.Core
 {
-    public class Guild : IGuild
+    public partial class Guild : IGuild
     {
         public int GuildID { get; }
         public WorldID World { get; }
@@ -35,13 +35,13 @@ namespace KMSGuildExtractor.Core
 
         public static bool IsValidGuildName(string guildName)
         {
-            if (!Regex.IsMatch(guildName, "^[0-9a-zA-Z가-힣]*$")) // 특수문자 입력 금지
+            if (!GuildNameChecker().IsMatch(guildName)) // 특수문자 입력 금지
             {
                 return false;
             }
 
             float count = guildName.ToCharArray()
-                                   .Sum(ch => Regex.IsMatch(ch.ToString(), "[0-9a-zA-Z]") ? 0.5f : 1f);
+                                   .Sum(ch => GuildNameAlphabetChecker().IsMatch(ch.ToString()) ? 0.5f : 1f);
 
             return count >= 2 && count <= 6;
         }
@@ -104,7 +104,7 @@ namespace KMSGuildExtractor.Core
 
             static (int gid, WorldID wid) ParseValueFromGuildLink(string url)
             {
-                MatchCollection matches = Regex.Matches(url, @"(?:\?|&|;)([^=]+)=([^&|;]+)");
+                MatchCollection matches = GuildLinkParser().Matches(url);
                 (int gid, WorldID wid) = (-1, WorldID.Unknown);
 
                 foreach (Match match in matches.Cast<Match>())
@@ -169,5 +169,12 @@ namespace KMSGuildExtractor.Core
                 throw new ParseException("Doesn't found next page button", e);
             }
         }
+
+        [GeneratedRegex("[0-9a-zA-Z]")]
+        private static partial Regex GuildNameAlphabetChecker();
+        [GeneratedRegex("^[0-9a-zA-Z가-힣]*$")]
+        private static partial Regex GuildNameChecker();
+        [GeneratedRegex("(?:\\?|&|;)([^=]+)=([^&|;]+)")]
+        private static partial Regex GuildLinkParser();
     }
 }

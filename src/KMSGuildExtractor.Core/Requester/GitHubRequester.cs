@@ -13,7 +13,7 @@ namespace KMSGuildExtractor.Core.Requester
 
         public static async Task<ReleaseData> GetLastReleaseAsync(CancellationToken cancellationToken = default)
         {
-            using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, LatestReleaseLink);
+            using HttpRequestMessage request = new(HttpMethod.Get, LatestReleaseLink);
             request.Headers.Add("User-Agent", "kms-guild-extractor");
             using HttpResponseMessage response = await s_client.SendAsync(request, cancellationToken);
 
@@ -22,7 +22,7 @@ namespace KMSGuildExtractor.Core.Requester
                 return null;
             }
 
-            using Stream jsonStream = await response.Content.ReadAsStreamAsync();
+            using Stream jsonStream = await response.Content.ReadAsStreamAsync(cancellationToken);
             return await JsonSerializer.DeserializeAsync<ReleaseData>(jsonStream, cancellationToken: cancellationToken);
         }
 
