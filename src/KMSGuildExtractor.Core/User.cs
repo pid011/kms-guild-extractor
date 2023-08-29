@@ -104,32 +104,9 @@ namespace KMSGuildExtractor.Core
         {
             try
             {
-                int? lastUpdated =
-                    html
-                    .DocumentNode
-                    .SelectSingleNode("//div[@class=\"mb-1 text-white\"]/span")?
-                    .InnerText?
-                    .ParseInt();
-
-                HtmlNodeCollection profile = html.DocumentNode.SelectNodes("//ul[@class=\"user-summary-list\"]/li");
-                int? level = profile[0]?.InnerText?.ParseLevel();
-
-                string job = profile[1]?.InnerText?.Trim();
-
-                int? popularity = profile[2]?.InnerText?.ParseInt();
-
-                HtmlNodeCollection datas = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
-
-                int? dojangFloor = datas[0].SelectSingleNode(".//h1")?.InnerText?.ParseInt();
-
-                int? union = datas[2].SelectSingleNode(".//span[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
-
-                LastUpdated = lastUpdated;
-                Level = level;
-                Job = job;
-                Popularity = popularity;
-                DojangFloor = dojangFloor;
-                UnionLevel = union;
+                (_, LastUpdated) = ParseProfile(html);
+                (Level, Job, Popularity) = ParseInformation(html);
+                (DojangFloor, UnionLevel) = ParseTitle(html);
             }
             catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
@@ -138,6 +115,34 @@ namespace KMSGuildExtractor.Core
             catch (NullReferenceException e)
             {
                 throw new ParseException("Faild to parse user detail html", e);
+            }
+
+            static (string imgUrl, int? lastUpdated) ParseProfile(HtmlDocument html)
+            {
+                HtmlNode profile = html.DocumentNode.SelectSingleNode("//div[@class=\"row row-small character-avatar-row\"]");
+                string imgUrl = string.Empty; // TODO: Parse character image url
+                int? lastUpdated = profile?.SelectSingleNode("./div[2]//span")?.InnerText?.ParseInt();
+
+                return (imgUrl, lastUpdated);
+            }
+
+            static (int? level, string job, int? popularity) ParseInformation(HtmlDocument html)
+            {
+                HtmlNodeCollection information = html.DocumentNode.SelectNodes("//li[@class=\"user-summary-item\"]");
+                int? level = information[1]?.InnerText?.ParseLevel();
+                string job = information[2]?.InnerText?.Trim();
+                int? popularity = information[3]?.InnerText?.ParseInt();
+
+                return (level, job, popularity);
+            }
+
+            static (int? dojang, int? union) ParseTitle(HtmlDocument html)
+            {
+                HtmlNodeCollection title = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
+                int? dojang = title[0].SelectSingleNode("//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
+                int? union = title[2].SelectSingleNode("//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
+
+                return (dojang, union);
             }
         }
     }
