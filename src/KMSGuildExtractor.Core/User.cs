@@ -105,23 +105,16 @@ namespace KMSGuildExtractor.Core
             try
             {
                 HtmlNode profile = html.DocumentNode.SelectSingleNode("//div[@class=\"row row-small character-avatar-row\"]");
-                int? lastUpdated = profile?.SelectSingleNode("./div[2]//span")?.InnerText?.ParseInt();
+                LastUpdated = profile?.SelectSingleNode("./div[2]//span")?.InnerText?.ParseInt();
 
                 HtmlNodeCollection information = html.DocumentNode.SelectNodes("//li[@class=\"user-summary-item\"]");
-                int? level = information[1]?.InnerText?.ParseLevel();
-                string job = information[2]?.InnerText?.Trim();
-                int? popularity = information[3]?.InnerText?.ParseInt();
+                Level = information[1]?.InnerText?.ParseLevel();
+                Job = information[2]?.InnerText?.Trim();
+                Popularity = information[3]?.InnerText?.ParseInt();
 
                 HtmlNodeCollection title = html.DocumentNode.SelectNodes("//section[@class=\"box user-summary-box\"]");
-                int? dojangFloor = title[0].SelectSingleNode("//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
-                int? union = title[2].SelectSingleNode("//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
-
-                LastUpdated = lastUpdated;
-                Level = level;
-                Job = job;
-                Popularity = popularity;
-                DojangFloor = dojangFloor;
-                UnionLevel = union;
+                DojangFloor = title[0].SelectSingleNode("//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
+                UnionLevel = title[2].SelectSingleNode("//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
             }
             catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
             {
