@@ -14,13 +14,9 @@ namespace KMSGuildExtractor.Core
     public class Guild : IGuild
     {
         public int GuildID { get; }
-
         public WorldID World { get; }
-
         public string Name { get; }
-
         public int? Level { get; private set; }
-
         public IReadOnlyList<GuildMember> Members { get; private set; }
 
         public Guild(string name, WorldID world, int guildID)
@@ -34,7 +30,6 @@ namespace KMSGuildExtractor.Core
         public static async Task<Guild> SearchAsync(string name, WorldID wid, CancellationToken cancellation = default)
         {
             HtmlDocument html = await GuildDataRequester.RequestGuildSearchHtmlAsync(name, cancellation);
-
             return FindGuildInHtml(html, wid);
         }
 
