@@ -17,6 +17,7 @@ namespace KMSGuildExtractor.Core.Requester
 
         public static async Task<SyncData> GetUserSyncDataAsync(string name, CancellationToken cancellation = default)
         {
+            // BUG: sync URL이 사라져서 작동이 불가함
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("User name cannot be empty.", nameof(name));
