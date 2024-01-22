@@ -102,13 +102,14 @@ namespace KMSGuildExtractor.Core
 
         private void SetUserDetail(HtmlDocument html)
         {
+            HtmlNode node = html.DocumentNode;
             try
             {
-                (_, LastUpdated) = ParseProfile(html);
-                (Level, Job, Popularity) = ParseInformation(html);
-                (DojangFloor, UnionLevel) = ParseTitle(html);
+                (_, LastUpdated) = ParseProfile(node);
+                (Level, Job, Popularity) = ParseInformation(node);
+                (DojangFloor, UnionLevel) = ParseTitle(node);
             }
-            catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode(".//img[@alt=\"검색결과 없음\"]") != null)
+            catch (NullReferenceException) when (html.GetElementbyId("app").SelectSingleNode("//img[@alt=\"검색결과 없음\"]") != null)
             {
                 throw new UserNotFoundException(Name);
             }
@@ -117,30 +118,39 @@ namespace KMSGuildExtractor.Core
                 throw new ParseException("Faild to parse user detail html", e);
             }
 
-            static (string imgUrl, int? lastUpdated) ParseProfile(HtmlDocument html)
+            static (string avatarUrl, int? lastUpdated) ParseProfile(HtmlNode node)
             {
-                HtmlNode profile = html.DocumentNode.SelectSingleNode(".//div[@class=\"row row-small character-avatar-row\"]");
-                string imgUrl = string.Empty; // TODO: Parse character image url
-                int? lastUpdated = profile?.SelectSingleNode("./div[2]//span")?.InnerText?.ParseInt();
-
-                return (imgUrl, lastUpdated);
+                string avatarUrl = node.SelectSingleNode("//img[@class=\"character-image\"]").Attributes["src"].Value;
+                int? lastUpdated = node.SelectSingleNode("//div[@class=\"last-activity-day\"]/span").InnerText.ParseInt();
+                return (avatarUrl, lastUpdated);
             }
 
-            static (int? level, string job, int? popularity) ParseInformation(HtmlDocument html)
+            static (int? level, string job, int? popularity) ParseInformation(HtmlNode node)
             {
-                HtmlNodeCollection information = html.DocumentNode.SelectNodes(".//li[@class=\"user-summary-item\"]");
-                int? level = information[1]?.InnerText?.ParseLevel();
-                string job = information[2]?.InnerText?.Trim();
-                int? popularity = information[3]?.InnerText?.ParseInt();
-
+                int? level = node.SelectSingleNode("//span[@class=\"level\"]")?.InnerText?.ParseInt();
+                string job = node.SelectSingleNode("//span[@class=\"job\"]")?.InnerText?.Trim();
+                int? popularity = node.SelectSingleNode("//span[@class=\"popularity\"]")?.InnerText?.ParseInt();
                 return (level, job, popularity);
             }
 
-            static (int? dojang, int? union) ParseTitle(HtmlDocument html)
+            static (int? dojang, int? union) ParseTitle(HtmlNode node)
             {
-                HtmlNodeCollection title = html.DocumentNode.SelectNodes(".//section[@class=\"box user-summary-box\"]");
-                int? dojang = title[0].SelectSingleNode(".//*[@class=\"user-summary-floor font-weight-bold\"]")?.InnerText?.ParseInt();
-                int? union = title[2].SelectSingleNode(".//*[@class=\"user-summary-level\"]")?.InnerText?.ParseInt();
+                int? dojang = null;
+                int? union = null;
+                // maple.gg 개편으로 무릉도장과 유니온 레벨을 html만으로 가져올 수가 없음
+                // 나중에 메이플 API로 변경해야 함
+
+                //foreach (HtmlNode node in html.DocumentNode.SelectNodes(".//div"))
+                //{
+                //    if (node.InnerText == "무릉도장 최고기록")
+                //    {
+                //        dojang = node.SelectSingleNode(".//div[@class=\"content\"]")?.InnerText?.ParseInt();
+                //    }
+                //    else if (node.InnerText == "유니온 레벨")
+                //    {
+                //        node.NextSibling.SelectSingleNode(".//div[@class=\"info\"]")?.InnerText.ParseInt();
+                //    }
+                //}
 
                 return (dojang, union);
             }
